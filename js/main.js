@@ -183,7 +183,7 @@
   };
 
   const closeAll = () => {
-    $$(".panel, .modal").forEach((p) => {
+    $$(".panel, .modal, .gallery").forEach((p) => {
       p.classList.remove("is-open");
       setTimeout(() => { if (!p.classList.contains("is-open")) p.hidden = true; }, 350);
     });
@@ -207,7 +207,8 @@
     }
     const panel = $("#panel-" + name);
     if (!panel) return;
-    backdrop.hidden = false;
+    if (name === "show") renderGallery();
+    if (!panel.classList.contains("gallery")) backdrop.hidden = false;
     panel.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add("is-open")));
     setTimeout(() => panel.querySelector("input:not([hidden]), button:not([data-close])")?.focus(), 60);
@@ -215,6 +216,12 @@
 
   backdrop.addEventListener("click", closeAll);
   document.addEventListener("keydown", (e) => {
+    if (!$("#viewer").hidden) {
+      if (e.key === "Escape") closeViewer();
+      else if (e.key === "ArrowLeft") step(document.dir === "rtl" ? 1 : -1);
+      else if (e.key === "ArrowRight") step(document.dir === "rtl" ? -1 : 1);
+      return;
+    }
     if (e.key === "Escape") closeAll();
     if (e.key === "/" && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); openLayer("search"); }
   });
@@ -398,6 +405,74 @@
   });
   if (location.hash === "#kargo") setTimeout(() => openLayer("ship"), 0);
 
+  // ================= DEFİLE =================
+  const SHOW = window.GIVANI_SHOW || { year: new Date().getFullYear(), images: [] };
+  const IMGS = (SHOW.images || []).filter((im) => im && im.src);
+  const viewer = $("#viewer"), vImg = $("#viewerImg");
+  let vIndex = 0;
+
+  const showTitle = () => t("show.title", { year: SHOW.year });
+
+  const renderShowSection = () => {
+    $("#showTitle").textContent = showTitle();
+    $("#galleryTitle").textContent = showTitle();
+    $("#galleryCount").textContent = IMGS.length ? t("show.photos", { n: IMGS.length }) : "";
+    const cover = $("#showCover");
+    if (IMGS.length && !cover.querySelector("img")) {
+      cover.innerHTML = `<img src="${esc(IMGS[0].src)}" alt="" loading="lazy">`;
+      cover.classList.add("has-img");
+    }
+  };
+
+  const renderGallery = () => {
+    const grid = $("#galleryGrid");
+    $("#galleryEmpty").hidden = IMGS.length > 0;
+    if (!IMGS.length) {
+      const g = ["g-ball", "g-mermaid", "g-aline", "g-sheath", "g-off", "g-sleeve"];
+      grid.innerHTML = g.map((id) => `<div class="gallery__item is-placeholder"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${id}"/></svg></div></div>`).join("");
+      return;
+    }
+    grid.innerHTML = IMGS.map((im, i) => `
+      <button class="gallery__item" data-view="${i}">
+        <img src="${esc(im.src)}" alt="${esc(im.alt || t("show.alt", { year: SHOW.year, i: i + 1 }))}" loading="lazy">
+      </button>`).join("");
+  };
+
+  const showImage = () => {
+    const im = IMGS[vIndex];
+    vImg.src = im.src;
+    vImg.alt = im.alt || t("show.alt", { year: SHOW.year, i: vIndex + 1 });
+    $("#viewerCount").textContent = `${vIndex + 1} / ${IMGS.length}`;
+    // Sonraki görseli önceden yükle
+    const next = IMGS[(vIndex + 1) % IMGS.length];
+    if (next) { const pre = new Image(); pre.src = next.src; }
+  };
+  function step(d) { if (IMGS.length) { vIndex = (vIndex + d + IMGS.length) % IMGS.length; showImage(); } }
+  const openViewer = (i) => { vIndex = i; viewer.hidden = false; showImage(); $("#viewerClose").focus(); };
+  function closeViewer() {
+    viewer.hidden = true;
+    $(`.gallery__item[data-view="${vIndex}"]`)?.focus({ preventScroll: false });
+  }
+
+  $("#galleryGrid").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-view]");
+    if (b) openViewer(+b.dataset.view);
+  });
+  $("#viewerPrev").addEventListener("click", () => step(document.dir === "rtl" ? 1 : -1));
+  $("#viewerNext").addEventListener("click", () => step(document.dir === "rtl" ? -1 : 1));
+  $("#viewerClose").addEventListener("click", closeViewer);
+  viewer.addEventListener("click", (e) => { if (e.target === viewer || e.target.id === "viewerStage") closeViewer(); });
+
+  // Telefonda kaydırma ile geçiş
+  let sx = null;
+  viewer.addEventListener("pointerdown", (e) => { sx = e.clientX; });
+  viewer.addEventListener("pointerup", (e) => {
+    if (sx === null) return;
+    const dx = e.clientX - sx; sx = null;
+    if (Math.abs(dx) > 50) step((dx < 0 ? 1 : -1) * (document.dir === "rtl" ? -1 : 1));
+  });
+  if (location.hash === "#defile-galeri") setTimeout(() => openLayer("show"), 0);
+
   // ================= DİL SEÇİCİ =================
   const langBtn = $("#langBtn"), langMenu = $("#langMenu");
   function closeLangMenu() { langMenu.hidden = true; langBtn.setAttribute("aria-expanded", "false"); }
@@ -434,6 +509,8 @@
     renderBooked();
     renderSizes();
     renderAddr();
+    renderShowSection();
+    if (!$("#panel-show").hidden) renderGallery();
     refresh();
   };
 

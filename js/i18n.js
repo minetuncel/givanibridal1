@@ -117,7 +117,15 @@ window.GIVANI_I18N = {
       "ship.edit": "Düzenle",
       "ship.delete": "Sil",
       "ship.add": "Teslimat adresi ekle",
-      "ship.to": "Teslimat"
+      "ship.to": "Teslimat",
+      "nav.show": "Defile",
+      "show.title": "Defile {year}",
+      "show.cta": "Görselleri Gör",
+      "show.empty": "Görseller yakında eklenecek.",
+      "show.photos": "{n} görsel",
+      "show.prev": "Önceki",
+      "show.next": "Sonraki",
+      "show.alt": "Defile {year} — görsel {i}"
     },
 
     /* ---------------- ENGLISH ---------------- */
@@ -217,7 +225,15 @@ window.GIVANI_I18N = {
       "ship.edit": "Edit",
       "ship.delete": "Delete",
       "ship.add": "Add delivery address",
-      "ship.to": "Deliver to"
+      "ship.to": "Deliver to",
+      "nav.show": "Runway",
+      "show.title": "Runway Show {year}",
+      "show.cta": "View Photos",
+      "show.empty": "Photos coming soon.",
+      "show.photos": "{n} photos",
+      "show.prev": "Previous",
+      "show.next": "Next",
+      "show.alt": "Runway Show {year} — photo {i}"
     },
 
     /* ---------------- العربية ---------------- */
@@ -317,7 +333,15 @@ window.GIVANI_I18N = {
       "ship.edit": "تعديل",
       "ship.delete": "حذف",
       "ship.add": "أضيفي عنوان التوصيل",
-      "ship.to": "التوصيل إلى"
+      "ship.to": "التوصيل إلى",
+      "nav.show": "عرض الأزياء",
+      "show.title": "عرض الأزياء {year}",
+      "show.cta": "شاهدي الصور",
+      "show.empty": "ستُضاف الصور قريبًا.",
+      "show.photos": "{n} صورة",
+      "show.prev": "السابق",
+      "show.next": "التالي",
+      "show.alt": "عرض الأزياء {year} — صورة {i}"
     },
 
     /* ---------------- FRANÇAIS ---------------- */
@@ -417,7 +441,15 @@ window.GIVANI_I18N = {
       "ship.edit": "Modifier",
       "ship.delete": "Supprimer",
       "ship.add": "Ajouter une adresse de livraison",
-      "ship.to": "Livraison à"
+      "ship.to": "Livraison à",
+      "nav.show": "Défilé",
+      "show.title": "Défilé {year}",
+      "show.cta": "Voir les photos",
+      "show.empty": "Les photos arrivent bientôt.",
+      "show.photos": "{n} photos",
+      "show.prev": "Précédente",
+      "show.next": "Suivante",
+      "show.alt": "Défilé {year} — photo {i}"
     },
 
     /* ---------------- DEUTSCH ---------------- */
@@ -517,7 +549,15 @@ window.GIVANI_I18N = {
       "ship.edit": "Bearbeiten",
       "ship.delete": "Löschen",
       "ship.add": "Lieferadresse hinzufügen",
-      "ship.to": "Lieferung an"
+      "ship.to": "Lieferung an",
+      "nav.show": "Modenschau",
+      "show.title": "Modenschau {year}",
+      "show.cta": "Fotos ansehen",
+      "show.empty": "Fotos folgen in Kürze.",
+      "show.photos": "{n} Fotos",
+      "show.prev": "Zurück",
+      "show.next": "Weiter",
+      "show.alt": "Modenschau {year} — Foto {i}"
     },
 
     /* ---------------- РУССКИЙ ---------------- */
@@ -617,7 +657,15 @@ window.GIVANI_I18N = {
       "ship.edit": "Изменить",
       "ship.delete": "Удалить",
       "ship.add": "Добавить адрес доставки",
-      "ship.to": "Доставка"
+      "ship.to": "Доставка",
+      "nav.show": "Показ",
+      "show.title": "Показ {year}",
+      "show.cta": "Смотреть фото",
+      "show.empty": "Фотографии скоро появятся.",
+      "show.photos": "Фото: {n}",
+      "show.prev": "Назад",
+      "show.next": "Вперёд",
+      "show.alt": "Показ {year} — фото {i}"
     }
   }
 };
