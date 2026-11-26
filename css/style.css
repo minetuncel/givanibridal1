@@ -116,37 +116,46 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   transition: opacity .7s var(--ease), transform .9s var(--ease), visibility .9s;
 }
 .intro.is-leaving { opacity: 0; transform: translateY(-3%); visibility: hidden; }
+.intro__facets { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.intro { isolation: isolate; overflow: hidden; }
 .intro__logo {
   display: flex; flex-direction: column; align-items: center; gap: 22px;
-  padding: 24px 32px;
-  color: var(--ink);
+  padding: 0;
   animation: introIn 1.2s var(--ease) both;
 }
-.intro__logo:hover .brand-mark { transform: scale(1.04); }
-.brand-mark {
-  width: clamp(92px, 12vw, 132px); height: auto;
-  transition: transform .6s var(--ease);
+.sign {
+  display: block;
+  padding: clamp(18px, 2.6vw, 30px) clamp(40px, 6vw, 84px) clamp(22px, 3vw, 36px);
+  background: linear-gradient(180deg, #45474a 0%, #333538 55%, #2a2c2e 100%);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 24px 48px rgba(0,0,0,.28), 0 6px 14px rgba(0,0,0,.18);
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
 }
-.brand-mark circle { fill: none; stroke: currentColor; stroke-width: 1.2; }
-.brand-mark text { font: 300 64px var(--font); fill: currentColor; text-anchor: middle; dominant-baseline: central; }
-.brand-word { display: flex; flex-direction: column; align-items: center; gap: 10px; direction: ltr; }
-.brand-word__name {
-  font-size: clamp(40px, 7vw, 76px);
-  font-weight: 500;
-  letter-spacing: .34em;
-  margin-right: -.34em;
-  line-height: 1;
-  padding-top: .12em;
+.intro__logo:hover .sign { transform: translateY(-3px); box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 30px 60px rgba(0,0,0,.3), 0 8px 18px rgba(0,0,0,.2); }
+.sign__word {
+  display: block;
+  font-family: "Questrial", "Century Gothic", "Avenir", sans-serif;
+  font-size: clamp(64px, 11vw, 148px);
+  line-height: 1.05;
+  letter-spacing: .01em;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f2f3 38%, #b9bdc1 52%, #e9ebed 70%, #ffffff 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 1px rgba(0,0,0,.45));
 }
-.brand-word__sub { font-size: clamp(13px, 1.4vw, 16px); letter-spacing: .6em; margin-right: -.6em; color: var(--muted); }
-.brand-logo-img { max-width: min(360px, 70vw); max-height: 40vh; height: auto; }
+.sign__sub {
+  font-family: "Questrial", sans-serif;
+  font-size: clamp(13px, 1.4vw, 16px);
+  letter-spacing: .6em; margin-right: -.6em;
+  color: #3a3c3e;
+}
 .intro__langs {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
   animation: introIn 1.2s .3s var(--ease) both;
 }
 .intro__langs button {
   min-height: 44px; padding: 0 14px; border-radius: 999px;
-  font-size: 15px; color: var(--muted);
+  font-size: 15px; color: #4a4c4e;
 }
 .intro__langs button:hover { color: var(--ink); }
 .intro__langs button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
@@ -179,18 +188,24 @@ html.has-intro #intro[hidden] { display: grid !important; }
   height: 76px;
 }
 .logo {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: .28em;
-  color: var(--ink);
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: "Questrial", "Century Gothic", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(180deg, #45474a, #2a2c2e);
+  padding: 7px 16px 9px;
+  border-radius: 2px;
   white-space: nowrap;
+  direction: ltr;
 }
 .logo span {
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: .3em;
-  color: var(--muted);
-  margin-left: 6px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .32em;
+  color: #c9cbcd;
+  padding-top: 4px;
 }
 .nav { display: flex; justify-content: center; gap: 36px; }
 .nav a {
@@ -558,10 +573,11 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .social svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.4; }
 
 .footer__mark {
+  font-family: "Questrial", "Century Gothic", sans-serif;
   margin-top: 72px;
-  font-size: clamp(72px, 24vw, 380px);
-  font-weight: 600;
-  letter-spacing: -.02em;
+  font-size: clamp(72px, 25vw, 400px);
+  font-weight: 400;
+  letter-spacing: -.01em;
   line-height: 1;
   padding-top: .12em;
   color: var(--ink);
@@ -847,7 +863,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
 @media (max-width: 760px) {
   body { font-size: 16px; }
   .header__inner { height: 64px; }
-  .logo { font-size: 20px; letter-spacing: .22em; }
+  .logo { font-size: 24px; padding: 6px 12px 7px; }
   .logo span { display: none; }
   .lang__btn { padding: 0 6px; }
   .hide-sm { display: none; }
