@@ -75,10 +75,10 @@
     </nav>
 
     <div class="header__actions">
-      <button class="icon-btn" aria-label="Ara"><svg><use href="#i-search"/></svg></button>
-      <button class="icon-btn hide-sm" aria-label="Hesabım"><svg><use href="#i-user"/></svg></button>
-      <button class="icon-btn hide-sm" aria-label="Favoriler"><svg><use href="#i-heart"/></svg></button>
-      <button class="icon-btn cart" aria-label="Sepet"><svg><use href="#i-bag"/></svg><span class="cart__count" id="cartCount">0</span></button>
+      <button class="icon-btn" aria-label="Ara" data-open="search"><svg><use href="#i-search"/></svg></button>
+      <button class="icon-btn hide-sm" aria-label="Hesabım" data-open="account"><svg><use href="#i-user"/></svg></button>
+      <button class="icon-btn badge-wrap hide-sm" aria-label="Favoriler" data-open="fav"><svg><use href="#i-heart"/></svg><span class="badge" data-count="fav">0</span></button>
+      <button class="icon-btn badge-wrap" aria-label="Sepet" data-open="cart"><svg><use href="#i-bag"/></svg><span class="badge" data-count="cart">0</span></button>
     </div>
   </div>
 </header>
@@ -92,7 +92,62 @@
     <a href="#randevu">Randevu</a>
     <a href="#iletisim">İletişim</a>
   </nav>
+  <div class="drawer__tools">
+    <button data-open="account"><svg><use href="#i-user"/></svg>Hesabım</button>
+    <button data-open="fav"><svg><use href="#i-heart"/></svg>Favoriler <span class="badge badge--inline" data-count="fav">0</span></button>
+  </div>
 </aside>
+
+<!-- Arama -->
+<div class="search" id="search" role="dialog" aria-modal="true" aria-label="Arama" hidden>
+  <div class="wrap search__bar">
+    <svg class="search__icon"><use href="#i-search"/></svg>
+    <input type="search" id="searchInput" placeholder="Model veya kategori ara" autocomplete="off" aria-label="Ara">
+    <button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="wrap search__body">
+    <div class="search__quick" id="searchQuick"></div>
+    <p class="search__meta" id="searchMeta"></p>
+    <div class="search__results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- Yan paneller -->
+<div class="backdrop" id="backdrop" hidden></div>
+
+<aside class="panel" id="panel-account" role="dialog" aria-modal="true" aria-label="Hesabım" hidden>
+  <div class="panel__head"><h3>Hesabım</h3><button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button></div>
+  <div class="panel__body">
+    <div class="seg" role="tablist">
+      <button class="seg__btn is-active" data-auth="login">Giriş Yap</button>
+      <button class="seg__btn" data-auth="register">Üye Ol</button>
+    </div>
+    <form class="form" id="authForm">
+      <input type="text" name="name" placeholder="Ad Soyad" aria-label="Ad Soyad" data-only="register" hidden>
+      <input type="email" name="email" placeholder="E-posta" aria-label="E-posta" required>
+      <input type="password" name="password" placeholder="Şifre" aria-label="Şifre" required minlength="6">
+      <button type="submit" class="btn btn--block" id="authSubmit">Giriş Yap</button>
+      <p class="form__msg" id="authMsg" hidden></p>
+    </form>
+  </div>
+</aside>
+
+<aside class="panel" id="panel-fav" role="dialog" aria-modal="true" aria-label="Favoriler" hidden>
+  <div class="panel__head"><h3>Favoriler <span class="muted" data-count="fav">0</span></h3><button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button></div>
+  <div class="panel__body"><ul class="list" id="favList"></ul></div>
+</aside>
+
+<aside class="panel" id="panel-cart" role="dialog" aria-modal="true" aria-label="Sepet" hidden>
+  <div class="panel__head"><h3>Sepet <span class="muted" data-count="cart">0</span></h3><button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button></div>
+  <div class="panel__body"><ul class="list" id="cartList"></ul></div>
+  <div class="panel__foot" id="cartFoot">
+    <div class="total"><span>Toplam</span><strong id="cartTotal">₺ —</strong></div>
+    <button class="btn btn--block" id="checkout">Siparişi Tamamla</button>
+    <p class="form__msg" id="checkoutMsg" hidden>Ödeme sistemi yakında aktif olacak.</p>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <main>
 
@@ -136,16 +191,8 @@
         </div>
       </div>
 
-      <div class="grid" id="productGrid">
-        <article class="card" data-cat="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sleeve"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="sade"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sheath"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-off"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-aline"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-        <article class="card" data-cat="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
-      </div>
+      <div class="grid" id="productGrid"></div>
+      <p class="empty" id="gridEmpty" hidden>Bu kategoride ürün yok.</p>
     </div>
   </section>
 
@@ -222,6 +269,7 @@
   </div>
 </footer>
 
+<script src="js/products.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
