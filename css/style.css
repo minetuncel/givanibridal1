@@ -572,3 +572,4 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   * { transition: none !important; }
   html { scroll-behavior: auto; }
 }
+.footer__col .addr { display: block; line-height: 1.5; }
