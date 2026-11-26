@@ -8,113 +8,73 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- SVG kütüphanesi: simgeler ve gelinlik çizimleri -->
+<!-- Simgeler ve gelinlik siluetleri -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <!-- Simgeler -->
+    <linearGradient id="gown-fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".55" stop-color="#f7f5f1"/>
+      <stop offset="1" stop-color="#e2ddd5"/>
+    </linearGradient>
+
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c1.2-3.8 4-5.6 7.5-5.6s6.3 1.8 7.5 5.6"/></symbol>
     <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.5 8.5h13l-1 12h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-    <symbol id="i-needle" viewBox="0 0 32 32"><path d="M6 26L24 8"/><ellipse cx="25.5" cy="6.5" rx="1.6" ry="3" transform="rotate(45 25.5 6.5)"/><path d="M25 7c-6 2-9 9-5 13s10 1 9-4"/></symbol>
-    <symbol id="i-hanger" viewBox="0 0 32 32"><path d="M16 11V9.5a2.5 2.5 0 1 0-2.5-2.5"/><path d="M16 11L4 21.5h24z"/></symbol>
-    <symbol id="i-ring" viewBox="0 0 32 32"><circle cx="16" cy="19" r="8"/><path d="M12.5 11.5L14 7h4l1.5 4.5"/><path d="M14 7l2 4.5L18 7"/></symbol>
-    <symbol id="i-box" viewBox="0 0 32 32"><path d="M5 11h22v15H5z"/><path d="M3.5 7h25v4h-25z"/><path d="M16 7v19"/><path d="M16 7c-2-4-7-4-6-1s6 1 6 1c2-4 7-4 6-1s-6 1-6 1"/></symbol>
     <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r=".6"/></symbol>
-    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z"/><path d="M9.2 8.6c.2-.5.6-.5.9-.5s.5.6.8 1.3c.2.5-.5.9-.4 1.2.5 1 1.3 1.8 2.3 2.3.3.1.7-.6 1.2-.4.7.3 1.3.6 1.3.8s0 .7-.5.9c-.6.4-1.5.6-2.6.1A7 7 0 0 1 9.1 11c-.4-1-.2-1.8.1-2.4z"/></symbol>
 
-    <!-- Monogram -->
-    <symbol id="logo-mark" viewBox="0 0 60 60">
-      <path d="M30 4c12 0 22 10 22 22v30H8V26C8 14 18 4 30 4z"/>
-      <path d="M37.5 22.5A9.5 9.5 0 1 0 39 33h-8"/>
+    <!-- Siluetler (viewBox 200x300) -->
+    <symbol id="g-aline" viewBox="0 0 200 300">
+      <path class="g" d="M90 34C91 46 90 56 86 66L82 112C68 170 54 226 36 280Q100 294 164 280C146 226 132 170 118 112L114 66C110 56 109 46 110 34Q100 42 90 34Z"/>
+      <path class="f" d="M100 118C99 174 97 230 94 286M90 116C83 172 74 228 64 282M110 116C117 172 126 228 136 282"/>
     </symbol>
-
-    <!-- Gelinlik çizimleri -->
-    <symbol id="d-aline" viewBox="0 0 200 300">
-      <path d="M90 34c1.5 12 1 22-4 32M110 34c-1.5 12-1 22 4 32"/>
-      <path d="M86 66q14 12 28 0l4 46q-18 6-36 0z"/>
-      <path d="M82 112C68 170 54 226 36 280q64 14 128 0C146 226 132 170 118 112"/>
-      <path d="M100 118c-1 56-3 110-6 166M90 116c-7 56-16 110-26 165M110 116c7 56 16 110 26 165" class="fold"/>
+    <symbol id="g-mermaid" viewBox="0 0 200 300">
+      <path class="g" d="M76 62Q84 56 90 62Q95 70 100 70Q105 70 110 62Q116 56 124 62L118 112C122 146 120 176 110 204C126 224 144 252 160 282Q100 296 40 282C56 252 74 224 90 204C80 176 78 146 82 112Z"/>
+      <path class="f" d="M90 204Q100 210 110 204M72 240Q82 258 78 284M128 240Q118 258 122 284M100 212V288"/>
     </symbol>
-
-    <symbol id="d-mermaid" viewBox="0 0 200 300">
-      <path d="M76 62q8-6 14 0 4 8 10 8t10-8q6-6 14 0"/>
-      <path d="M76 62l6 50q18 6 36 0l6-50"/>
-      <path d="M82 112c-4 34-2 64 8 92-16 20-34 48-50 78q60 14 120 0c-16-30-34-58-50-78 10-28 12-58 8-92"/>
-      <path d="M90 204q10 6 20 0M70 240q10 18 6 44M130 240q-10 18-6 44M100 210v76" class="fold"/>
+    <symbol id="g-ball" viewBox="0 0 200 300">
+      <path class="g" d="M72 58Q86 68 100 60Q114 68 128 58L118 112C152 150 176 210 186 282Q100 298 14 282C24 210 48 150 82 112Z"/>
+      <path class="f" d="M100 118V290M76 122C62 172 52 230 48 286M124 122C138 172 148 230 152 286M40 182Q70 198 100 188Q130 198 160 182"/>
     </symbol>
-
-    <symbol id="d-ball" viewBox="0 0 200 300">
-      <path d="M72 58q14 10 28 2 14 8 28-2"/>
-      <path d="M72 58l10 54q18 6 36 0l10-54"/>
-      <path d="M82 112C48 150 24 210 14 282q86 16 172 0C176 210 152 150 118 112"/>
-      <path d="M40 180q30 18 60 6 30 12 60-6M26 232q37 22 74 8 37 14 74-8" class="fold"/>
-      <path d="M100 118v168M76 120c-14 50-24 110-28 166M124 120c14 50 24 110 28 166" class="fold"/>
+    <symbol id="g-sheath" viewBox="0 0 200 300">
+      <path class="g" d="M92 30Q100 44 108 30L114 66L118 112C122 172 124 228 126 282Q100 288 74 282C76 228 78 172 82 112L86 66Z"/>
+      <path class="f" d="M112 186L116 282M100 118V200"/>
     </symbol>
-
-    <symbol id="d-sheath" viewBox="0 0 200 300">
-      <path d="M92 30l-6 36M108 30l6 36M92 30q8 16 16 0"/>
-      <path d="M86 66q14 8 28 0l4 46q-18 6-36 0z"/>
-      <path d="M82 112c-4 60-6 116-8 170q26 6 52 0c-2-54-4-110-8-170"/>
-      <path d="M112 186l4 96M100 118v80" class="fold"/>
+    <symbol id="g-sleeve" viewBox="0 0 200 300">
+      <path class="g" d="M90 36Q100 42 110 36C122 38 128 44 130 52L138 112L132 116L122 70L118 112C134 168 148 228 160 282Q100 294 40 282C52 228 66 168 82 112L78 70L68 116L62 112L70 52C72 44 78 38 90 36Z"/>
+      <path class="f" d="M100 118V286M88 118C82 172 74 228 66 282M112 118C118 172 126 228 134 282"/>
     </symbol>
-
-    <symbol id="d-sleeve" viewBox="0 0 200 300">
-      <path d="M90 36q10 6 20 0"/>
-      <path d="M90 36l-4 30q14 8 28 0l-4-30"/>
-      <path d="M90 36c-12 2-18 8-20 16l-8 60 6 4 10-46M110 36c12 2 18 8 20 16l8 60-6 4-10-46"/>
-      <path d="M86 66l-4 46q18 6 36 0l-4-46"/>
-      <path d="M82 112C66 168 52 228 40 282q60 12 120 0C148 228 134 168 118 112"/>
-      <path d="M100 118v166M88 118c-6 54-14 110-22 164M112 118c6 54 14 110 22 164" class="fold"/>
-    </symbol>
-
-    <symbol id="d-offshoulder" viewBox="0 0 200 300">
-      <path d="M62 62q20-8 38 6 18-14 38-6"/>
-      <path d="M62 62l2 10q12-4 20 0M138 62l-2 10q-12-4-20 0"/>
-      <path d="M84 70l-2 42q18 6 36 0l-2-42"/>
-      <path d="M82 112C62 160 46 220 30 282q70 14 140 0C154 220 138 160 118 112"/>
-      <path d="M100 116c-2 58-2 112 0 170M86 116q-14 70-28 168M114 116q14 70 28 168" class="fold"/>
-    </symbol>
-
-    <!-- Dekoratif dal -->
-    <symbol id="sprig" viewBox="0 0 120 40">
-      <path d="M4 20h112"/>
-      <path d="M30 20c4-8 10-10 16-10-2 6-8 10-16 10zM30 20c4 8 10 10 16 10-2-6-8-10-16-10z"/>
-      <path d="M90 20c-4-8-10-10-16-10 2 6 8 10 16 10zM90 20c-4 8-10 10-16 10 2-6 8-10 16-10z"/>
-      <circle cx="60" cy="20" r="3"/>
+    <symbol id="g-off" viewBox="0 0 200 300">
+      <path class="g" d="M62 62Q82 54 100 68Q118 54 138 62L136 72Q126 70 116 72L118 112C138 160 154 220 170 282Q100 296 30 282C46 220 62 160 82 112L84 72Q74 70 64 72Z"/>
+      <path class="f" d="M100 116C98 174 98 230 100 288M86 116Q72 186 58 284M114 116Q128 186 142 284"/>
     </symbol>
   </defs>
 </svg>
 
-<!-- Üst bant -->
 <div class="topbar">Türkiye geneli ücretsiz kargo</div>
 
-<!-- Header -->
 <header class="header" id="header">
-  <div class="container header__inner">
+  <div class="wrap header__inner">
     <button class="icon-btn menu-toggle" aria-label="Menü" id="menuOpen"><svg><use href="#i-menu"/></svg></button>
 
-    <nav class="nav nav--left">
+    <a href="#" class="logo" aria-label="Givani Bridal">GIVANI <span>BRIDAL</span></a>
+
+    <nav class="nav">
       <a href="#koleksiyon">Koleksiyon</a>
       <a href="#yeni-sezon">Yeni Sezon</a>
       <a href="#atolye">Atölye</a>
+      <a href="#randevu">Randevu</a>
     </nav>
 
-    <a href="#" class="logo" aria-label="Givani Bridal">
-      <span class="logo__name">GIVANI</span>
-      <span class="logo__sub">BRIDAL</span>
-    </a>
-
     <div class="header__actions">
-      <a href="#randevu" class="nav-link-plain">Randevu</a>
       <button class="icon-btn" aria-label="Ara"><svg><use href="#i-search"/></svg></button>
       <button class="icon-btn hide-sm" aria-label="Hesabım"><svg><use href="#i-user"/></svg></button>
       <button class="icon-btn hide-sm" aria-label="Favoriler"><svg><use href="#i-heart"/></svg></button>
@@ -123,7 +83,6 @@
   </div>
 </header>
 
-<!-- Mobil menü -->
 <aside class="drawer" id="drawer" aria-hidden="true">
   <button class="icon-btn drawer__close" aria-label="Kapat" id="menuClose"><svg><use href="#i-close"/></svg></button>
   <nav class="drawer__nav">
@@ -139,155 +98,84 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="container hero__inner">
-      <div class="hero__text reveal">
-        <span class="eyebrow">Couture Bridal</span>
-        <h1>Zarafetin<br><span class="accent">en saf hâli</span></h1>
-        <a href="#yeni-sezon" class="btn">Koleksiyonu Keşfet</a>
-      </div>
-
-      <div class="hero__visual reveal">
-        <div class="arch arch--hero">
-          <svg class="dress"><use href="#d-offshoulder"/></svg>
-        </div>
-        <svg class="hero__sprig"><use href="#sprig"/></svg>
-      </div>
+    <div class="hero__stage shot">
+      <svg preserveAspectRatio="xMidYMax meet" class="gown gown--side"><use href="#g-aline"/></svg>
+      <svg preserveAspectRatio="xMidYMax meet" class="gown gown--main"><use href="#g-ball"/></svg>
+      <svg preserveAspectRatio="xMidYMax meet" class="gown gown--side"><use href="#g-mermaid"/></svg>
+    </div>
+    <div class="wrap hero__text">
+      <h1>Yeni Koleksiyon</h1>
+      <a href="#yeni-sezon" class="btn">Koleksiyonu Gör</a>
     </div>
   </section>
 
   <!-- Kategoriler -->
   <section class="section" id="koleksiyon">
-    <div class="container">
-      <h2 class="section__title reveal">Koleksiyon</h2>
+    <div class="wrap">
+      <h2 class="title">Koleksiyon</h2>
       <div class="cats">
-        <a href="#yeni-sezon" class="cat reveal">
-          <div class="arch"><svg class="dress"><use href="#d-ball"/></svg></div>
-          <span>Prenses</span>
-        </a>
-        <a href="#yeni-sezon" class="cat reveal">
-          <div class="arch"><svg class="dress"><use href="#d-mermaid"/></svg></div>
-          <span>Balık</span>
-        </a>
-        <a href="#yeni-sezon" class="cat reveal">
-          <div class="arch"><svg class="dress"><use href="#d-aline"/></svg></div>
-          <span>A Kesim</span>
-        </a>
-        <a href="#yeni-sezon" class="cat reveal">
-          <div class="arch"><svg class="dress"><use href="#d-sheath"/></svg></div>
-          <span>Sade</span>
-        </a>
+        <a href="#yeni-sezon" class="cat" data-go="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg></div><span>Prenses</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg></div><span>Balık</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-aline"/></svg></div><span>A Kesim</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="sade"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sheath"/></svg></div><span>Sade</span></a>
       </div>
     </div>
   </section>
 
   <!-- Ürünler -->
-  <section class="section section--soft" id="yeni-sezon">
-    <div class="container">
-      <div class="section__head reveal">
-        <h2 class="section__title">Yeni Sezon</h2>
-        <div class="filters" role="tablist">
-          <button class="chip is-active" data-filter="all">Tümü</button>
-          <button class="chip" data-filter="prenses">Prenses</button>
-          <button class="chip" data-filter="balik">Balık</button>
-          <button class="chip" data-filter="akesim">A Kesim</button>
-          <button class="chip" data-filter="sade">Sade</button>
+  <section class="section section--top0" id="yeni-sezon">
+    <div class="wrap">
+      <div class="bar">
+        <h2 class="title title--left">Yeni Sezon</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab is-active" data-filter="all">Tümü</button>
+          <button class="tab" data-filter="prenses">Prenses</button>
+          <button class="tab" data-filter="balik">Balık</button>
+          <button class="tab" data-filter="akesim">A Kesim</button>
+          <button class="tab" data-filter="sade">Sade</button>
         </div>
       </div>
 
       <div class="grid" id="productGrid">
-        <article class="card reveal" data-cat="prenses">
-          <div class="card__media"><svg class="dress"><use href="#d-ball"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="balik">
-          <div class="card__media"><svg class="dress"><use href="#d-mermaid"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="akesim">
-          <div class="card__media"><svg class="dress"><use href="#d-sleeve"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="sade">
-          <div class="card__media"><svg class="dress"><use href="#d-sheath"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="akesim">
-          <div class="card__media"><svg class="dress"><use href="#d-offshoulder"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="akesim">
-          <div class="card__media"><svg class="dress"><use href="#d-aline"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="balik">
-          <div class="card__media"><svg class="dress"><use href="#d-mermaid"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
-
-        <article class="card reveal" data-cat="prenses">
-          <div class="card__media"><svg class="dress"><use href="#d-ball"/></svg>
-            <button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button>
-            <button class="card__add">Sepete Ekle</button>
-          </div>
-          <h3>Model Adı</h3><span class="price">₺ —</span>
-        </article>
+        <article class="card" data-cat="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sleeve"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="sade"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sheath"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-off"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-aline"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
+        <article class="card" data-cat="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg><button class="fav" aria-label="Favorilere ekle"><svg><use href="#i-heart"/></svg></button><button class="card__add">Sepete Ekle</button></div><div class="card__info"><h3>Model Adı</h3><span class="price">₺ —</span></div></article>
       </div>
     </div>
   </section>
 
   <!-- Atölye -->
-  <section class="atelier" id="atolye">
-    <div class="container atelier__inner reveal">
-      <svg class="atelier__sprig"><use href="#sprig"/></svg>
-      <p class="atelier__quote">Her dikişte<br><span class="accent">size ait bir hikâye</span></p>
-      <a href="#randevu" class="btn">Atölyeyi Ziyaret Et</a>
+  <section class="split" id="atolye">
+    <div class="shot split__media"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sleeve"/></svg></div>
+    <div class="split__text">
+      <h2>Kişiye özel dikim</h2>
+      <p>Ölçünüze göre, atölyemizde.</p>
+      <a href="#randevu" class="btn btn--outline">Randevu Al</a>
     </div>
   </section>
 
   <!-- Hizmetler -->
   <section class="section">
-    <div class="container features">
-      <div class="feature reveal"><svg><use href="#i-needle"/></svg><span>Kişiye Özel Dikim</span></div>
-      <div class="feature reveal"><svg><use href="#i-hanger"/></svg><span>Özel Prova</span></div>
-      <div class="feature reveal"><svg><use href="#i-ring"/></svg><span>Aksesuar</span></div>
-      <div class="feature reveal"><svg><use href="#i-box"/></svg><span>Özel Paketleme</span></div>
+    <div class="wrap services">
+      <div>Özel Prova</div>
+      <div>Tadilat</div>
+      <div>Aksesuar</div>
+      <div>Özel Paketleme</div>
     </div>
   </section>
 
   <!-- Randevu -->
-  <section class="section section--soft" id="randevu">
-    <div class="container booking reveal">
-      <h2 class="section__title">Randevu</h2>
+  <section class="section section--tint" id="randevu">
+    <div class="wrap booking">
+      <h2 class="title title--left">Randevu</h2>
       <form class="booking__form" id="bookingForm">
-        <input type="text" placeholder="Ad Soyad" required>
-        <input type="tel" placeholder="Telefon" required>
+        <input type="text" placeholder="Ad Soyad" aria-label="Ad Soyad" required>
+        <input type="tel" placeholder="Telefon" aria-label="Telefon" required>
         <input type="date" aria-label="Tarih" required>
         <button type="submit" class="btn">Gönder</button>
       </form>
@@ -297,40 +185,38 @@
 
 </main>
 
-<!-- Footer -->
 <footer class="footer" id="iletisim">
-  <div class="container footer__inner">
-    <div class="footer__brand">
-      <svg class="footer__mark"><use href="#logo-mark"/></svg>
-      <div class="logo logo--footer"><span class="logo__name">GIVANI</span><span class="logo__sub">BRIDAL</span></div>
-    </div>
-
+  <div class="wrap footer__cols">
     <div class="footer__col">
       <h4>Mağaza</h4>
       <a href="#koleksiyon">Koleksiyon</a>
       <a href="#yeni-sezon">Yeni Sezon</a>
       <a href="#randevu">Randevu</a>
     </div>
-
     <div class="footer__col">
       <h4>Yardım</h4>
       <a href="#">Beden Rehberi</a>
-      <a href="#">Kargo & İade</a>
+      <a href="#">Kargo ve İade</a>
       <a href="#">S.S.S.</a>
     </div>
-
     <div class="footer__col">
       <h4>İletişim</h4>
-      <a href="#"><svg class="ico"><use href="#i-pin"/></svg>Adres</a>
+      <a href="#">Adres</a>
       <a href="tel:+900000000000">+90 (000) 000 00 00</a>
       <a href="mailto:info@givanibridal.com">info@givanibridal.com</a>
+    </div>
+    <div class="footer__col">
+      <h4>Takip Edin</h4>
       <div class="social">
         <a href="#" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a>
         <a href="#" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a>
       </div>
     </div>
   </div>
-  <div class="container footer__bottom">
+
+  <div class="wrap footer__mark">GIVANI</div>
+
+  <div class="wrap footer__bottom">
     <span>© <span id="year"></span> Givani Bridal</span>
     <span>givanibridal.com</span>
   </div>
