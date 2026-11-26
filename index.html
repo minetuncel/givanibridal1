@@ -202,7 +202,7 @@
     <div class="split__text">
       <h2>Kişiye özel dikim</h2>
       <p>Ölçünüze göre, atölyemizde.</p>
-      <a href="#randevu" class="btn btn--outline">Randevu Al</a>
+      <a href="#randevu" class="btn btn--outline" data-book="prova">Randevu Al</a>
     </div>
   </section>
 
@@ -220,6 +220,16 @@
   <section class="section section--tint" id="randevu">
     <div class="wrap booking">
       <h2 class="title title--left">Randevu</h2>
+      <div class="types" role="radiogroup" aria-label="Randevu türü">
+        <label class="type">
+          <input type="radio" name="bookType" value="deneme" checked>
+          <span class="type__box"><strong>Gelinlik Deneme</strong><span>Koleksiyondan modelleri deneyin</span></span>
+        </label>
+        <label class="type">
+          <input type="radio" name="bookType" value="prova">
+          <span class="type__box"><strong>Özel Dikim Prova</strong><span>Size özel dikilen gelinliğin provası</span></span>
+        </label>
+      </div>
       <form class="booking__form" id="bookingForm">
         <input type="text" placeholder="Ad Soyad" aria-label="Ad Soyad" required>
         <input type="tel" placeholder="Telefon" aria-label="Telefon" required>
@@ -229,7 +239,7 @@
         </select>
         <button type="submit" class="btn">Gönder</button>
       </form>
-      <p class="booking__ok" id="bookingOk" hidden>Teşekkürler, sizi arayacağız.</p>
+      <p class="booking__ok" id="bookingOk" hidden></p>
     </div>
   </section>
 

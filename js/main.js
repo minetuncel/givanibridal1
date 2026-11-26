@@ -281,11 +281,21 @@
   dateIn.addEventListener("change", fillTimes);
   fillTimes();
 
+  // Randevu türü
+  const TYPES = { deneme: "Gelinlik Deneme", prova: "Özel Dikim Prova" };
+  const setType = (v) => { const r = $(`input[name="bookType"][value="${v}"]`); if (r) r.checked = true; };
+  $$("[data-book]").forEach((a) => a.addEventListener("click", () => setType(a.dataset.book)));
+
   const form = $("#bookingForm");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    const type = $('input[name="bookType"]:checked').value;
+    const [y, mo, d] = dateIn.value.split("-");
+    const ok = $("#bookingOk");
+    ok.textContent = `${TYPES[type]} randevunuz ${d}.${mo}.${y} saat ${timeIn.value} için alındı. Sizi arayacağız.`;
     form.hidden = true;
-    $("#bookingOk").hidden = false;
+    $(".types").hidden = true;
+    ok.hidden = false;
   });
 
   $("#year").textContent = new Date().getFullYear();
