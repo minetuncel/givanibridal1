@@ -4,31 +4,52 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   const PRODUCTS = window.GIVANI_PRODUCTS || [];
-  const CATS = window.GIVANI_CATEGORIES || {};
+  const CATS = window.GIVANI_CATEGORIES || [];
+  const I18N = window.GIVANI_I18N;
   const byId = (id) => PRODUCTS.find((p) => p.id === id);
-
-  // ---------- Yardımcılar ----------
-  const esc = (v) =>
-    String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const money = (n) =>
-    typeof n === "number" ? "₺ " + n.toLocaleString("tr-TR") : "₺ —";
-  const norm = (t) =>
-    String(t).toLocaleLowerCase("tr").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ı/g, "i");
 
   const store = {
     get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
 
+  // ================= DİL =================
+  const LANGS = I18N.languages;
+  const langOf = (code) => LANGS.find((l) => l.code === code);
+  const detect = () => {
+    const saved = store.get("gv_lang", null);
+    if (langOf(saved)) return saved;
+    const nav = (navigator.languages || [navigator.language || ""]).map((l) => l.slice(0, 2).toLowerCase());
+    return nav.find(langOf) || I18N.defaultLang;
+  };
+  let lang = detect();
+
+  const t = (key, vars = {}) => {
+    const str = I18N.strings[lang]?.[key] ?? I18N.strings[I18N.defaultLang][key] ?? key;
+    return str.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
+  };
+  const locale = () => langOf(lang).locale;
+  const catName = (k) => t("cat." + k);
+  const prodName = (p) => p.name || t("product.unnamed");
+
+  // ---------- Yardımcılar ----------
+  const esc = (v) =>
+    String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const money = (n) => (typeof n === "number" ? "₺ " + n.toLocaleString("tr-TR") : "₺ —");
+  const norm = (s) =>
+    String(s).toLocaleLowerCase("tr").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ı/g, "i");
+
   let favs = store.get("gv_fav", []).filter(byId);
   let cart = store.get("gv_cart", []).filter((i) => byId(i.id));
 
-  const media = (p, cls = "") =>
-    p.image
-      ? `<div class="shot ${cls}"><img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy"></div>`
-      : `<div class="shot ${cls}"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${esc(p.gown)}"/></svg></div>`;
+  const media = (p, cls = "", inner = "") =>
+    `<div class="shot ${cls}">${
+      p.image
+        ? `<img src="${esc(p.image)}" alt="${esc(prodName(p))}" loading="lazy">`
+        : `<svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${esc(p.gown)}"/></svg>`
+    }${inner}</div>`;
 
-  // ---------- Toast ----------
+  // ---------- Bildirim ----------
   const toast = $("#toast");
   let toastT;
   const say = (msg) => {
@@ -38,40 +59,38 @@
     toastT = setTimeout(() => toast.classList.remove("is-on"), 1800);
   };
 
-  // ---------- Ürün listesi ----------
+  // ================= ÜRÜNLER =================
   const grid = $("#productGrid");
   let filter = "all";
 
   const cardHTML = (p) => `
     <article class="card" data-id="${p.id}">
-      ${media(p).replace("</div>", `
-        <button class="fav${favs.includes(p.id) ? " is-active" : ""}" data-fav="${p.id}" aria-label="Favorilere ekle" aria-pressed="${favs.includes(p.id)}"><svg><use href="#i-heart"/></svg></button>
-        <button class="card__add" data-add="${p.id}">Sepete Ekle</button></div>`)}
+      ${media(p, "", `
+        <button class="fav${favs.includes(p.id) ? " is-active" : ""}" data-fav="${p.id}" aria-label="${esc(t("action.addFav"))}" aria-pressed="${favs.includes(p.id)}"><svg><use href="#i-heart"/></svg></button>
+        <button class="card__add" data-add="${p.id}">${esc(t("action.addToCart"))}</button>`)}
       <div class="card__info">
-        <h3>${esc(p.name)}</h3><span class="price">${money(p.price)}</span>
+        <h3>${esc(prodName(p))}</h3><span class="price">${money(p.price)}</span>
       </div>
-      <span class="card__cat">${esc(CATS[p.cat] || "")}</span>
+      <span class="card__cat">${esc(catName(p.cat))}</span>
     </article>`;
 
   const renderGrid = () => {
     const list = PRODUCTS.filter((p) => filter === "all" || p.cat === filter);
     grid.innerHTML = list.map(cardHTML).join("");
     $("#gridEmpty").hidden = list.length > 0;
-    $$(".tab").forEach((t) => t.classList.toggle("is-active", t.dataset.filter === filter));
+    $$(".tab").forEach((tb) => tb.classList.toggle("is-active", tb.dataset.filter === filter));
   };
-
-  $$(".tab").forEach((t) => t.addEventListener("click", () => { filter = t.dataset.filter; renderGrid(); }));
+  $$(".tab").forEach((tb) => tb.addEventListener("click", () => { filter = tb.dataset.filter; renderGrid(); }));
   $$(".cat").forEach((c) => c.addEventListener("click", () => { filter = c.dataset.go; renderGrid(); }));
 
-  // ---------- Favoriler & Sepet ----------
+  // ================= FAVORİ & SEPET =================
   const toggleFav = (id) => {
     const on = !favs.includes(id);
     favs = on ? [...favs, id] : favs.filter((f) => f !== id);
     store.set("gv_fav", favs);
-    say(on ? "Favorilere eklendi" : "Favorilerden çıkarıldı");
+    say(t(on ? "toast.favAdded" : "toast.favRemoved"));
     refresh();
   };
-
   const addCart = (id, n = 1) => {
     const item = cart.find((i) => i.id === id);
     if (item) item.qty += n; else cart.push({ id, qty: n });
@@ -89,8 +108,8 @@
     <li class="row">
       ${media(p, "row__img")}
       <div class="row__info">
-        <strong>${esc(p.name)}</strong>
-        <span>${esc(CATS[p.cat] || "")}</span>
+        <strong>${esc(prodName(p))}</strong>
+        <span>${esc(catName(p.cat))}</span>
         <span>${money(p.price)}</span>
         ${extra}
       </div>
@@ -98,27 +117,20 @@
 
   const renderFav = () => {
     $("#favList").innerHTML = favs.length
-      ? favs.map((id) => {
-          const p = byId(id);
-          return rowHTML(p, `<div class="row__actions">
-            <button class="link" data-add="${id}">Sepete Ekle</button>
-            <button class="link link--muted" data-fav="${id}">Kaldır</button></div>`);
-        }).join("")
-      : `<li class="empty">Favori listeniz boş.</li>`;
+      ? favs.map((id) => rowHTML(byId(id), `<div class="row__actions">
+            <button class="link" data-add="${id}">${esc(t("action.addToCart"))}</button>
+            <button class="link link--muted" data-fav="${id}">${esc(t("action.remove"))}</button></div>`)).join("")
+      : `<li class="empty">${esc(t("fav.empty"))}</li>`;
   };
 
   const renderCart = () => {
     $("#cartList").innerHTML = cart.length
-      ? cart.map(({ id, qty }) => {
-          const p = byId(id);
-          return rowHTML(p, `<div class="row__actions">
+      ? cart.map(({ id, qty }) => rowHTML(byId(id), `<div class="row__actions">
             <div class="qty">
-              <button data-dec="${id}" aria-label="Azalt">−</button><span>${qty}</span><button data-inc="${id}" aria-label="Artır">+</button>
+              <button data-dec="${id}" aria-label="${esc(t("action.dec"))}">−</button><span>${qty}</span><button data-inc="${id}" aria-label="${esc(t("action.inc"))}">+</button>
             </div>
-            <button class="link link--muted" data-remove="${id}">Kaldır</button></div>`);
-        }).join("")
-      : `<li class="empty">Sepetiniz boş.</li>`;
-
+            <button class="link link--muted" data-remove="${id}">${esc(t("action.remove"))}</button></div>`)).join("")
+      : `<li class="empty">${esc(t("cart.empty"))}</li>`;
     const priced = cart.every(({ id }) => typeof byId(id).price === "number");
     const total = cart.reduce((s, { id, qty }) => s + (byId(id).price || 0) * qty, 0);
     $("#cartTotal").textContent = cart.length && priced ? money(total) : "₺ —";
@@ -135,18 +147,19 @@
     if (!$("#search").hidden) runSearch();
   };
 
-  // Tüm tıklamalar tek yerden
+  // ================= TIKLAMALAR =================
   document.addEventListener("click", (e) => {
-    const t = e.target.closest("button, a");
-    if (!t) return;
-    const d = t.dataset;
+    const el = e.target.closest("button, a");
+    if (!el) return;
+    const d = el.dataset;
     if (d.fav) toggleFav(+d.fav);
-    else if (d.add) { addCart(+d.add); say("Sepete eklendi"); }
+    else if (d.add) { addCart(+d.add); say(t("toast.cartAdded")); }
     else if (d.inc) addCart(+d.inc, 1);
     else if (d.dec) addCart(+d.dec, -1);
     else if (d.remove) removeCart(+d.remove);
-    else if (d.open) open(d.open);
+    else if (d.open) openLayer(d.open);
     else if ("close" in d) closeAll();
+    else if (d.setlang) setLang(d.setlang);
     else if (d.result) {
       closeAll();
       filter = "all";
@@ -158,27 +171,36 @@
     }
   });
 
-  // ---------- Panel / arama açma-kapama ----------
+  // ================= PANELLER & ARAMA =================
   const backdrop = $("#backdrop");
   const drawer = $("#drawer");
   let lastFocus = null;
 
+  const setDrawer = (on) => {
+    drawer.classList.toggle("is-open", on);
+    drawer.setAttribute("aria-hidden", String(!on));
+    document.body.style.overflow = on ? "hidden" : "";
+  };
+
   const closeAll = () => {
-    $$(".panel").forEach((p) => { p.classList.remove("is-open"); setTimeout(() => (p.hidden = !p.classList.contains("is-open") ? true : p.hidden), 300); });
+    $$(".panel").forEach((p) => {
+      p.classList.remove("is-open");
+      setTimeout(() => { if (!p.classList.contains("is-open")) p.hidden = true; }, 350);
+    });
     $("#search").hidden = true;
     backdrop.hidden = true;
     setDrawer(false);
-    document.body.style.overflow = "";
+    closeLangMenu();
     lastFocus?.focus?.();
   };
 
-  const open = (name) => {
-    lastFocus = document.activeElement;
+  const openLayer = (name) => {
+    const prev = document.activeElement;
     closeAll();
+    lastFocus = prev;
     document.body.style.overflow = "hidden";
     if (name === "search") {
-      const s = $("#search");
-      s.hidden = false;
+      $("#search").hidden = false;
       $("#searchInput").focus();
       runSearch();
       return;
@@ -187,74 +209,67 @@
     if (!panel) return;
     backdrop.hidden = false;
     panel.hidden = false;
-    requestAnimationFrame(() => panel.classList.add("is-open"));
-    setTimeout(() => panel.querySelector("input, button:not([data-close])")?.focus(), 50);
+    requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add("is-open")));
+    setTimeout(() => panel.querySelector("input:not([hidden]), button:not([data-close])")?.focus(), 60);
   };
 
   backdrop.addEventListener("click", closeAll);
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeAll();
-    if (e.key === "/" && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); open("search"); }
+    if (e.key === "/" && !/input|textarea|select/i.test(document.activeElement.tagName)) { e.preventDefault(); openLayer("search"); }
   });
 
-  // Mobil menü
-  const setDrawer = (on) => {
-    drawer.classList.toggle("is-open", on);
-    drawer.setAttribute("aria-hidden", String(!on));
-    if (on) document.body.style.overflow = "hidden";
-  };
   $("#menuOpen").addEventListener("click", () => setDrawer(true));
-  $("#menuClose").addEventListener("click", () => { setDrawer(false); document.body.style.overflow = ""; });
-  $$(".drawer__nav a").forEach((a) => a.addEventListener("click", () => { setDrawer(false); document.body.style.overflow = ""; }));
+  $("#menuClose").addEventListener("click", () => setDrawer(false));
+  $$(".drawer__nav a").forEach((a) => a.addEventListener("click", () => setDrawer(false)));
 
   // ---------- Arama ----------
   const input = $("#searchInput");
-  $("#searchQuick").innerHTML = Object.entries(CATS)
-    .map(([k, v]) => `<button class="chip" data-q="${esc(v)}">${esc(v)}</button>`).join("");
+  const renderQuick = () => {
+    $("#searchQuick").innerHTML = CATS.map((k) => `<button class="chip" data-q="${esc(catName(k))}">${esc(catName(k))}</button>`).join("");
+  };
   $("#searchQuick").addEventListener("click", (e) => {
     const b = e.target.closest("[data-q]");
     if (b) { input.value = b.dataset.q; runSearch(); input.focus(); }
   });
 
+  // Arama tüm dillerdeki kategori adlarında yapılır (ör. "mermaid" veya "balık")
+  const allCatNames = (k) => Object.values(I18N.strings).map((s) => s["cat." + k] || "").join(" ");
   const runSearch = () => {
     const q = norm(input.value.trim());
     const res = q
-      ? PRODUCTS.filter((p) => norm(`${p.name} ${CATS[p.cat] || ""} ${p.cat}`).includes(q))
+      ? PRODUCTS.filter((p) => norm(`${prodName(p)} ${p.cat} ${allCatNames(p.cat)}`).includes(q))
       : PRODUCTS;
-    $("#searchMeta").textContent = q ? (res.length ? `${res.length} sonuç` : "Sonuç bulunamadı") : "Tüm ürünler";
+    $("#searchMeta").textContent = q ? (res.length ? t("search.results", { n: res.length }) : t("search.none")) : t("search.all");
     $("#searchResults").innerHTML = res.map((p) => `
       <button class="result" data-result="${p.id}">
         ${media(p)}
-        <span class="result__name">${esc(p.name)}</span>
-        <span class="result__meta">${esc(CATS[p.cat] || "")} · ${money(p.price)}</span>
+        <span class="result__name">${esc(prodName(p))}</span>
+        <span class="result__meta">${esc(catName(p.cat))} · ${money(p.price)}</span>
       </button>`).join("");
   };
   input.addEventListener("input", runSearch);
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") $("#searchResults .result")?.click();
-  });
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#searchResults .result")?.click(); });
 
-  // ---------- Hesap ----------
+  // ================= HESAP =================
   let mode = "login";
-  $$(".seg__btn").forEach((b) => b.addEventListener("click", () => {
-    mode = b.dataset.auth;
-    $$(".seg__btn").forEach((x) => x.classList.toggle("is-active", x === b));
+  const syncAuth = () => {
+    $$(".seg__btn").forEach((x) => x.classList.toggle("is-active", x.dataset.auth === mode));
     $$('[data-only="register"]').forEach((el) => { el.hidden = mode !== "register"; el.required = mode === "register"; });
-    $("#authSubmit").textContent = mode === "login" ? "Giriş Yap" : "Üye Ol";
-    $("#authMsg").hidden = true;
-  }));
+    $("#authSubmit").textContent = t(mode === "login" ? "auth.login" : "auth.register");
+  };
+  $$(".seg__btn").forEach((b) => b.addEventListener("click", () => { mode = b.dataset.auth; $("#authMsg").hidden = true; syncAuth(); }));
   $("#authForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const m = $("#authMsg");
-    m.textContent = "Üyelik sistemi yakında aktif olacak.";
+    m.textContent = t("auth.soon");
     m.hidden = false;
   });
 
-  // ---------- Sipariş ----------
   $("#checkout").addEventListener("click", () => { $("#checkoutMsg").hidden = false; });
 
-  // ---------- Randevu ----------
-  // Randevu saatleri (dakika cinsinden). Pazar: 12:00–17:00, diğer günler: 10:00–19:00. Aralık: 30 dk.
+  // ================= RANDEVU =================
+  // Pazar: 12:00–17:00, diğer günler: 10:00–19:00 (dakika cinsinden). Aralık: 30 dk.
   const HOURS = { default: [10 * 60, 19 * 60], sunday: [12 * 60, 17 * 60] };
   const STEP = 30;
   const dateIn = $("#bookDate"), timeIn = $("#bookTime");
@@ -269,35 +284,82 @@
     const [y, mo, d] = (dateIn.value || "").split("-").map(Number);
     const isSunday = dateIn.value && new Date(y, mo - 1, d).getDay() === 0;
     const [OPEN, CLOSE] = isSunday ? HOURS.sunday : HOURS.default;
-    let html = '<option value="" disabled>Saat</option>';
+    let html = `<option value="" disabled>${esc(t("form.time"))}</option>`;
     for (let m = OPEN; m <= CLOSE; m += STEP) {
-      const t = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
-      html += `<option value="${t}"${m <= nowMin ? " disabled" : ""}>${t}</option>`;
+      const tm = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+      html += `<option value="${tm}"${m <= nowMin ? " disabled" : ""}>${tm}</option>`;
     }
     timeIn.innerHTML = html;
     const ok = [...timeIn.options].some((o) => o.value === keep && !o.disabled);
     timeIn.value = ok ? keep : "";
   };
   dateIn.addEventListener("change", fillTimes);
-  fillTimes();
 
-  // Randevu türü
-  const TYPES = { deneme: "Gelinlik Deneme", prova: "Özel Dikim Prova" };
   const setType = (v) => { const r = $(`input[name="bookType"][value="${v}"]`); if (r) r.checked = true; };
   $$("[data-book]").forEach((a) => a.addEventListener("click", () => setType(a.dataset.book)));
 
   const form = $("#bookingForm");
+  let booked = null;
+  const renderBooked = () => {
+    if (!booked) return;
+    const [y, mo, d] = booked.date.split("-").map(Number);
+    const date = new Intl.DateTimeFormat(locale(), { day: "numeric", month: "long", year: "numeric" }).format(new Date(y, mo - 1, d));
+    $("#bookingOk").textContent = t("book.ok", { type: t("type." + booked.type), date, time: booked.time });
+  };
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const type = $('input[name="bookType"]:checked').value;
-    const [y, mo, d] = dateIn.value.split("-");
-    const ok = $("#bookingOk");
-    ok.textContent = `${TYPES[type]} randevunuz ${d}.${mo}.${y} saat ${timeIn.value} için alındı. Sizi arayacağız.`;
+    booked = { type: $('input[name="bookType"]:checked').value, date: dateIn.value, time: timeIn.value };
+    renderBooked();
     form.hidden = true;
     $(".types").hidden = true;
-    ok.hidden = false;
+    $("#bookingOk").hidden = false;
   });
 
+  // ================= DİL SEÇİCİ =================
+  const langBtn = $("#langBtn"), langMenu = $("#langMenu");
+  function closeLangMenu() { langMenu.hidden = true; langBtn.setAttribute("aria-expanded", "false"); }
+  langBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = langMenu.hidden;
+    langMenu.hidden = !open;
+    langBtn.setAttribute("aria-expanded", String(open));
+    if (open) langMenu.querySelector('[aria-selected="true"]')?.focus();
+  });
+  document.addEventListener("click", (e) => { if (!e.target.closest("#lang")) closeLangMenu(); });
+
+  const renderLangLists = () => {
+    langMenu.innerHTML = LANGS.map((l) => `<li><button role="option" data-setlang="${l.code}" lang="${l.code}" aria-selected="${l.code === lang}">
+        <span>${esc(l.name)}</span><span class="lang__tag">${l.code.toUpperCase()}</span></button></li>`).join("");
+    $("#drawerLangs").innerHTML = LANGS.map((l) =>
+      `<button class="chip${l.code === lang ? " is-active" : ""}" data-setlang="${l.code}" lang="${l.code}" aria-pressed="${l.code === lang}">${esc(l.name)}</button>`).join("");
+    $("#langCode").textContent = lang.toUpperCase();
+  };
+
+  const applyLang = () => {
+    const L = langOf(lang);
+    document.documentElement.lang = L.code;
+    document.documentElement.dir = L.dir;
+    document.title = t("meta.title");
+    $('meta[name="description"]')?.setAttribute("content", t("meta.description"));
+    $$("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    $$("[data-i18n-placeholder]").forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+    $$("[data-i18n-aria]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+    renderLangLists();
+    renderQuick();
+    syncAuth();
+    fillTimes();
+    renderBooked();
+    refresh();
+  };
+
+  function setLang(code) {
+    if (!langOf(code)) return;
+    lang = code;
+    store.set("gv_lang", code);
+    closeLangMenu();
+    applyLang();
+  }
+
   $("#year").textContent = new Date().getFullYear();
-  refresh();
+  applyLang();
 }

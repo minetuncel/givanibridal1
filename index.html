@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -27,6 +27,7 @@
     <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.5 8.5h13l-1 12h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5M12 3.5C9.6 5.9 8.4 8.7 8.4 12s1.2 6.1 3.6 8.5"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
     <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r=".6"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z"/><path d="M9.2 8.6c.2-.5.6-.5.9-.5s.5.6.8 1.3c.2.5-.5.9-.4 1.2.5 1 1.3 1.8 2.3 2.3.3.1.7-.6 1.2-.4.7.3 1.3.6 1.3.8s0 .7-.5.9c-.6.4-1.5.6-2.6.1A7 7 0 0 1 9.1 11c-.4-1-.2-1.8.1-2.4z"/></symbol>
@@ -59,51 +60,56 @@
   </defs>
 </svg>
 
-<div class="topbar">Türkiye geneli ücretsiz kargo</div>
+<div class="topbar" data-i18n="topbar">Türkiye geneli ücretsiz kargo</div>
 
 <header class="header" id="header">
   <div class="wrap header__inner">
-    <button class="icon-btn menu-toggle" aria-label="Menü" id="menuOpen"><svg><use href="#i-menu"/></svg></button>
+    <button class="icon-btn menu-toggle" aria-label="Menü" data-i18n-aria="ui.menu" id="menuOpen"><svg><use href="#i-menu"/></svg></button>
 
     <a href="#" class="logo" aria-label="Givani Bridal">GİVANİ <span>BRIDAL</span></a>
 
     <nav class="nav">
-      <a href="#koleksiyon">Koleksiyon</a>
-      <a href="#yeni-sezon">Yeni Sezon</a>
-      <a href="#atolye">Atölye</a>
-      <a href="#randevu">Randevu</a>
+      <a href="#koleksiyon" data-i18n="nav.collection">Koleksiyon</a>
+      <a href="#yeni-sezon" data-i18n="nav.newSeason">Yeni Sezon</a>
+      <a href="#atolye" data-i18n="nav.atelier">Atölye</a>
+      <a href="#randevu" data-i18n="nav.booking">Randevu</a>
     </nav>
 
     <div class="header__actions">
-      <button class="icon-btn" aria-label="Ara" data-open="search"><svg><use href="#i-search"/></svg></button>
-      <button class="icon-btn hide-sm" aria-label="Hesabım" data-open="account"><svg><use href="#i-user"/></svg></button>
-      <button class="icon-btn badge-wrap hide-sm" aria-label="Favoriler" data-open="fav"><svg><use href="#i-heart"/></svg><span class="badge" data-count="fav">0</span></button>
-      <button class="icon-btn badge-wrap" aria-label="Sepet" data-open="cart"><svg><use href="#i-bag"/></svg><span class="badge" data-count="cart">0</span></button>
+      <div class="lang" id="lang">
+        <button class="lang__btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Dil" data-i18n-aria="ui.language"><svg><use href="#i-globe"/></svg><span id="langCode">TR</span></button>
+        <ul class="lang__menu" id="langMenu" role="listbox" hidden></ul>
+      </div>
+      <button class="icon-btn" aria-label="Ara" data-i18n-aria="ui.search" data-open="search"><svg><use href="#i-search"/></svg></button>
+      <button class="icon-btn hide-sm" aria-label="Hesabım" data-i18n-aria="account" data-open="account"><svg><use href="#i-user"/></svg></button>
+      <button class="icon-btn badge-wrap hide-sm" aria-label="Favoriler" data-i18n-aria="favorites" data-open="fav"><svg><use href="#i-heart"/></svg><span class="badge" data-count="fav">0</span></button>
+      <button class="icon-btn badge-wrap" aria-label="Sepet" data-i18n-aria="cart" data-open="cart"><svg><use href="#i-bag"/></svg><span class="badge" data-count="cart">0</span></button>
     </div>
   </div>
 </header>
 
 <aside class="drawer" id="drawer" aria-hidden="true">
-  <button class="icon-btn drawer__close" aria-label="Kapat" id="menuClose"><svg><use href="#i-close"/></svg></button>
+  <button class="icon-btn drawer__close" aria-label="Kapat" data-i18n-aria="ui.close" id="menuClose"><svg><use href="#i-close"/></svg></button>
   <nav class="drawer__nav">
-    <a href="#koleksiyon">Koleksiyon</a>
-    <a href="#yeni-sezon">Yeni Sezon</a>
-    <a href="#atolye">Atölye</a>
-    <a href="#randevu">Randevu</a>
-    <a href="#iletisim">İletişim</a>
+    <a href="#koleksiyon" data-i18n="nav.collection">Koleksiyon</a>
+    <a href="#yeni-sezon" data-i18n="nav.newSeason">Yeni Sezon</a>
+    <a href="#atolye" data-i18n="nav.atelier">Atölye</a>
+    <a href="#randevu" data-i18n="nav.booking">Randevu</a>
+    <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
   </nav>
   <div class="drawer__tools">
-    <button data-open="account"><svg><use href="#i-user"/></svg>Hesabım</button>
-    <button data-open="fav"><svg><use href="#i-heart"/></svg>Favoriler <span class="badge badge--inline" data-count="fav">0</span></button>
+    <button data-open="account"><svg><use href="#i-user"/></svg><span data-i18n="account">Hesabım</span></button>
+    <button data-open="fav"><svg><use href="#i-heart"/></svg><span data-i18n="favorites">Favoriler</span> <span class="badge badge--inline" data-count="fav">0</span></button>
   </div>
+  <div class="drawer__langs" id="drawerLangs" role="group" aria-label="Dil" data-i18n-aria="ui.language"></div>
 </aside>
 
 <!-- Arama -->
-<div class="search" id="search" role="dialog" aria-modal="true" aria-label="Arama" hidden>
+<div class="search" id="search" role="dialog" aria-modal="true" aria-label="Arama" data-i18n-aria="ui.search" hidden>
   <div class="wrap search__bar">
     <svg class="search__icon"><use href="#i-search"/></svg>
-    <input type="search" id="searchInput" placeholder="Model veya kategori ara" autocomplete="off" aria-label="Ara">
-    <button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button>
+    <input type="search" id="searchInput" placeholder="Model veya kategori ara" data-i18n-placeholder="search.placeholder" autocomplete="off" aria-label="Ara" data-i18n-aria="ui.search">
+    <button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button>
   </div>
   <div class="wrap search__body">
     <div class="search__quick" id="searchQuick"></div>
@@ -115,35 +121,35 @@
 <!-- Yan paneller -->
 <div class="backdrop" id="backdrop" hidden></div>
 
-<aside class="panel" id="panel-account" role="dialog" aria-modal="true" aria-label="Hesabım" hidden>
-  <div class="panel__head"><h3>Hesabım</h3><button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button></div>
+<aside class="panel" id="panel-account" role="dialog" aria-modal="true" aria-label="Hesabım" data-i18n-aria="account" hidden>
+  <div class="panel__head"><h3 data-i18n="account">Hesabım</h3><button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button></div>
   <div class="panel__body">
     <div class="seg" role="tablist">
-      <button class="seg__btn is-active" data-auth="login">Giriş Yap</button>
-      <button class="seg__btn" data-auth="register">Üye Ol</button>
+      <button class="seg__btn is-active" data-auth="login" data-i18n="auth.login">Giriş Yap</button>
+      <button class="seg__btn" data-auth="register" data-i18n="auth.register">Üye Ol</button>
     </div>
     <form class="form" id="authForm">
-      <input type="text" name="name" placeholder="Ad Soyad" aria-label="Ad Soyad" data-only="register" hidden>
-      <input type="email" name="email" placeholder="E-posta" aria-label="E-posta" required>
-      <input type="password" name="password" placeholder="Şifre" aria-label="Şifre" required minlength="6">
+      <input type="text" name="name" placeholder="Ad Soyad" aria-label="Ad Soyad" data-i18n-placeholder="form.name" data-i18n-aria="form.name" data-only="register" hidden>
+      <input type="email" name="email" placeholder="E-posta" aria-label="E-posta" data-i18n-placeholder="form.email" data-i18n-aria="form.email" required>
+      <input type="password" name="password" placeholder="Şifre" aria-label="Şifre" data-i18n-placeholder="form.password" data-i18n-aria="form.password" required minlength="6">
       <button type="submit" class="btn btn--block" id="authSubmit">Giriş Yap</button>
       <p class="form__msg" id="authMsg" hidden></p>
     </form>
   </div>
 </aside>
 
-<aside class="panel" id="panel-fav" role="dialog" aria-modal="true" aria-label="Favoriler" hidden>
-  <div class="panel__head"><h3>Favoriler <span class="muted" data-count="fav">0</span></h3><button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button></div>
+<aside class="panel" id="panel-fav" role="dialog" aria-modal="true" aria-label="Favoriler" data-i18n-aria="favorites" hidden>
+  <div class="panel__head"><h3><span data-i18n="favorites">Favoriler</span> <span class="muted" data-count="fav">0</span></h3><button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button></div>
   <div class="panel__body"><ul class="list" id="favList"></ul></div>
 </aside>
 
-<aside class="panel" id="panel-cart" role="dialog" aria-modal="true" aria-label="Sepet" hidden>
-  <div class="panel__head"><h3>Sepet <span class="muted" data-count="cart">0</span></h3><button class="icon-btn" data-close aria-label="Kapat"><svg><use href="#i-close"/></svg></button></div>
+<aside class="panel" id="panel-cart" role="dialog" aria-modal="true" aria-label="Sepet" data-i18n-aria="cart" hidden>
+  <div class="panel__head"><h3><span data-i18n="cart">Sepet</span> <span class="muted" data-count="cart">0</span></h3><button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button></div>
   <div class="panel__body"><ul class="list" id="cartList"></ul></div>
   <div class="panel__foot" id="cartFoot">
-    <div class="total"><span>Toplam</span><strong id="cartTotal">₺ —</strong></div>
-    <button class="btn btn--block" id="checkout">Siparişi Tamamla</button>
-    <p class="form__msg" id="checkoutMsg" hidden>Ödeme sistemi yakında aktif olacak.</p>
+    <div class="total"><span data-i18n="cart.total">Toplam</span><strong id="cartTotal">₺ —</strong></div>
+    <button class="btn btn--block" id="checkout" data-i18n="cart.checkout">Siparişi Tamamla</button>
+    <p class="form__msg" id="checkoutMsg" data-i18n="cart.soon" hidden>Ödeme sistemi yakında aktif olacak.</p>
   </div>
 </aside>
 
@@ -159,20 +165,20 @@
       <svg preserveAspectRatio="xMidYMax meet" class="gown gown--side"><use href="#g-mermaid"/></svg>
     </div>
     <div class="wrap hero__text">
-      <h1>Yeni Koleksiyon</h1>
-      <a href="#yeni-sezon" class="btn">Koleksiyonu Gör</a>
+      <h1 data-i18n="hero.title">Yeni Koleksiyon</h1>
+      <a href="#yeni-sezon" class="btn" data-i18n="hero.cta">Koleksiyonu Gör</a>
     </div>
   </section>
 
   <!-- Kategoriler -->
   <section class="section" id="koleksiyon">
     <div class="wrap">
-      <h2 class="title">Koleksiyon</h2>
+      <h2 class="title" data-i18n="nav.collection">Koleksiyon</h2>
       <div class="cats">
-        <a href="#yeni-sezon" class="cat" data-go="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg></div><span>Prenses</span></a>
-        <a href="#yeni-sezon" class="cat" data-go="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg></div><span>Balık</span></a>
-        <a href="#yeni-sezon" class="cat" data-go="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-aline"/></svg></div><span>A Kesim</span></a>
-        <a href="#yeni-sezon" class="cat" data-go="sade"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sheath"/></svg></div><span>Sade</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="prenses"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-ball"/></svg></div><span data-i18n="cat.prenses">Prenses</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="balik"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-mermaid"/></svg></div><span data-i18n="cat.balik">Balık</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="akesim"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-aline"/></svg></div><span data-i18n="cat.akesim">A Kesim</span></a>
+        <a href="#yeni-sezon" class="cat" data-go="sade"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sheath"/></svg></div><span data-i18n="cat.sade">Sade</span></a>
       </div>
     </div>
   </section>
@@ -181,18 +187,18 @@
   <section class="section section--top0" id="yeni-sezon">
     <div class="wrap">
       <div class="bar">
-        <h2 class="title title--left">Yeni Sezon</h2>
+        <h2 class="title title--left" data-i18n="nav.newSeason">Yeni Sezon</h2>
         <div class="tabs" role="tablist">
-          <button class="tab is-active" data-filter="all">Tümü</button>
-          <button class="tab" data-filter="prenses">Prenses</button>
-          <button class="tab" data-filter="balik">Balık</button>
-          <button class="tab" data-filter="akesim">A Kesim</button>
-          <button class="tab" data-filter="sade">Sade</button>
+          <button class="tab is-active" data-filter="all" data-i18n="tab.all">Tümü</button>
+          <button class="tab" data-filter="prenses" data-i18n="cat.prenses">Prenses</button>
+          <button class="tab" data-filter="balik" data-i18n="cat.balik">Balık</button>
+          <button class="tab" data-filter="akesim" data-i18n="cat.akesim">A Kesim</button>
+          <button class="tab" data-filter="sade" data-i18n="cat.sade">Sade</button>
         </div>
       </div>
 
       <div class="grid" id="productGrid"></div>
-      <p class="empty" id="gridEmpty" hidden>Bu kategoride ürün yok.</p>
+      <p class="empty" id="gridEmpty" data-i18n="grid.empty" hidden>Bu kategoride ürün yok.</p>
     </div>
   </section>
 
@@ -200,44 +206,44 @@
   <section class="split" id="atolye">
     <div class="shot split__media"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sleeve"/></svg></div>
     <div class="split__text">
-      <h2>Kişiye özel dikim</h2>
-      <p>Ölçünüze göre, atölyemizde.</p>
-      <a href="#randevu" class="btn btn--outline" data-book="prova">Randevu Al</a>
+      <h2 data-i18n="split.title">Kişiye özel dikim</h2>
+      <p data-i18n="split.text">Ölçünüze göre, atölyemizde.</p>
+      <a href="#randevu" class="btn btn--outline" data-book="prova" data-i18n="split.cta">Randevu Al</a>
     </div>
   </section>
 
   <!-- Hizmetler -->
   <section class="section">
     <div class="wrap services">
-      <div>Özel Prova</div>
-      <div>Tadilat</div>
-      <div>Aksesuar</div>
-      <div>Özel Paketleme</div>
+      <div data-i18n="svc.fitting">Özel Prova</div>
+      <div data-i18n="svc.alteration">Tadilat</div>
+      <div data-i18n="svc.accessories">Aksesuar</div>
+      <div data-i18n="svc.packaging">Özel Paketleme</div>
     </div>
   </section>
 
   <!-- Randevu -->
   <section class="section section--tint" id="randevu">
     <div class="wrap booking">
-      <h2 class="title title--left">Randevu</h2>
-      <div class="types" role="radiogroup" aria-label="Randevu türü">
+      <h2 class="title title--left" data-i18n="nav.booking">Randevu</h2>
+      <div class="types" role="radiogroup" aria-label="Randevu türü" data-i18n-aria="book.typeLabel">
         <label class="type">
           <input type="radio" name="bookType" value="deneme" checked>
-          <span class="type__box"><strong>Gelinlik Deneme</strong><span>Koleksiyondan modelleri deneyin</span></span>
+          <span class="type__box"><strong data-i18n="type.deneme">Gelinlik Deneme</strong><span data-i18n="type.denemeDesc">Koleksiyondan modelleri deneyin</span></span>
         </label>
         <label class="type">
           <input type="radio" name="bookType" value="prova">
-          <span class="type__box"><strong>Özel Dikim Prova</strong><span>Size özel dikilen gelinliğin provası</span></span>
+          <span class="type__box"><strong data-i18n="type.prova">Özel Dikim Prova</strong><span data-i18n="type.provaDesc">Size özel dikilen gelinliğin provası</span></span>
         </label>
       </div>
       <form class="booking__form" id="bookingForm">
-        <input type="text" placeholder="Ad Soyad" aria-label="Ad Soyad" required>
-        <input type="tel" placeholder="Telefon" aria-label="Telefon" required>
-        <input type="date" id="bookDate" aria-label="Tarih" required>
-        <select id="bookTime" aria-label="Saat" required>
+        <input type="text" placeholder="Ad Soyad" aria-label="Ad Soyad" data-i18n-placeholder="form.name" data-i18n-aria="form.name" required>
+        <input type="tel" placeholder="Telefon" aria-label="Telefon" data-i18n-placeholder="form.phone" data-i18n-aria="form.phone" required>
+        <input type="date" id="bookDate" aria-label="Tarih" data-i18n-aria="form.date" required>
+        <select id="bookTime" aria-label="Saat" data-i18n-aria="form.time" required>
           <option value="" disabled selected>Saat</option>
         </select>
-        <button type="submit" class="btn">Gönder</button>
+        <button type="submit" class="btn" data-i18n="form.send">Gönder</button>
       </form>
       <p class="booking__ok" id="bookingOk" hidden></p>
     </div>
@@ -248,30 +254,30 @@
 <footer class="footer" id="iletisim">
   <div class="wrap footer__cols">
     <div class="footer__col">
-      <h4>Mağaza</h4>
-      <a href="#koleksiyon">Koleksiyon</a>
-      <a href="#yeni-sezon">Yeni Sezon</a>
-      <a href="#randevu">Randevu</a>
+      <h4 data-i18n="footer.store">Mağaza</h4>
+      <a href="#koleksiyon" data-i18n="nav.collection">Koleksiyon</a>
+      <a href="#yeni-sezon" data-i18n="nav.newSeason">Yeni Sezon</a>
+      <a href="#randevu" data-i18n="nav.booking">Randevu</a>
     </div>
     <div class="footer__col">
-      <h4>Yardım</h4>
-      <a href="#">Beden Rehberi</a>
-      <a href="#">Kargo ve İade</a>
-      <a href="#">S.S.S.</a>
+      <h4 data-i18n="footer.help">Yardım</h4>
+      <a href="#" data-i18n="footer.size">Beden Rehberi</a>
+      <a href="#" data-i18n="footer.shipping">Kargo ve İade</a>
+      <a href="#" data-i18n="footer.faq">S.S.S.</a>
     </div>
     <div class="footer__col">
-      <h4>İletişim</h4>
+      <h4 data-i18n="nav.contact">İletişim</h4>
       <a class="addr" href="https://www.google.com/maps/search/?api=1&amp;query=Atikali+Mah.+Fevzipa%C5%9Fa+Cad.+Eski+Altay+Sk.+No%3A3+Fatih+%C4%B0stanbul" target="_blank" rel="noopener">Atikali Mah. Fevzipaşa Cad.<br>Eski Altay Sk. No:3 D:A<br>34087 Fatih / İstanbul</a>
       <a href="tel:+905309518934">0530 951 89 34</a>
-      <a href="mailto:info@givanibridal.com">info@givanibridal.com</a>
+      <a href="mailto:info@givanibridal.com" dir="ltr">info@givanibridal.com</a>
     </div>
     <div class="footer__col">
-      <h4>Takip Edin</h4>
+      <h4 data-i18n="footer.follow">Takip Edin</h4>
       <div class="social">
         <a href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener" aria-label="Instagram: givanibridal"><svg><use href="#i-instagram"/></svg></a>
         <a href="https://wa.me/905309518934" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a>
       </div>
-      <a href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener">@givanibridal</a>
+      <a href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener" dir="ltr">@givanibridal</a>
     </div>
   </div>
 
@@ -283,6 +289,7 @@
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
 <script src="js/main.js"></script>
 </body>
