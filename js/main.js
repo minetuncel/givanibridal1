@@ -473,6 +473,21 @@
   });
   if (location.hash === "#defile-galeri") setTimeout(() => openLayer("show"), 0);
 
+  // ================= GİRİŞ EKRANI =================
+  // Her ziyarette (oturum başına bir kez) gösterilir. Doğrudan bir bölüm bağlantısıyla gelinirse atlanır.
+  const intro = $("#intro");
+  if (document.documentElement.classList.contains("has-intro")) {
+    intro.hidden = false;
+  }
+  const enterSite = () => {
+    try { sessionStorage.setItem("gv_intro", "1"); } catch {}
+    intro.classList.add("is-leaving");
+    document.documentElement.classList.remove("has-intro");
+    setTimeout(() => { intro.hidden = true; }, 900);
+  };
+  $("#introEnter").addEventListener("click", enterSite);
+  intro.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target === intro) enterSite(); });
+
   // ================= DİL SEÇİCİ =================
   const langBtn = $("#langBtn"), langMenu = $("#langMenu");
   function closeLangMenu() { langMenu.hidden = true; langBtn.setAttribute("aria-expanded", "false"); }
@@ -491,6 +506,8 @@
     $("#drawerLangs").innerHTML = LANGS.map((l) =>
       `<button class="chip${l.code === lang ? " is-active" : ""}" data-setlang="${l.code}" lang="${l.code}" aria-pressed="${l.code === lang}">${esc(l.name)}</button>`).join("");
     $("#langCode").textContent = lang.toUpperCase();
+    $("#introLangs").innerHTML = LANGS.map((l) =>
+      `<button data-setlang="${l.code}" lang="${l.code}" aria-pressed="${l.code === lang}">${esc(l.name)}</button>`).join("");
   };
 
   const applyLang = () => {

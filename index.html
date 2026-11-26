@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<script>try{if(!sessionStorage.getItem("gv_intro")&&!location.hash)document.documentElement.classList.add("has-intro")}catch(e){document.documentElement.classList.add("has-intro")}</script>
 
 <!-- Simgeler ve gelinlik siluetleri -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -60,6 +61,17 @@
     </symbol>
   </defs>
 </svg>
+
+<!-- Giriş ekranı -->
+<div class="intro" id="intro" hidden>
+  <button class="intro__logo" id="introEnter" aria-label="Siteye gir" data-i18n-aria="intro.enter">
+    <!-- LOGO: Gerçek logo dosyası eklendiğinde aşağıdaki iki öğe yerine
+         <img class="brand-logo-img" src="assets/logo.png" alt="Givani Bridal"> yazılması yeterli. -->
+    <svg class="brand-mark" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="57"/><text x="60" y="63">G</text></svg>
+    <span class="brand-word"><span class="brand-word__name">GİVANİ</span><span class="brand-word__sub">BRIDAL</span></span>
+  </button>
+  <div class="intro__langs" id="introLangs" role="group" aria-label="Dil" data-i18n-aria="ui.language"></div>
+</div>
 
 <div class="topbar" data-i18n="topbar">Türkiye geneli ücretsiz kargo</div>
 

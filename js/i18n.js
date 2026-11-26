@@ -125,7 +125,8 @@ window.GIVANI_I18N = {
       "show.photos": "{n} görsel",
       "show.prev": "Önceki",
       "show.next": "Sonraki",
-      "show.alt": "Defile {year} — görsel {i}"
+      "show.alt": "Defile {year} — görsel {i}",
+      "intro.enter": "Siteye gir"
     },
 
     /* ---------------- ENGLISH ---------------- */
@@ -233,7 +234,8 @@ window.GIVANI_I18N = {
       "show.photos": "{n} photos",
       "show.prev": "Previous",
       "show.next": "Next",
-      "show.alt": "Runway Show {year} — photo {i}"
+      "show.alt": "Runway Show {year} — photo {i}",
+      "intro.enter": "Enter the site"
     },
 
     /* ---------------- العربية ---------------- */
@@ -341,7 +343,8 @@ window.GIVANI_I18N = {
       "show.photos": "{n} صورة",
       "show.prev": "السابق",
       "show.next": "التالي",
-      "show.alt": "عرض الأزياء {year} — صورة {i}"
+      "show.alt": "عرض الأزياء {year} — صورة {i}",
+      "intro.enter": "دخول الموقع"
     },
 
     /* ---------------- FRANÇAIS ---------------- */
@@ -449,7 +452,8 @@ window.GIVANI_I18N = {
       "show.photos": "{n} photos",
       "show.prev": "Précédente",
       "show.next": "Suivante",
-      "show.alt": "Défilé {year} — photo {i}"
+      "show.alt": "Défilé {year} — photo {i}",
+      "intro.enter": "Entrer sur le site"
     },
 
     /* ---------------- DEUTSCH ---------------- */
@@ -557,7 +561,8 @@ window.GIVANI_I18N = {
       "show.photos": "{n} Fotos",
       "show.prev": "Zurück",
       "show.next": "Weiter",
-      "show.alt": "Modenschau {year} — Foto {i}"
+      "show.alt": "Modenschau {year} — Foto {i}",
+      "intro.enter": "Zur Website"
     },
 
     /* ---------------- РУССКИЙ ---------------- */
@@ -665,7 +670,8 @@ window.GIVANI_I18N = {
       "show.photos": "Фото: {n}",
       "show.prev": "Назад",
       "show.next": "Вперёд",
-      "show.alt": "Показ {year} — фото {i}"
+      "show.alt": "Показ {year} — фото {i}",
+      "intro.enter": "Войти на сайт"
     }
   }
 };
