@@ -584,6 +584,63 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 .total { display: flex; justify-content: space-between; font-size: 17px; margin-bottom: 16px; color: var(--ink); }
 .total strong { font-weight: 600; }
 
+/* ---------- Beden rehberi ---------- */
+.modal {
+  position: fixed; left: 50%; top: 50%; z-index: 116;
+  width: min(880px, calc(100% - 32px));
+  max-height: calc(100vh - 48px);
+  display: flex; flex-direction: column;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.14);
+  transform: translate(-50%, -46%); opacity: 0;
+  transition: transform .35s var(--ease), opacity .35s var(--ease);
+}
+.modal.is-open { transform: translate(-50%, -50%); opacity: 1; }
+.modal__head {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 16px 16px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.modal__head h3 { flex: 1; font-size: 26px; font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
+.modal__body { overflow-y: auto; padding: 28px 32px 32px; }
+
+.unit { display: inline-flex; background: var(--tint); border-radius: 999px; padding: 4px; }
+.unit__btn { min-height: 36px; min-width: 52px; padding: 0 14px; border-radius: 999px; font-size: 15px; color: var(--muted); }
+.unit__btn.is-active { background: #fff; color: var(--ink); font-weight: 500; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
+.scroll { overflow-x: auto; }
+.sizes { width: 100%; border-collapse: collapse; font-size: 16px; white-space: nowrap; }
+.sizes th, .sizes td { padding: 13px 14px; text-align: start; border-bottom: 1px solid var(--line); }
+.sizes thead th { font-size: 14px; font-weight: 500; color: var(--muted); border-bottom-color: var(--ink); }
+.sizes tbody th { font-weight: 600; color: var(--ink); }
+.sizes td { color: var(--text); }
+.sizes .num { text-align: end; font-variant-numeric: tabular-nums; }
+.sizes tbody tr:hover { background: var(--tint); }
+
+.howto {
+  display: grid; grid-template-columns: 120px 1fr; gap: 28px; align-items: center;
+  margin-top: 32px; padding: 24px; background: var(--tint); border-radius: 16px;
+}
+.howto__fig { width: 120px; height: auto; }
+.howto__body { fill: #fff; stroke: #cfcfcf; stroke-width: 1.2; }
+.howto__line { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.howto__stand { stroke: #cfcfcf; stroke-width: 1.5; fill: none; }
+.howto__fig text { font: 600 17px var(--font); fill: var(--ink); text-anchor: middle; }
+.howto h4 { font-size: 19px; font-weight: 500; color: var(--ink); margin-bottom: 12px; }
+.howto__list { list-style: none; counter-reset: m; display: flex; flex-direction: column; gap: 10px; }
+.howto__list li { counter-increment: m; display: grid; grid-template-columns: 26px 1fr; column-gap: 6px; font-size: 16px; }
+.howto__list li::before { content: counter(m); grid-row: span 2; font-weight: 600; color: var(--ink); }
+.howto__list strong { font-weight: 500; color: var(--ink); }
+.howto__list span { color: var(--muted); }
+
+.sizes__note { margin-top: 20px; font-size: 15px; color: var(--muted); }
+.sizes__cta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+  margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line);
+  font-size: 16px; color: var(--ink);
+}
+
 /* ---------- Bildirim ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 28px; z-index: 130;
@@ -607,6 +664,7 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 [dir="rtl"] .panel { right: auto; left: 0; transform: translateX(-100%); }
 [dir="rtl"] .panel.is-open { transform: none; }
 [dir="rtl"] .panel__head { padding: 0 28px 0 16px; }
+[dir="rtl"] .modal__head { padding: 16px 32px 16px 16px; }
 [dir="rtl"] .drawer__close { right: auto; left: 14px; }
 [dir="rtl"] .type__box { padding: 18px 54px 18px 22px; }
 [dir="rtl"] .type__box::before { left: auto; right: 20px; }
@@ -661,6 +719,15 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   .search__bar { height: 70px; }
   .search__results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .panel__head, .panel__body, .panel__foot { padding-left: 20px; padding-right: 20px; }
+  .modal { width: 100%; max-height: 92vh; top: auto; bottom: 0; left: 0; border-radius: 20px 20px 0 0; transform: translateY(100%); }
+  .modal.is-open { transform: none; }
+  .modal__head { padding: 12px 12px 12px 20px; gap: 10px; }
+  .modal__head h3 { font-size: 21px; }
+  .modal__body { padding: 20px; }
+  .sizes { font-size: 15px; }
+  .sizes th, .sizes td { padding: 11px 10px; }
+  .howto { grid-template-columns: 1fr; gap: 16px; padding: 18px; justify-items: start; }
+  .howto__fig { width: 96px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

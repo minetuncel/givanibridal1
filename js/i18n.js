@@ -91,7 +91,20 @@ window.GIVANI_I18N = {
       "footer.size": "Beden Rehberi",
       "footer.shipping": "Kargo ve İade",
       "footer.faq": "S.S.S.",
-      "footer.follow": "Takip Edin"
+      "footer.follow": "Takip Edin",
+      "size.colSize": "TR / EU",
+      "size.colIntl": "Uluslararası",
+      "size.colBust": "Göğüs",
+      "size.colWaist": "Bel",
+      "size.colHip": "Basen",
+      "size.cm": "cm",
+      "size.in": "inç",
+      "size.howTitle": "Nasıl ölçülür?",
+      "size.bustHow": "Göğsün en dolgun yerinden, mezura yere paralel olacak şekilde ölçün.",
+      "size.waistHow": "Belin en ince yerinden ölçün.",
+      "size.hipHow": "Basenin en geniş yerinden ölçün.",
+      "size.note": "Ölçüler modele göre küçük farklılık gösterebilir. İki beden arasında kalırsanız büyük olanı seçin.",
+      "size.custom": "Ölçüleriniz tabloya uymuyor mu? Özel dikim için randevu alın."
     },
 
     /* ---------------- ENGLISH ---------------- */
@@ -165,7 +178,20 @@ window.GIVANI_I18N = {
       "footer.size": "Size Guide",
       "footer.shipping": "Shipping & Returns",
       "footer.faq": "FAQ",
-      "footer.follow": "Follow Us"
+      "footer.follow": "Follow Us",
+      "size.colSize": "TR / EU",
+      "size.colIntl": "International",
+      "size.colBust": "Bust",
+      "size.colWaist": "Waist",
+      "size.colHip": "Hips",
+      "size.cm": "cm",
+      "size.in": "in",
+      "size.howTitle": "How to measure",
+      "size.bustHow": "Measure around the fullest part of your bust, keeping the tape parallel to the floor.",
+      "size.waistHow": "Measure around the narrowest part of your waist.",
+      "size.hipHow": "Measure around the widest part of your hips.",
+      "size.note": "Measurements may vary slightly by model. If you are between two sizes, choose the larger one.",
+      "size.custom": "Not matching the chart? Book a made-to-measure appointment."
     },
 
     /* ---------------- العربية ---------------- */
@@ -239,7 +265,20 @@ window.GIVANI_I18N = {
       "footer.size": "دليل المقاسات",
       "footer.shipping": "الشحن والإرجاع",
       "footer.faq": "الأسئلة الشائعة",
-      "footer.follow": "تابعونا"
+      "footer.follow": "تابعونا",
+      "size.colSize": "TR / EU",
+      "size.colIntl": "دولي",
+      "size.colBust": "الصدر",
+      "size.colWaist": "الخصر",
+      "size.colHip": "الورك",
+      "size.cm": "سم",
+      "size.in": "إنش",
+      "size.howTitle": "كيف تأخذين المقاسات؟",
+      "size.bustHow": "قيسي حول أعرض جزء من الصدر مع إبقاء الشريط موازيًا للأرض.",
+      "size.waistHow": "قيسي حول أنحف جزء من الخصر.",
+      "size.hipHow": "قيسي حول أعرض جزء من الوركين.",
+      "size.note": "قد تختلف المقاسات قليلًا حسب الموديل. إذا كنتِ بين مقاسين، اختاري الأكبر.",
+      "size.custom": "مقاساتك لا تطابق الجدول؟ احجزي موعد تفصيل خاص."
     },
 
     /* ---------------- FRANÇAIS ---------------- */
@@ -313,7 +352,20 @@ window.GIVANI_I18N = {
       "footer.size": "Guide des tailles",
       "footer.shipping": "Livraison et retours",
       "footer.faq": "FAQ",
-      "footer.follow": "Suivez-nous"
+      "footer.follow": "Suivez-nous",
+      "size.colSize": "TR / EU",
+      "size.colIntl": "International",
+      "size.colBust": "Poitrine",
+      "size.colWaist": "Taille",
+      "size.colHip": "Hanches",
+      "size.cm": "cm",
+      "size.in": "po",
+      "size.howTitle": "Comment mesurer ?",
+      "size.bustHow": "Mesurez autour de la partie la plus forte de la poitrine, ruban parallèle au sol.",
+      "size.waistHow": "Mesurez autour de la partie la plus fine de la taille.",
+      "size.hipHow": "Mesurez autour de la partie la plus large des hanches.",
+      "size.note": "Les mesures peuvent varier légèrement selon le modèle. Entre deux tailles, choisissez la plus grande.",
+      "size.custom": "Vos mesures ne correspondent pas au tableau ? Prenez rendez-vous pour du sur-mesure."
     },
 
     /* ---------------- DEUTSCH ---------------- */
@@ -387,7 +439,20 @@ window.GIVANI_I18N = {
       "footer.size": "Größentabelle",
       "footer.shipping": "Versand & Rückgabe",
       "footer.faq": "FAQ",
-      "footer.follow": "Folgen Sie uns"
+      "footer.follow": "Folgen Sie uns",
+      "size.colSize": "TR / EU",
+      "size.colIntl": "International",
+      "size.colBust": "Brust",
+      "size.colWaist": "Taille",
+      "size.colHip": "Hüfte",
+      "size.cm": "cm",
+      "size.in": "Zoll",
+      "size.howTitle": "So messen Sie richtig",
+      "size.bustHow": "Messen Sie um die stärkste Stelle der Brust, das Maßband parallel zum Boden.",
+      "size.waistHow": "Messen Sie an der schmalsten Stelle der Taille.",
+      "size.hipHow": "Messen Sie an der breitesten Stelle der Hüfte.",
+      "size.note": "Die Maße können je nach Modell leicht abweichen. Liegen Sie zwischen zwei Größen, wählen Sie die größere.",
+      "size.custom": "Ihre Maße passen nicht zur Tabelle? Vereinbaren Sie einen Termin für eine Maßanfertigung."
     },
 
     /* ---------------- РУССКИЙ ---------------- */
@@ -461,7 +526,20 @@ window.GIVANI_I18N = {
       "footer.size": "Таблица размеров",
       "footer.shipping": "Доставка и возврат",
       "footer.faq": "Вопросы и ответы",
-      "footer.follow": "Мы в соцсетях"
+      "footer.follow": "Мы в соцсетях",
+      "size.colSize": "TR / EU",
+      "size.colIntl": "Международный",
+      "size.colBust": "Грудь",
+      "size.colWaist": "Талия",
+      "size.colHip": "Бёдра",
+      "size.cm": "см",
+      "size.in": "дюйм",
+      "size.howTitle": "Как снять мерки",
+      "size.bustHow": "Измерьте по самым выступающим точкам груди, держа ленту параллельно полу.",
+      "size.waistHow": "Измерьте по самой узкой части талии.",
+      "size.hipHow": "Измерьте по самой широкой части бёдер.",
+      "size.note": "Мерки могут немного отличаться в зависимости от модели. Если вы между двумя размерами, выбирайте больший.",
+      "size.custom": "Ваши мерки не совпадают с таблицей? Запишитесь на индивидуальный пошив."
     }
   }
 };

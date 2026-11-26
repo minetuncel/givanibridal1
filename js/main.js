@@ -183,7 +183,7 @@
   };
 
   const closeAll = () => {
-    $$(".panel").forEach((p) => {
+    $$(".panel, .modal").forEach((p) => {
       p.classList.remove("is-open");
       setTimeout(() => { if (!p.classList.contains("is-open")) p.hidden = true; }, 350);
     });
@@ -191,7 +191,7 @@
     backdrop.hidden = true;
     setDrawer(false);
     closeLangMenu();
-    lastFocus?.focus?.();
+    lastFocus?.focus?.({ preventScroll: true });
   };
 
   const openLayer = (name) => {
@@ -315,6 +315,29 @@
     $("#bookingOk").hidden = false;
   });
 
+  // ================= BEDEN REHBERİ =================
+  // Kadın beden tablosu (cm). Değerleri değiştirmek için bu listeyi düzenleyin.
+  const SIZES = [
+    { eu: 34, intl: "XS",  uk: 6,  us: 2,  bust: 80,  waist: 62, hip: 88 },
+    { eu: 36, intl: "S",   uk: 8,  us: 4,  bust: 84,  waist: 66, hip: 92 },
+    { eu: 38, intl: "M",   uk: 10, us: 6,  bust: 88,  waist: 70, hip: 96 },
+    { eu: 40, intl: "L",   uk: 12, us: 8,  bust: 92,  waist: 74, hip: 100 },
+    { eu: 42, intl: "XL",  uk: 14, us: 10, bust: 96,  waist: 78, hip: 104 },
+    { eu: 44, intl: "XXL", uk: 16, us: 12, bust: 100, waist: 82, hip: 108 },
+    { eu: 46, intl: "3XL", uk: 18, us: 14, bust: 106, waist: 88, hip: 114 },
+    { eu: 48, intl: "4XL", uk: 20, us: 16, bust: 112, waist: 94, hip: 120 }
+  ];
+  let unit = "cm";
+  const measure = (cm) => unit === "cm" ? cm : (Math.round((cm / 2.54) * 2) / 2).toLocaleString(locale());
+  const renderSizes = () => {
+    $("#sizeRows").innerHTML = SIZES.map((r) => `<tr>
+      <th scope="row">${r.eu}</th><td>${r.intl}</td><td>${r.uk}</td><td>${r.us}</td>
+      <td class="num">${measure(r.bust)}</td><td class="num">${measure(r.waist)}</td><td class="num">${measure(r.hip)}</td></tr>`).join("");
+    $$(".unit__btn").forEach((b) => { b.classList.toggle("is-active", b.dataset.unit === unit); b.setAttribute("aria-pressed", String(b.dataset.unit === unit)); });
+  };
+  $$(".unit__btn").forEach((b) => b.addEventListener("click", () => { unit = b.dataset.unit; renderSizes(); }));
+  if (location.hash === "#beden-rehberi") setTimeout(() => openLayer("size"), 0);
+
   // ================= DİL SEÇİCİ =================
   const langBtn = $("#langBtn"), langMenu = $("#langMenu");
   function closeLangMenu() { langMenu.hidden = true; langBtn.setAttribute("aria-expanded", "false"); }
@@ -349,6 +372,7 @@
     syncAuth();
     fillTimes();
     renderBooked();
+    renderSizes();
     refresh();
   };
 

@@ -153,6 +153,59 @@
   </div>
 </aside>
 
+<!-- Beden rehberi -->
+<div class="modal" id="panel-size" role="dialog" aria-modal="true" aria-labelledby="sizeTitle" hidden>
+  <div class="modal__head">
+    <h3 id="sizeTitle" data-i18n="footer.size">Beden Rehberi</h3>
+    <div class="unit" role="group" aria-label="cm / inç">
+      <button class="unit__btn is-active" data-unit="cm" data-i18n="size.cm">cm</button>
+      <button class="unit__btn" data-unit="in" data-i18n="size.in">inç</button>
+    </div>
+    <button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="modal__body">
+    <div class="scroll">
+      <table class="sizes">
+        <thead>
+          <tr>
+            <th data-i18n="size.colSize">TR / EU</th>
+            <th data-i18n="size.colIntl">Uluslararası</th>
+            <th>UK</th>
+            <th>US</th>
+            <th class="num" data-i18n="size.colBust">Göğüs</th>
+            <th class="num" data-i18n="size.colWaist">Bel</th>
+            <th class="num" data-i18n="size.colHip">Basen</th>
+          </tr>
+        </thead>
+        <tbody id="sizeRows"></tbody>
+      </table>
+    </div>
+
+    <div class="howto">
+      <svg class="howto__fig" viewBox="0 0 160 240" aria-hidden="true">
+        <path class="howto__body" d="M68 12h24l2 18Q126 34 132 46Q128 70 116 84Q108 104 104 120Q122 136 124 164Q124 196 112 222H48Q36 196 36 164Q38 136 56 120Q52 104 44 84Q32 70 28 46Q34 34 66 30Z"/>
+        <path class="howto__stand" d="M80 222v12M62 236h36"/>
+        <path class="howto__line" d="M36 84h88"/><path class="howto__line" d="M52 120h56"/><path class="howto__line" d="M32 164h96"/>
+        <text x="148" y="90">1</text><text x="148" y="126">2</text><text x="148" y="170">3</text>
+      </svg>
+      <div>
+        <h4 data-i18n="size.howTitle">Nasıl ölçülür?</h4>
+        <ol class="howto__list">
+          <li><strong data-i18n="size.colBust">Göğüs</strong><span data-i18n="size.bustHow"></span></li>
+          <li><strong data-i18n="size.colWaist">Bel</strong><span data-i18n="size.waistHow"></span></li>
+          <li><strong data-i18n="size.colHip">Basen</strong><span data-i18n="size.hipHow"></span></li>
+        </ol>
+      </div>
+    </div>
+
+    <p class="sizes__note" data-i18n="size.note"></p>
+    <div class="sizes__cta">
+      <span data-i18n="size.custom"></span>
+      <a href="#randevu" class="btn btn--outline" data-book="prova" data-close data-i18n="split.cta">Randevu Al</a>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <main>
@@ -261,7 +314,7 @@
     </div>
     <div class="footer__col">
       <h4 data-i18n="footer.help">Yardım</h4>
-      <a href="#" data-i18n="footer.size">Beden Rehberi</a>
+      <a href="#beden-rehberi" data-open="size" data-i18n="footer.size">Beden Rehberi</a>
       <a href="#" data-i18n="footer.shipping">Kargo ve İade</a>
       <a href="#" data-i18n="footer.faq">S.S.S.</a>
     </div>
