@@ -338,6 +338,66 @@
   $$(".unit__btn").forEach((b) => b.addEventListener("click", () => { unit = b.dataset.unit; renderSizes(); }));
   if (location.hash === "#beden-rehberi") setTimeout(() => openLayer("size"), 0);
 
+  // ================= KARGO / TESLİMAT ADRESİ =================
+  const shipForm = $("#shipForm");
+  const FIELDS = ["name", "phone", "email", "country", "city", "district", "zip", "address"];
+  let addr = store.get("gv_addr", null);
+  let editingAddr = false;
+
+  const addrLines = (a) => [
+    a.name,
+    a.address,
+    [a.district, a.city, a.zip].filter(Boolean).join(" / "),
+    a.country,
+    [a.phone, a.email].filter(Boolean).join(" · ")
+  ].filter(Boolean);
+
+  const renderAddr = () => {
+    const show = addr && !editingAddr;
+    $("#addrCard").hidden = !show;
+    shipForm.hidden = show;
+    if (show) $("#addrView").innerHTML = addrLines(addr).map(esc).join("<br>");
+    // Sepetteki satır
+    $("#shipLine").innerHTML = addr
+      ? `<span class="ship-line__label">${esc(t("ship.to"))}</span>
+         <span class="ship-line__text">${esc(addr.name)} — ${esc([addr.district, addr.city].filter(Boolean).join(", "))}</span>
+         <button class="link" data-open="ship">${esc(t("ship.edit"))}</button>`
+      : `<button class="link" data-open="ship">+ ${esc(t("ship.add"))}</button>`;
+  };
+
+  const fillForm = () => {
+    FIELDS.forEach((f) => { if (addr && addr[f] != null) shipForm.elements[f].value = addr[f]; });
+  };
+
+  shipForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const msg = $("#shipMsg");
+    const bad = [...shipForm.elements].filter((el) => el.required && !el.value.trim());
+    shipForm.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
+    if (bad.length) {
+      bad.forEach((el) => el.classList.add("is-invalid"));
+      bad[0].focus();
+      msg.textContent = t("ship.required");
+      msg.hidden = false;
+      return;
+    }
+    addr = Object.fromEntries(FIELDS.map((f) => [f, shipForm.elements[f].value.trim()]));
+    store.set("gv_addr", addr);
+    editingAddr = false;
+    msg.hidden = true;
+    renderAddr();
+    say(t("ship.saved"));
+  });
+  shipForm.addEventListener("input", (e) => e.target.classList.remove("is-invalid"));
+  $("#addrEdit").addEventListener("click", () => { editingAddr = true; fillForm(); renderAddr(); shipForm.elements.name.focus(); });
+  $("#addrDelete").addEventListener("click", () => {
+    addr = null; editingAddr = false;
+    try { localStorage.removeItem("gv_addr"); } catch {}
+    shipForm.reset();
+    renderAddr();
+  });
+  if (location.hash === "#kargo") setTimeout(() => openLayer("ship"), 0);
+
   // ================= DİL SEÇİCİ =================
   const langBtn = $("#langBtn"), langMenu = $("#langMenu");
   function closeLangMenu() { langMenu.hidden = true; langBtn.setAttribute("aria-expanded", "false"); }
@@ -373,6 +433,7 @@
     fillTimes();
     renderBooked();
     renderSizes();
+    renderAddr();
     refresh();
   };
 

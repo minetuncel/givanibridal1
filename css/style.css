@@ -641,6 +641,29 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   font-size: 16px; color: var(--ink);
 }
 
+/* ---------- Kargo adresi ---------- */
+.modal--narrow { width: min(620px, calc(100% - 32px)); }
+.ship-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.ship-form .span2 { grid-column: 1 / -1; }
+.form textarea {
+  min-height: 96px; padding: 14px 18px;
+  border: 1px solid var(--line); border-radius: 12px;
+  font: inherit; font-size: 16px; resize: vertical; outline: none;
+}
+.form textarea:focus { border-color: var(--ink); }
+.form .is-invalid { border-color: #b3261e; }
+.addr-card { padding: 20px 22px; border: 1px solid var(--ink); border-radius: 16px; }
+.addr-card address { font-size: 16px; line-height: 1.6; color: var(--ink); }
+.addr-card .row__actions { padding-top: 12px; }
+
+.ship-line {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+.ship-line__label { color: var(--muted); }
+.ship-line__text { color: var(--ink); flex: 1; min-width: 0; }
+
 /* ---------- Bildirim ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 28px; z-index: 130;
@@ -724,6 +747,7 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   .modal__head { padding: 12px 12px 12px 20px; gap: 10px; }
   .modal__head h3 { font-size: 21px; }
   .modal__body { padding: 20px; }
+  .ship-form { grid-template-columns: 1fr; }
   .sizes { font-size: 15px; }
   .sizes th, .sizes td { padding: 11px 10px; }
   .howto { grid-template-columns: 1fr; gap: 16px; padding: 18px; justify-items: start; }

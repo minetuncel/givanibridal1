@@ -89,7 +89,7 @@ window.GIVANI_I18N = {
       "footer.store": "Mağaza",
       "footer.help": "Yardım",
       "footer.size": "Beden Rehberi",
-      "footer.shipping": "Kargo ve İade",
+      "footer.shipping": "Kargo",
       "footer.faq": "S.S.S.",
       "footer.follow": "Takip Edin",
       "size.colSize": "TR / EU",
@@ -104,7 +104,20 @@ window.GIVANI_I18N = {
       "size.waistHow": "Belin en ince yerinden ölçün.",
       "size.hipHow": "Basenin en geniş yerinden ölçün.",
       "size.note": "Ölçüler modele göre küçük farklılık gösterebilir. İki beden arasında kalırsanız büyük olanı seçin.",
-      "size.custom": "Ölçüleriniz tabloya uymuyor mu? Özel dikim için randevu alın."
+      "size.custom": "Ölçüleriniz tabloya uymuyor mu? Özel dikim için randevu alın.",
+      "ship.title": "Teslimat Adresi",
+      "form.country": "Ülke",
+      "form.city": "İl",
+      "form.district": "İlçe",
+      "form.address": "Açık adres (mahalle, cadde, sokak, no, daire)",
+      "form.zip": "Posta kodu",
+      "form.save": "Adresi Kaydet",
+      "ship.saved": "Adresiniz kaydedildi.",
+      "ship.required": "Lütfen zorunlu alanları doldurun.",
+      "ship.edit": "Düzenle",
+      "ship.delete": "Sil",
+      "ship.add": "Teslimat adresi ekle",
+      "ship.to": "Teslimat"
     },
 
     /* ---------------- ENGLISH ---------------- */
@@ -176,7 +189,7 @@ window.GIVANI_I18N = {
       "footer.store": "Shop",
       "footer.help": "Help",
       "footer.size": "Size Guide",
-      "footer.shipping": "Shipping & Returns",
+      "footer.shipping": "Shipping",
       "footer.faq": "FAQ",
       "footer.follow": "Follow Us",
       "size.colSize": "TR / EU",
@@ -191,7 +204,20 @@ window.GIVANI_I18N = {
       "size.waistHow": "Measure around the narrowest part of your waist.",
       "size.hipHow": "Measure around the widest part of your hips.",
       "size.note": "Measurements may vary slightly by model. If you are between two sizes, choose the larger one.",
-      "size.custom": "Not matching the chart? Book a made-to-measure appointment."
+      "size.custom": "Not matching the chart? Book a made-to-measure appointment.",
+      "ship.title": "Delivery Address",
+      "form.country": "Country",
+      "form.city": "City / Province",
+      "form.district": "District",
+      "form.address": "Street address (street, number, apartment)",
+      "form.zip": "Postal code",
+      "form.save": "Save Address",
+      "ship.saved": "Your address has been saved.",
+      "ship.required": "Please fill in the required fields.",
+      "ship.edit": "Edit",
+      "ship.delete": "Delete",
+      "ship.add": "Add delivery address",
+      "ship.to": "Deliver to"
     },
 
     /* ---------------- العربية ---------------- */
@@ -263,7 +289,7 @@ window.GIVANI_I18N = {
       "footer.store": "المتجر",
       "footer.help": "المساعدة",
       "footer.size": "دليل المقاسات",
-      "footer.shipping": "الشحن والإرجاع",
+      "footer.shipping": "الشحن",
       "footer.faq": "الأسئلة الشائعة",
       "footer.follow": "تابعونا",
       "size.colSize": "TR / EU",
@@ -278,7 +304,20 @@ window.GIVANI_I18N = {
       "size.waistHow": "قيسي حول أنحف جزء من الخصر.",
       "size.hipHow": "قيسي حول أعرض جزء من الوركين.",
       "size.note": "قد تختلف المقاسات قليلًا حسب الموديل. إذا كنتِ بين مقاسين، اختاري الأكبر.",
-      "size.custom": "مقاساتك لا تطابق الجدول؟ احجزي موعد تفصيل خاص."
+      "size.custom": "مقاساتك لا تطابق الجدول؟ احجزي موعد تفصيل خاص.",
+      "ship.title": "عنوان التوصيل",
+      "form.country": "الدولة",
+      "form.city": "المدينة / المحافظة",
+      "form.district": "المنطقة",
+      "form.address": "العنوان بالتفصيل (الحي، الشارع، رقم المبنى، الشقة)",
+      "form.zip": "الرمز البريدي",
+      "form.save": "حفظ العنوان",
+      "ship.saved": "تم حفظ عنوانك.",
+      "ship.required": "يرجى ملء الحقول المطلوبة.",
+      "ship.edit": "تعديل",
+      "ship.delete": "حذف",
+      "ship.add": "أضيفي عنوان التوصيل",
+      "ship.to": "التوصيل إلى"
     },
 
     /* ---------------- FRANÇAIS ---------------- */
@@ -350,7 +389,7 @@ window.GIVANI_I18N = {
       "footer.store": "Boutique",
       "footer.help": "Aide",
       "footer.size": "Guide des tailles",
-      "footer.shipping": "Livraison et retours",
+      "footer.shipping": "Livraison",
       "footer.faq": "FAQ",
       "footer.follow": "Suivez-nous",
       "size.colSize": "TR / EU",
@@ -365,7 +404,20 @@ window.GIVANI_I18N = {
       "size.waistHow": "Mesurez autour de la partie la plus fine de la taille.",
       "size.hipHow": "Mesurez autour de la partie la plus large des hanches.",
       "size.note": "Les mesures peuvent varier légèrement selon le modèle. Entre deux tailles, choisissez la plus grande.",
-      "size.custom": "Vos mesures ne correspondent pas au tableau ? Prenez rendez-vous pour du sur-mesure."
+      "size.custom": "Vos mesures ne correspondent pas au tableau ? Prenez rendez-vous pour du sur-mesure.",
+      "ship.title": "Adresse de livraison",
+      "form.country": "Pays",
+      "form.city": "Ville / Province",
+      "form.district": "Quartier / District",
+      "form.address": "Adresse (rue, numéro, appartement)",
+      "form.zip": "Code postal",
+      "form.save": "Enregistrer l'adresse",
+      "ship.saved": "Votre adresse a été enregistrée.",
+      "ship.required": "Veuillez remplir les champs obligatoires.",
+      "ship.edit": "Modifier",
+      "ship.delete": "Supprimer",
+      "ship.add": "Ajouter une adresse de livraison",
+      "ship.to": "Livraison à"
     },
 
     /* ---------------- DEUTSCH ---------------- */
@@ -437,7 +489,7 @@ window.GIVANI_I18N = {
       "footer.store": "Shop",
       "footer.help": "Hilfe",
       "footer.size": "Größentabelle",
-      "footer.shipping": "Versand & Rückgabe",
+      "footer.shipping": "Versand",
       "footer.faq": "FAQ",
       "footer.follow": "Folgen Sie uns",
       "size.colSize": "TR / EU",
@@ -452,7 +504,20 @@ window.GIVANI_I18N = {
       "size.waistHow": "Messen Sie an der schmalsten Stelle der Taille.",
       "size.hipHow": "Messen Sie an der breitesten Stelle der Hüfte.",
       "size.note": "Die Maße können je nach Modell leicht abweichen. Liegen Sie zwischen zwei Größen, wählen Sie die größere.",
-      "size.custom": "Ihre Maße passen nicht zur Tabelle? Vereinbaren Sie einen Termin für eine Maßanfertigung."
+      "size.custom": "Ihre Maße passen nicht zur Tabelle? Vereinbaren Sie einen Termin für eine Maßanfertigung.",
+      "ship.title": "Lieferadresse",
+      "form.country": "Land",
+      "form.city": "Stadt / Provinz",
+      "form.district": "Bezirk",
+      "form.address": "Straße, Hausnummer, Wohnung",
+      "form.zip": "Postleitzahl",
+      "form.save": "Adresse speichern",
+      "ship.saved": "Ihre Adresse wurde gespeichert.",
+      "ship.required": "Bitte füllen Sie die Pflichtfelder aus.",
+      "ship.edit": "Bearbeiten",
+      "ship.delete": "Löschen",
+      "ship.add": "Lieferadresse hinzufügen",
+      "ship.to": "Lieferung an"
     },
 
     /* ---------------- РУССКИЙ ---------------- */
@@ -524,7 +589,7 @@ window.GIVANI_I18N = {
       "footer.store": "Магазин",
       "footer.help": "Помощь",
       "footer.size": "Таблица размеров",
-      "footer.shipping": "Доставка и возврат",
+      "footer.shipping": "Доставка",
       "footer.faq": "Вопросы и ответы",
       "footer.follow": "Мы в соцсетях",
       "size.colSize": "TR / EU",
@@ -539,7 +604,20 @@ window.GIVANI_I18N = {
       "size.waistHow": "Измерьте по самой узкой части талии.",
       "size.hipHow": "Измерьте по самой широкой части бёдер.",
       "size.note": "Мерки могут немного отличаться в зависимости от модели. Если вы между двумя размерами, выбирайте больший.",
-      "size.custom": "Ваши мерки не совпадают с таблицей? Запишитесь на индивидуальный пошив."
+      "size.custom": "Ваши мерки не совпадают с таблицей? Запишитесь на индивидуальный пошив.",
+      "ship.title": "Адрес доставки",
+      "form.country": "Страна",
+      "form.city": "Город / провинция",
+      "form.district": "Район",
+      "form.address": "Адрес (улица, дом, квартира)",
+      "form.zip": "Почтовый индекс",
+      "form.save": "Сохранить адрес",
+      "ship.saved": "Адрес сохранён.",
+      "ship.required": "Пожалуйста, заполните обязательные поля.",
+      "ship.edit": "Изменить",
+      "ship.delete": "Удалить",
+      "ship.add": "Добавить адрес доставки",
+      "ship.to": "Доставка"
     }
   }
 };

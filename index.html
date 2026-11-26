@@ -147,6 +147,7 @@
   <div class="panel__head"><h3><span data-i18n="cart">Sepet</span> <span class="muted" data-count="cart">0</span></h3><button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button></div>
   <div class="panel__body"><ul class="list" id="cartList"></ul></div>
   <div class="panel__foot" id="cartFoot">
+    <div class="ship-line" id="shipLine"></div>
     <div class="total"><span data-i18n="cart.total">Toplam</span><strong id="cartTotal">₺ —</strong></div>
     <button class="btn btn--block" id="checkout" data-i18n="cart.checkout">Siparişi Tamamla</button>
     <p class="form__msg" id="checkoutMsg" data-i18n="cart.soon" hidden>Ödeme sistemi yakında aktif olacak.</p>
@@ -203,6 +204,35 @@
       <span data-i18n="size.custom"></span>
       <a href="#randevu" class="btn btn--outline" data-book="prova" data-close data-i18n="split.cta">Randevu Al</a>
     </div>
+  </div>
+</div>
+
+<!-- Kargo / teslimat adresi -->
+<div class="modal modal--narrow" id="panel-ship" role="dialog" aria-modal="true" aria-labelledby="shipTitle" hidden>
+  <div class="modal__head">
+    <h3 id="shipTitle" data-i18n="ship.title">Teslimat Adresi</h3>
+    <button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="modal__body">
+    <div class="addr-card" id="addrCard" hidden>
+      <address id="addrView"></address>
+      <div class="row__actions">
+        <button class="link" id="addrEdit" data-i18n="ship.edit">Düzenle</button>
+        <button class="link link--muted" id="addrDelete" data-i18n="ship.delete">Sil</button>
+      </div>
+    </div>
+    <form class="form ship-form" id="shipForm" novalidate>
+      <input name="name" autocomplete="name" placeholder="Ad Soyad" data-i18n-placeholder="form.name" data-i18n-aria="form.name" required>
+      <input name="phone" type="tel" autocomplete="tel" placeholder="Telefon" data-i18n-placeholder="form.phone" data-i18n-aria="form.phone" required>
+      <input name="email" type="email" autocomplete="email" class="span2" placeholder="E-posta" data-i18n-placeholder="form.email" data-i18n-aria="form.email">
+      <input name="country" autocomplete="country-name" placeholder="Ülke" data-i18n-placeholder="form.country" data-i18n-aria="form.country" value="Türkiye" required>
+      <input name="city" autocomplete="address-level1" placeholder="İl" data-i18n-placeholder="form.city" data-i18n-aria="form.city" required>
+      <input name="district" autocomplete="address-level2" placeholder="İlçe" data-i18n-placeholder="form.district" data-i18n-aria="form.district" required>
+      <input name="zip" autocomplete="postal-code" inputmode="numeric" placeholder="Posta kodu" data-i18n-placeholder="form.zip" data-i18n-aria="form.zip">
+      <textarea name="address" rows="3" autocomplete="street-address" class="span2" placeholder="Açık adres" data-i18n-placeholder="form.address" data-i18n-aria="form.address" required></textarea>
+      <button type="submit" class="btn btn--block span2" data-i18n="form.save">Adresi Kaydet</button>
+      <p class="form__msg span2" id="shipMsg" role="status" hidden></p>
+    </form>
   </div>
 </div>
 
@@ -315,7 +345,7 @@
     <div class="footer__col">
       <h4 data-i18n="footer.help">Yardım</h4>
       <a href="#beden-rehberi" data-open="size" data-i18n="footer.size">Beden Rehberi</a>
-      <a href="#" data-i18n="footer.shipping">Kargo ve İade</a>
+      <a href="#kargo" data-open="ship" data-i18n="footer.shipping">Kargo</a>
       <a href="#" data-i18n="footer.faq">S.S.S.</a>
     </div>
     <div class="footer__col">
