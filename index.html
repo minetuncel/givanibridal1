@@ -223,7 +223,10 @@
       <form class="booking__form" id="bookingForm">
         <input type="text" placeholder="Ad Soyad" aria-label="Ad Soyad" required>
         <input type="tel" placeholder="Telefon" aria-label="Telefon" required>
-        <input type="date" aria-label="Tarih" required>
+        <input type="date" id="bookDate" aria-label="Tarih" required>
+        <select id="bookTime" aria-label="Saat" required>
+          <option value="" disabled selected>Saat</option>
+        </select>
         <button type="submit" class="btn">Gönder</button>
       </form>
       <p class="booking__ok" id="bookingOk" hidden>Teşekkürler, sizi arayacağız.</p>

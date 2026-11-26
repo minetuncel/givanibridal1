@@ -254,6 +254,29 @@
   $("#checkout").addEventListener("click", () => { $("#checkoutMsg").hidden = false; });
 
   // ---------- Randevu ----------
+  // Randevu saatleri: 10:00 – 19:00, 30 dakikada bir. Değiştirmek için OPEN/CLOSE/STEP değerlerini düzenleyin.
+  const OPEN = 10 * 60, CLOSE = 19 * 60, STEP = 30;
+  const dateIn = $("#bookDate"), timeIn = $("#bookTime");
+  const pad = (n) => String(n).padStart(2, "0");
+  const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+  dateIn.min = todayISO();
+
+  const fillTimes = () => {
+    const keep = timeIn.value;
+    const now = new Date();
+    const nowMin = dateIn.value === todayISO() ? now.getHours() * 60 + now.getMinutes() : -1;
+    let html = '<option value="" disabled>Saat</option>';
+    for (let m = OPEN; m <= CLOSE; m += STEP) {
+      const t = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
+      html += `<option value="${t}"${m <= nowMin ? " disabled" : ""}>${t}</option>`;
+    }
+    timeIn.innerHTML = html;
+    const ok = [...timeIn.options].some((o) => o.value === keep && !o.disabled);
+    timeIn.value = ok ? keep : "";
+  };
+  dateIn.addEventListener("change", fillTimes);
+  fillTimes();
+
   const form = $("#bookingForm");
   form.addEventListener("submit", (e) => {
     e.preventDefault();

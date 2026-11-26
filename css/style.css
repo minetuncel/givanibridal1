@@ -338,16 +338,16 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 /* ---------- Randevu ---------- */
 .booking {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  align-items: center;
-  gap: 24px 48px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
 }
 .booking__form {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  grid-template-columns: repeat(2, minmax(0, 1.2fr)) repeat(2, minmax(0, 1fr)) auto;
   gap: 10px;
 }
-.booking__form input {
+.booking__form input,
+.booking__form select {
   min-height: 52px;
   padding: 0 18px;
   background: #fff;
@@ -358,6 +358,14 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   transition: border-color .3s var(--ease);
 }
 .booking__form input::placeholder { color: var(--muted); }
+.booking__form select {
+  appearance: none; -webkit-appearance: none;
+  font: inherit; color: var(--ink); cursor: pointer;
+  padding-right: 42px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23141414' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 8v4l2.5 2'/%3E%3C/svg%3E") no-repeat right 16px center / 20px;
+}
+.booking__form select:invalid { color: var(--muted); }
+.booking__form input:focus, .booking__form select:focus { border-color: var(--ink); }
 .booking__form input:focus { border-color: var(--ink); }
 .booking__ok { font-size: 20px; font-weight: 500; color: var(--ink); }
 
@@ -526,6 +534,8 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 
 /* ---------- Duyarlı ---------- */
 @media (max-width: 1080px) {
+  .booking__form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .booking__form .btn { grid-column: 1 / -1; }
   .nav { display: none; }
   .menu-toggle { display: inline-grid; }
   .header__inner { grid-template-columns: auto 1fr auto; gap: 8px; }
@@ -559,7 +569,8 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   .split__media { min-height: 420px; }
 
   .services { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
-  .booking__form { grid-template-columns: 1fr; }
+  .booking__form { grid-template-columns: 1fr 1fr; }
+  .booking__form input[type="text"], .booking__form input[type="tel"], .booking__form .btn { grid-column: 1 / -1; }
 
   .footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer__bottom { flex-direction: column; }
