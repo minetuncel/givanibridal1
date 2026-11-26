@@ -382,11 +382,11 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   font-size: clamp(72px, 24vw, 380px);
   font-weight: 600;
   letter-spacing: -.02em;
-  line-height: .8;
+  line-height: 1;
+  padding-top: .12em;
   color: var(--ink);
   text-align: center;
   white-space: nowrap;
-  overflow: hidden;
 }
 .footer__bottom {
   display: flex; justify-content: space-between; gap: 12px;
