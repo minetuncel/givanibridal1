@@ -4,13 +4,13 @@
 
 :root {
   --bg: #ffffff;
-  --studio: #efede9;
-  --studio-2: #e8e5df;
-  --tint: #f6f5f2;
+  --studio: #f1f1f1;
+  --studio-2: #e7e7e7;
+  --tint: #f6f6f6;
   --ink: #141414;
   --text: #2e2e2e;
   --muted: #6f6f6f;
-  --line: #e3e1dc;
+  --line: #e4e4e4;
 
   --font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --pad: clamp(20px, 4vw, 56px);
