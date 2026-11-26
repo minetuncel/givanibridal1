@@ -254,8 +254,9 @@
   $("#checkout").addEventListener("click", () => { $("#checkoutMsg").hidden = false; });
 
   // ---------- Randevu ----------
-  // Randevu saatleri: 10:00 – 19:00, 30 dakikada bir. Değiştirmek için OPEN/CLOSE/STEP değerlerini düzenleyin.
-  const OPEN = 10 * 60, CLOSE = 19 * 60, STEP = 30;
+  // Randevu saatleri (dakika cinsinden). Pazar: 12:00–17:00, diğer günler: 10:00–19:00. Aralık: 30 dk.
+  const HOURS = { default: [10 * 60, 19 * 60], sunday: [12 * 60, 17 * 60] };
+  const STEP = 30;
   const dateIn = $("#bookDate"), timeIn = $("#bookTime");
   const pad = (n) => String(n).padStart(2, "0");
   const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
@@ -265,6 +266,9 @@
     const keep = timeIn.value;
     const now = new Date();
     const nowMin = dateIn.value === todayISO() ? now.getHours() * 60 + now.getMinutes() : -1;
+    const [y, mo, d] = (dateIn.value || "").split("-").map(Number);
+    const isSunday = dateIn.value && new Date(y, mo - 1, d).getDay() === 0;
+    const [OPEN, CLOSE] = isSunday ? HOURS.sunday : HOURS.default;
     let html = '<option value="" disabled>Saat</option>';
     for (let m = OPEN; m <= CLOSE; m += STEP) {
       const t = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
