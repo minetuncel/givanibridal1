@@ -258,15 +258,16 @@ html.has-intro #intro[hidden] { display: grid !important; }
   gap: 1%;
   align-items: flex-end;
 }
-.hero__stage { justify-content: flex-end; padding-right: 7%; }
-.hero__stage::before { left: auto; right: 3%; bottom: 64px; width: 60%; height: 50px; transform: none; }
-.hero__stage .gown { width: 20%; height: 72%; margin-bottom: 80px; }
-.hero__stage .gown--main { width: 26%; }
+.hero__stage { justify-content: center; gap: 2%; }
+.hero__stage::before { bottom: 64px; width: 56%; height: 50px; opacity: .45; }
+.hero__stage .gown { width: 20%; height: 72%; margin-bottom: 80px; opacity: .38; filter: none; }
+.hero__stage .gown--main { width: 26%; opacity: .45; }
 .hero__stage .gown--side { height: 58%; }
 
 .hero__text {
-  position: absolute; left: 0; right: 0; top: clamp(36px, 6vw, 88px);
-  display: flex; flex-direction: column; align-items: flex-start; gap: 28px;
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+  text-align: center;
   pointer-events: none;
 }
 .hero__text > * { pointer-events: auto; }
@@ -833,8 +834,6 @@ html.has-intro #intro[hidden] { display: grid !important; }
 [dir="rtl"] body { letter-spacing: 0; }
 [dir="rtl"] .hero h1, [dir="rtl"] .title, [dir="rtl"] .split__text h2 { letter-spacing: 0; line-height: 1.2; }
 [dir="rtl"] .logo, [dir="rtl"] .footer__mark { direction: ltr; }
-[dir="rtl"] .hero__stage { padding-right: 0; padding-left: 7%; }
-[dir="rtl"] .hero__stage::before { right: auto; left: 3%; }
 [dir="rtl"] .fav { right: auto; left: 8px; }
 [dir="rtl"] .badge { right: auto; left: 1px; }
 [dir="rtl"] .panel { right: auto; left: 0; transform: translateX(-100%); }
@@ -869,12 +868,9 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .hide-sm { display: none; }
 
   .hero__stage { height: 62vh; min-height: 420px; }
-  .hero__stage { justify-content: center; padding-right: 0; }
-  .hero__stage::before { right: auto; left: 50%; transform: translateX(-50%); }
   .hero__stage .gown--side { display: none; }
   .hero__stage .gown, .hero__stage .gown--main { width: 70%; height: 80%; margin-bottom: 40px; }
-  .hero__stage::before { bottom: 28px; }
-  .hero__text { position: static; flex-direction: column; align-items: flex-start; padding-top: 24px; }
+  .hero__stage::before { bottom: 28px; width: 70%; }
 
   .cats, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { gap: 28px 10px; }
