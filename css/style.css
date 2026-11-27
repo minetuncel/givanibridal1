@@ -1259,3 +1259,16 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
   .contact__info dl > div::after { top: 27px; inset-inline-start: 30px; }
 }
 .viewer__track { touch-action: pan-x; }
+
+/* Galeri başlığı: ok ve "Defile 2026" yazısı birlikte tek bir geri butonu */
+.gallery__exit {
+  flex: 0 1 auto; display: inline-flex; align-items: center; gap: 6px; min-width: 0;
+  margin-inline-start: -10px; padding: 4px 12px 4px 0; border-radius: 12px; text-align: start;
+  color: var(--ink); cursor: pointer; transition: background .25s var(--ease);
+}
+.gallery__exit .gallery__back { display: inline-grid; place-items: center; margin: 0; flex: none; }
+.gallery__exit .gallery__back svg { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s var(--ease); }
+.gallery__exit:hover .gallery__back svg { transform: translateX(-3px); }
+[dir="rtl"] .gallery__exit:hover .gallery__back svg { transform: scaleX(-1) translateX(-3px); }
+.gallery__title { font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gallery__exit:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
