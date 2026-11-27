@@ -24,7 +24,6 @@ window.GIVANI_SHOW = {
     { src: "/assets/defile/10.jpg" },
     { src: "/assets/defile/11.jpg" },
     { src: "/assets/defile/12.jpg" },
-    { src: "/assets/defile/13.jpg" },
-    { src: "/assets/defile/14.jpg" }
+    { src: "/assets/defile/13.jpg" }
   ]
 };

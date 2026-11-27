@@ -89,7 +89,7 @@ const DEFAULT_PRODUCTS = [
 
 const DEFAULT_SHOW = {
   year: 2026,
-  images: Array.from({ length: 14 }, (_, i) => ({ src: `/assets/defile/${String(i + 1).padStart(2, "0")}.jpg`, alt: "" }))
+  images: Array.from({ length: 13 }, (_, i) => ({ src: `/assets/defile/${String(i + 1).padStart(2, "0")}.jpg`, alt: "" }))
 };
 const DEFAULT_REVIEWS = [];
 
