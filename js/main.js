@@ -748,6 +748,14 @@
   // Giriş ekranında dil seçimi dışında herhangi bir yere tıklamak siteye girer
   intro.addEventListener("click", (e) => { if (!e.target.closest("[data-setlang]") && !intro.classList.contains("is-leaving")) enterSite(); });
   intro.addEventListener("keydown", (e) => { if (e.key === "Escape") enterSite(); });
+  // Giriş ekranını parmakla ya da fareyle herhangi bir yöne sürüklemek de siteye girer
+  let dragStart = null;
+  intro.addEventListener("pointerdown", (e) => { if (e.isPrimary) dragStart = { x: e.clientX, y: e.clientY }; });
+  intro.addEventListener("pointermove", (e) => {
+    if (!dragStart || !e.isPrimary || intro.classList.contains("is-leaving")) return;
+    if (Math.hypot(e.clientX - dragStart.x, e.clientY - dragStart.y) > 40) { dragStart = null; enterSite(); }
+  });
+  ["pointerup", "pointercancel"].forEach((t) => intro.addEventListener(t, () => { dragStart = null; }));
 
   // Üstteki Givani Bridal logosu giriş ekranını tekrar açar
   const showIntro = () => {
