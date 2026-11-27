@@ -1303,3 +1303,7 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 .logo { background: #000 !important; padding: 8px 14px !important; gap: 12px; }
 .logo .mark { font-size: 24px; }
 .logo .logo__sub { color: #bdbdbd; }
+/* Üst menü logosu: arka plansız, siyah yazı ve siyah çift çerçeve */
+.logo { background: none !important; padding: 6px 8px !important; box-shadow: none; }
+.logo .mark { color: #111; }
+.logo .mark::before, .logo .mark::after { border-color: #111; border-width: 1px; }
