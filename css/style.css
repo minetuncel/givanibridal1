@@ -273,11 +273,15 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .hero__stage::before { display: none; }
 /* Arka planda silik defile videosu; yazı ve buton önde okunur kalır */
 .hero__stage { position: relative; overflow: hidden; isolation: isolate; background: #fff; }
+/* Bilgisayarda video ortada dikey bir pano gibi durur, yanları beyaza erir */
 .hero__video {
-  position: absolute; inset: -20px; width: calc(100% + 40px); height: calc(100% + 40px);
-  object-fit: cover; object-position: 50% 30%;
-  opacity: .45; filter: blur(1.5px);
+  position: absolute; top: 0; bottom: 0; left: 50%; right: auto;
+  width: min(62%, 860px); height: 100%; transform: translateX(-50%);
+  object-fit: cover; object-position: 50% 40%;
+  opacity: .5; filter: blur(.6px);
   z-index: -2; pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
 }
 .hero__stage::after {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -1033,7 +1037,8 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .lang__btn { padding: 0 6px; }
   .hide-sm { display: none; }
 
-  .hero__stage { height: 62vh; min-height: 420px; }
+  .hero__stage { height: 86vh; height: 86svh; min-height: 560px; }
+  .hero__video { left: 0; width: 100%; transform: none; object-position: 50% 35%; -webkit-mask-image: none; mask-image: none; }
 
   .cats, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { gap: 28px 10px; }
