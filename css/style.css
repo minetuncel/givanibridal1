@@ -405,17 +405,14 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .show__cover { display: block; width: 100%; padding: 0; }
 .show__stage { height: min(78vh, 760px); min-height: 480px; }
 .show__stage.has-media::before { display: none; }
-/* Silik defile fotoğrafı: sağda durur, kenarları arka plana erir */
+/* Silik defile fotoğrafı: tüm alana yayılır, kenarları arka plana erir */
 .show__stage .show__bgimg {
-  position: absolute; top: 0; bottom: 0; right: 0; left: auto; width: 62%; height: 100%;
-  object-fit: cover; object-position: 50% 18%;
-  opacity: .5; filter: saturate(.35) contrast(.92);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 38%, #000 82%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 100%);
-  -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0%, #000 38%, #000 82%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 100%);
-  mask-composite: intersect;
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 55%;
+  opacity: .32; filter: grayscale(1) contrast(.9);
+  -webkit-mask-image: radial-gradient(ellipse 75% 80% at 55% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 80% at 55% 50%, #000 55%, transparent 100%);
 }
-[dir="rtl"] .show__stage .show__bgimg { right: auto; left: 0; }
-@media (max-width: 760px) { .show__stage .show__bgimg { left: 0; } }
 .show__stage.has-media { background: #f7f7f7; }
 .show__stage.has-media::after { display: none; }
 [dir="rtl"] .show__stage.has-media::after { transform: scaleX(-1); }
@@ -1054,10 +1051,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .show__g--3 { left: 28%; }
   .runway { clip-path: polygon(42% 0, 58% 0, 84% 100%, 16% 100%); }
   .show__stage.has-media::after { display: none; }
-  .show__stage .show__bgimg {
-    width: 100%; object-position: 50% 15%; opacity: .55;
-    -webkit-mask-image: linear-gradient(180deg, #000 65%, transparent 100%); mask-image: linear-gradient(180deg, #000 65%, transparent 100%);
-  }
+  .show__stage .show__bgimg { object-position: 50% 50%; opacity: .38; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, #000 70%, transparent 100%); }
   .gallery__head { height: 64px; }
   .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .gallery__item { border-radius: 10px; }

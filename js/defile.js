@@ -15,7 +15,7 @@ window.GIVANI_SHOW = {
   video: "/assets/defile/video.mp4",
   poster: "/assets/defile/video-poster.jpg",
   // Ana sayfadaki Defile alanında silik arka plan olarak görünen fotoğraf
-  cover: "/assets/defile/03.jpg",
+  cover: "/assets/defile/cover.jpg",
   images: [
     { src: "/assets/defile/01.jpg" },
     { src: "/assets/defile/02.jpg" },
