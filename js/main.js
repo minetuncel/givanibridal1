@@ -8,6 +8,7 @@
   let SHOW = window.GIVANI_SHOW || { year: new Date().getFullYear(), images: [] };
   let IMGS = (SHOW.images || []).filter((im) => im && im.src);
   let REVIEWS = [];
+  let BRIDES = [];
   let SETTINGS = {
     whatsapp: "905309518934",
     phone: "0530 951 89 34",
@@ -589,14 +590,15 @@
   };
 
   // Instagram gibi: fotoğraflar parmakla/trackpad ile yana kayar, yerine oturur
-  let vKey = "", vObs = null;
+  // Büyük görünüm hem defile galerisi hem Givani Gelinleri için kullanılır
+  let vKey = "", vObs = null, VLIST = IMGS, vAlt = (i) => t("show.alt", { year: SHOW.year, i: i + 1 }), vOpener = null;
   const buildViewer = () => {
-    const key = IMGS.map((im) => im.src).join("|");
+    const key = VLIST.map((im) => im.src).join("|");
     if (key === vKey) return;
     vKey = key;
-    vTrack.innerHTML = IMGS.map((im, i) => `
-      <figure class="viewer__slide" data-i="${i}"><img src="${esc(im.src)}" alt="${esc(im.alt || t("show.alt", { year: SHOW.year, i: i + 1 }))}" loading="lazy" draggable="false"></figure>`).join("");
-    vDots.innerHTML = IMGS.map(() => "<span></span>").join("");
+    vTrack.innerHTML = VLIST.map((im, i) => `
+      <figure class="viewer__slide" data-i="${i}"><img src="${esc(im.src)}" alt="${esc(im.alt || vAlt(i))}" loading="lazy" draggable="false"></figure>`).join("");
+    vDots.innerHTML = VLIST.map(() => "<span></span>").join("");
     vObs?.disconnect();
     vObs = new IntersectionObserver((entries) => entries.forEach((en) => {
       if (en.isIntersecting) { vIndex = +en.target.dataset.i; updateViewerUi(); }
@@ -604,31 +606,58 @@
     vTrack.querySelectorAll(".viewer__slide").forEach((s) => vObs.observe(s));
   };
   const updateViewerUi = () => {
-    $("#viewerCount").textContent = `${vIndex + 1} / ${IMGS.length}`;
+    $("#viewerCount").textContent = `${vIndex + 1} / ${VLIST.length}`;
     vDots.querySelectorAll("span").forEach((d, i) => d.classList.toggle("on", i === vIndex));
     $("#viewerPrev").disabled = vIndex === 0;
-    $("#viewerNext").disabled = vIndex === IMGS.length - 1;
+    $("#viewerNext").disabled = vIndex === VLIST.length - 1;
   };
   const goTo = (i, smooth = true) => {
-    i = Math.max(0, Math.min(IMGS.length - 1, i));
+    i = Math.max(0, Math.min(VLIST.length - 1, i));
     const s = vTrack.children[i];
     if (s) s.scrollIntoView({ inline: "center", block: "nearest", behavior: smooth ? "smooth" : "instant" });
   };
-  function step(d) { if (IMGS.length) goTo(vIndex + d); }
-  const openViewer = (i) => {
+  function step(d) { if (VLIST.length) goTo(vIndex + d); }
+  const openViewer = (i, list = IMGS, altFn = (n) => t("show.alt", { year: SHOW.year, i: n + 1 }), evName = "gallery_photo") => {
+    vOpener = document.activeElement;
+    VLIST = list; vAlt = altFn;
     buildViewer(); viewer.hidden = false; vIndex = i; updateViewerUi();
     requestAnimationFrame(() => goTo(i, false));
-    ev("gallery_photo"); $("#viewerClose").focus();
+    ev(evName); $("#viewerClose").focus();
   };
   function closeViewer() {
     viewer.hidden = true;
-    $(`.gallery__item[data-view="${vIndex}"]`)?.focus({ preventScroll: false });
+    vOpener?.focus?.({ preventScroll: true });
   }
 
   $("#galleryGrid").addEventListener("click", (e) => {
     const b = e.target.closest("[data-view]");
     if (b) openViewer(+b.dataset.view);
   });
+
+  // ================= GİVANİ GELİNLERİ =================
+  // Müşterilerin düğün çekimleri; önce 8 fotoğraf görünür, "Daha Fazla" ile devamı açılır
+  const BRIDES_STEP = 8;
+  let bridesShown = BRIDES_STEP;
+  const brideAlt = (i) => t("brides.alt", { i: i + 1 });
+  const renderBrides = () => {
+    const grid = $("#bridesGrid"), more = $("#bridesMore");
+    if (!BRIDES.length) {
+      const gs = ["g-ball", "g-mermaid", "g-aline", "g-sleeve"];
+      grid.innerHTML = gs.map((id) => `<div class="brides__item is-placeholder"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${id}"/></svg></div></div>`).join("");
+      more.hidden = true;
+      return;
+    }
+    grid.innerHTML = BRIDES.slice(0, bridesShown).map((im, i) => `
+      <button class="brides__item" data-bride="${i}">
+        <img src="${esc(im.src)}" alt="${esc(im.alt || brideAlt(i))}" loading="lazy" decoding="async">
+      </button>`).join("");
+    more.hidden = bridesShown >= BRIDES.length;
+  };
+  $("#bridesGrid").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-bride]");
+    if (b) openViewer(+b.dataset.bride, BRIDES, brideAlt, "brides_photo");
+  });
+  $("#bridesMore").addEventListener("click", () => { bridesShown += BRIDES_STEP; renderBrides(); ev("brides_more"); });
   $("#viewerPrev").addEventListener("click", () => step(document.dir === "rtl" ? 1 : -1));
   $("#viewerNext").addEventListener("click", () => step(document.dir === "rtl" ? -1 : 1));
   $("#viewerClose").addEventListener("click", closeViewer);
@@ -810,6 +839,7 @@
     renderSizes();
     renderAddr();
     renderShowSection();
+    renderBrides();
     renderHours();
     renderReviews();
     applySettings();
@@ -858,6 +888,7 @@
       if (Array.isArray(c.products)) PRODUCTS = c.products.map((p) => ({ ...p, id: String(p.id) }));
       if (c.show) { SHOW = c.show; IMGS = (SHOW.images || []).filter((im) => im && im.src); }
       if (Array.isArray(c.reviews)) REVIEWS = c.reviews;
+      if (Array.isArray(c.brides)) BRIDES = c.brides.filter((im) => im && im.src);
       cleanSaved();
       applyLang();
     })

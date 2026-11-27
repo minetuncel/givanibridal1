@@ -56,6 +56,14 @@ function cleanShow(s = {}) {
   };
 }
 
+// Givani Gelinleri: müşterilerden gelen düğün çekimleri
+function cleanBrides(list) {
+  if (!Array.isArray(list)) return null;
+  return list.slice(0, 300)
+    .map((im) => ({ src: imgUrl(im && im.src), alt: U.str(im && im.alt, 120) }))
+    .filter((im) => im.src);
+}
+
 function cleanReviews(list) {
   if (!Array.isArray(list)) return null;
   return list.slice(0, 100).map((r, i) => ({
@@ -200,6 +208,7 @@ module.exports = async (req, res) => {
       if (b.products) { const p = cleanProducts(b.products); if (p) await db.setJSON("gv:products", p); }
       if (b.show) await db.setJSON("gv:show", cleanShow(b.show));
       if (b.reviews) { const r = cleanReviews(b.reviews); if (r) await db.setJSON("gv:reviews", r); }
+      if (b.brides) { const br = cleanBrides(b.brides); if (br) await db.setJSON("gv:brides", br); }
       return U.send(res, 200, { ok: true, ...(await U.loadContent()) });
     }
 

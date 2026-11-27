@@ -70,6 +70,7 @@
     <symbol id="a-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="a-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
     <symbol id="a-edit" viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
+    <symbol id="a-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/></symbol>
     <symbol id="a-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
     <symbol id="a-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4.5-2 1.5a11 11 0 0 0 5.5 5.5l1.5-2 4.5 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"/></symbol>
     <symbol id="a-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3.9L4 9M4 13a8 8 0 0 0 14.9 3.9L20 15"/><path d="M4 4v5h5M20 20v-5h-5"/></symbol>
@@ -130,6 +131,7 @@
       <button data-page="bookings"><svg><use href="#a-cal"/></svg>Randevular<span class="pill" id="bBook" hidden></span></button>
       <button data-page="messages"><svg><use href="#a-mail"/></svg>Mesajlar<span class="pill" id="bMsg" hidden></span></button>
       <button data-page="products"><svg><use href="#a-dress"/></svg>Modeller</button>
+      <button data-page="brides"><svg><use href="#a-heart"/></svg>Givani Gelinleri</button>
       <button data-page="show"><svg><use href="#a-image"/></svg>Defile Galerisi</button>
       <button data-page="reviews"><svg><use href="#a-star"/></svg>Yorumlar</button>
       <button data-page="settings"><svg><use href="#a-gear"/></svg>Site Ayarları</button>
@@ -202,6 +204,17 @@
       <p class="muted">İlk fotoğraf ana sayfadaki Defile bölümünde kapak olarak görünür. Sırayı oklarla değiştirebilirsiniz.</p>
       <div class="progress" id="showProgress" hidden><span></span><em></em></div>
       <div class="thumbs" id="showList"></div>
+    </section>
+
+    <!-- GİVANİ GELİNLERİ -->
+    <section class="page" data-page="brides" hidden>
+      <header class="page__head">
+        <h2>Givani Gelinleri</h2>
+        <label class="btn"><svg><use href="#a-plus"/></svg>Fotoğraf Yükle<input type="file" id="brideUpload" accept="image/*" multiple hidden></label>
+      </header>
+      <p class="muted">Gelinlerimizden gelen düğün çekimleri. Sitede ana sayfada "Givani Gelinleri" bölümünde görünür; yeni yüklenenler en başa eklenir. Sırayı oklarla değiştirebilirsiniz.</p>
+      <div class="progress" id="brideProgress" hidden><span></span><em></em></div>
+      <div class="thumbs" id="brideList"></div>
     </section>
 
     <!-- YORUMLAR -->

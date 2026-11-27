@@ -95,10 +95,11 @@ const DEFAULT_SHOW = {
   images: Array.from({ length: 13 }, (_, i) => ({ src: `/assets/defile/${String(i + 1).padStart(2, "0")}.jpg`, alt: "" }))
 };
 const DEFAULT_REVIEWS = [];
+const DEFAULT_BRIDES = [];
 
 async function loadContent() {
-  const [s, p, sh, r] = await db.pipe([
-    ["GET", "gv:settings"], ["GET", "gv:products"], ["GET", "gv:show"], ["GET", "gv:reviews"]
+  const [s, p, sh, r, br] = await db.pipe([
+    ["GET", "gv:settings"], ["GET", "gv:products"], ["GET", "gv:show"], ["GET", "gv:reviews"], ["GET", "gv:brides"]
   ]);
   const parse = (v, d) => { try { return v == null ? d : JSON.parse(v); } catch { return d; } };
   const settings = { ...DEFAULT_SETTINGS, ...parse(s, {}) };
@@ -107,7 +108,8 @@ async function loadContent() {
     settings,
     products: parse(p, DEFAULT_PRODUCTS),
     show: { ...DEFAULT_SHOW, ...parse(sh, {}) },
-    reviews: parse(r, DEFAULT_REVIEWS)
+    reviews: parse(r, DEFAULT_REVIEWS),
+    brides: parse(br, DEFAULT_BRIDES)
   };
 }
 
@@ -167,6 +169,6 @@ async function requireAdmin(req) {
 
 module.exports = {
   send, query, body, ip, cookies, uid, day, str, text, rateLimit,
-  DEFAULT_SETTINGS, DEFAULT_PRODUCTS, DEFAULT_SHOW, DEFAULT_REVIEWS, loadContent,
+  DEFAULT_SETTINGS, DEFAULT_PRODUCTS, DEFAULT_SHOW, DEFAULT_REVIEWS, DEFAULT_BRIDES, loadContent,
   getAdmin, checkPassword, setPassword, createSession, destroySession, requireAdmin
 };

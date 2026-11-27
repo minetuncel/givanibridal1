@@ -121,12 +121,13 @@
     gallery_open: "Defile galerisi açılışı", gallery_photo: "Defile fotoğraf görüntüleme", size_guide_open: "Beden rehberi",
     shipping_open: "Kargo adresi penceresi", lang_change: "Dil değiştirme", intro_enter: "Giriş ekranından siteye giriş",
     booking_submit: "Randevu talebi", contact_submit: "İletişim mesajı", reviews_more: "Google yorumlarına gitme",
-    view_collection: "Koleksiyon", view_new_season: "Yeni Sezon", view_atelier: "Kişiye özel dikim", view_show: "Defile",
+    view_collection: "Koleksiyon", view_new_season: "Yeni Sezon", view_atelier: "Kişiye özel dikim", view_brides: "Givani Gelinleri", view_show: "Defile",
+    brides_photo: "Gelin fotoğrafı açma", brides_more: "Gelinler: daha fazla",
     view_reviews: "Yorumlar", view_booking: "Randevu", view_contact: "Bize Ulaşın"
   };
   const CLICK = ["whatsapp_click", "phone_click", "instagram_click", "pinterest_click", "email_click", "map_click", "directions_click"];
-  const INTER = ["product_click", "fav_add", "cart_add", "search", "gallery_open", "gallery_photo", "size_guide_open", "shipping_open", "booking_submit", "contact_submit", "reviews_more", "lang_change", "intro_enter"];
-  const SECT = ["view_collection", "view_new_season", "view_atelier", "view_show", "view_reviews", "view_booking", "view_contact"];
+  const INTER = ["product_click", "fav_add", "cart_add", "search", "gallery_open", "gallery_photo", "brides_photo", "brides_more", "size_guide_open", "shipping_open", "booking_submit", "contact_submit", "reviews_more", "lang_change", "intro_enter"];
+  const SECT = ["view_collection", "view_new_season", "view_atelier", "view_brides", "view_show", "view_reviews", "view_booking", "view_contact"];
   const DEV = { mobile: "Telefon", tablet: "Tablet", desktop: "Bilgisayar" };
   const LANG = { tr: "Türkçe", en: "English", ar: "العربية", fr: "Français", de: "Deutsch", ru: "Русский" };
 
@@ -462,6 +463,50 @@
     else if (d.sDel) { if (!confirm("Bu fotoğraf silinsin mi?")) return; const [rm] = imgs.splice(+d.sDel, 1); if (await save({ show: { ...content.show, images: imgs } })) { delImg(rm.src); renderShow(); } return; }
     else return;
     if (await save({ show: { ...content.show, images: imgs } })) renderShow();
+  });
+
+  // ================= GİVANİ GELİNLERİ =================
+  function renderBrides() {
+    const imgs = content.brides || [];
+    $("#brideList").innerHTML = imgs.length ? imgs.map((im, i) => `
+      <div class="thumb">
+        <img src="${esc(im.src)}" alt="" loading="lazy">
+        <div class="thumb__bar">
+          <span>${i + 1}</span>
+          <div>
+            <button class="icon-btn" data-b-up="${i}" ${i === 0 ? "disabled" : ""} aria-label="Öne al"><svg><use href="#a-left"/></svg></button>
+            <button class="icon-btn" data-b-down="${i}" ${i === imgs.length - 1 ? "disabled" : ""} aria-label="Geri al"><svg><use href="#a-right"/></svg></button>
+            <button class="icon-btn" data-b-del="${i}" aria-label="Sil"><svg><use href="#a-trash"/></svg></button>
+          </div>
+        </div>
+      </div>`).join("") : `<p class="empty">Henüz fotoğraf yok. "Fotoğraf Yükle" ile ekleyin; birden fazla fotoğrafı aynı anda seçebilirsiniz.</p>`;
+  }
+  loaders.brides = async () => { await loadContent(); renderBrides(); };
+  $("#brideUpload").addEventListener("change", async (e) => {
+    const files = [...e.target.files]; e.target.value = "";
+    if (!files.length) return;
+    const bar = $("#brideProgress"), fill = bar.querySelector("span"), label = bar.querySelector("em");
+    bar.hidden = false;
+    const added = [];
+    for (let i = 0; i < files.length; i++) {
+      label.textContent = `Yükleniyor ${i + 1} / ${files.length}`;
+      fill.style.width = (i / files.length) * 100 + "%";
+      try { added.push({ src: await upload(files[i], 1600), alt: "" }); } catch { toast(files[i].name + " yüklenemedi"); }
+    }
+    fill.style.width = "100%";
+    // Yeni yüklenenler en başa eklenir
+    await save({ brides: [...added, ...(content.brides || [])] });
+    bar.hidden = true;
+    renderBrides();
+  });
+  $("#brideList").addEventListener("click", async (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    const imgs = [...(content.brides || [])], d = b.dataset;
+    if (d.bUp) { const i = +d.bUp; [imgs[i - 1], imgs[i]] = [imgs[i], imgs[i - 1]]; }
+    else if (d.bDown) { const i = +d.bDown; [imgs[i + 1], imgs[i]] = [imgs[i], imgs[i + 1]]; }
+    else if (d.bDel) { if (!confirm("Bu fotoğraf silinsin mi?")) return; const [rm] = imgs.splice(+d.bDel, 1); if (await save({ brides: imgs })) { delImg(rm.src); renderBrides(); } return; }
+    else return;
+    if (await save({ brides: imgs })) renderBrides();
   });
 
   // ================= YORUMLAR =================
