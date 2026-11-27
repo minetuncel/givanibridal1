@@ -251,37 +251,17 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .hero__stage { justify-content: center; align-items: flex-end; }
 .hero__stage::before { display: none; }
 /* Arka planda silik defile videosu; yazı ve buton önde okunur kalır */
-.hero__stage { position: relative; overflow: hidden; isolation: isolate; }
+.hero__stage { position: relative; overflow: hidden; isolation: isolate; background: #fff; }
 .hero__video {
   position: absolute; inset: -20px; width: calc(100% + 40px); height: calc(100% + 40px);
   object-fit: cover; object-position: 50% 30%;
-  opacity: .38; filter: blur(2px);
+  opacity: .45; filter: blur(1.5px);
   z-index: -2; pointer-events: none;
 }
 .hero__stage::after {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(255,255,255,.7), rgba(255,255,255,.25) 70%, rgba(255,255,255,.1));
 }
-/* Dans eden gelin */
-.bride { position: relative; height: 96%; width: auto; max-width: 92%; margin-bottom: 1%; opacity: .92; }
-.bride g, .bride ellipse { transform-box: view-box; }
-.bride .br-body { transform-origin: 196px 600px; animation: br-sway 7s ease-in-out infinite alternate; }
-.bride .br-skirt { transform-origin: 211px 212px; animation: br-swish 3.5s ease-in-out infinite alternate; }
-.bride .br-tulle { transform-origin: 211px 214px; animation: br-swish2 3.5s ease-in-out infinite alternate; }
-.bride .br-veil { transform-origin: 202px 90px; animation: br-veil 4.2s ease-in-out infinite alternate; }
-.bride .br-arm { transform-origin: 230px 153px; animation: br-arm 3.5s ease-in-out infinite alternate; }
-.bride .br-arm2 { transform-origin: 190px 153px; animation: br-arm2 3.5s ease-in-out infinite alternate; }
-.bride .br-head { transform-origin: 210px 124px; animation: br-head 7s ease-in-out infinite alternate; }
-.bride .br-shadow { transform-origin: 190px 598px; animation: br-shadow 7s ease-in-out infinite alternate; }
-@keyframes br-sway { from { transform: rotate(-2.2deg); } to { transform: rotate(2.2deg); } }
-@keyframes br-swish { from { transform: skewX(4deg) scaleX(.97); } to { transform: skewX(-4deg) scaleX(1.04); } }
-@keyframes br-swish2 { from { transform: skewX(-5deg) scaleX(1.03); } to { transform: skewX(5deg) scaleX(.96); } }
-@keyframes br-veil { from { transform: rotate(-5deg) skewY(-2deg); } to { transform: rotate(4deg) skewY(2deg); } }
-@keyframes br-arm { from { transform: rotate(-9deg); } to { transform: rotate(5deg); } }
-@keyframes br-arm2 { from { transform: rotate(6deg); } to { transform: rotate(-6deg); } }
-@keyframes br-head { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
-@keyframes br-shadow { from { transform: scaleX(.94); } to { transform: scaleX(1.05); } }
-@media (prefers-reduced-motion: reduce) { .bride * { animation: none !important; } }
 
 
 .hero__text {
@@ -1011,7 +991,6 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .hide-sm { display: none; }
 
   .hero__stage { height: 62vh; min-height: 420px; }
-  .bride { height: 94%; }
 
   .cats, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { gap: 28px 10px; }
