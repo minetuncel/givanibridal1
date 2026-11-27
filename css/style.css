@@ -1071,14 +1071,17 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .contact__form { grid-template-columns: 1fr; }
   .contact__form .btn { justify-self: stretch; }
   .review { padding: 22px; }
-  .show__stage { height: 60vh; min-height: 400px; }
-  .show__text { position: static; padding-top: 24px; }
+  .show__stage { height: 72vh; height: 72svh; min-height: 460px; }
+  /* Telefonda yazı ve buton görselin üstünde, alt kısımda ortalı */
+  .show__text { position: absolute; top: auto; bottom: 0; padding: 0 22px 32px; align-items: center; text-align: center; gap: 18px; }
+  .show__text h2 { font-size: clamp(38px, 11vw, 52px); line-height: 1.02; }
   .show__g--1 { left: 50%; height: 62%; }
   .show__g--2 { left: 76%; }
   .show__g--3 { left: 28%; }
   .runway { clip-path: polygon(42% 0, 58% 0, 84% 100%, 16% 100%); }
   .show__stage.has-media::after { display: none; }
-  .show__stage .show__bgimg { object-position: 50% 50%; opacity: .38; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, #000 70%, transparent 100%); }
+  .show__stage .show__bgimg { object-position: 50% 45%; opacity: .42; -webkit-mask-image: none; mask-image: none; }
+  .show__stage.has-media::after { display: block; content: ""; position: absolute; inset: 0; transform: none; background: linear-gradient(180deg, rgba(247,247,247,0) 35%, rgba(247,247,247,.75) 72%, rgba(247,247,247,.95) 100%); }
   .gallery__head { height: 64px; }
   .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .gallery__item { border-radius: 10px; }
