@@ -1313,3 +1313,9 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 @media (max-width: 760px) { .logo .mark { font-size: 26px; } .logo .mark::before, .logo .mark::after { border-width: 1.4px; } }
 @media (max-width: 400px) { .logo .mark { font-size: 22px; } .logo { margin-inline-end: 12px; } }
 @media (max-width: 380px) { .logo .mark { font-size: 19px; } }
+
+/* Logo, gönderilen marka görselinden birebir alındı */
+.sign__img { display: block; width: clamp(240px, 34vw, 470px); height: auto; margin: 0 auto; }
+.logo__img { display: block; height: 50px; width: auto; }
+@media (max-width: 760px) { .logo__img { height: 38px; } }
+@media (max-width: 380px) { .logo__img { height: 32px; } }
