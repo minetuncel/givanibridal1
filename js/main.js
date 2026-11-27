@@ -547,7 +547,6 @@
   const renderShowSection = () => {
     $("#showTitle").textContent = showTitle();
     $("#galleryTitle").textContent = showTitle();
-    $("#galleryCount").textContent = IMGS.length ? t("show.photos", { n: IMGS.length }) : "";
     // Kapakta defile fotoğrafı değil, varsa defile videosu gösterilir
     const vid = SHOW.video;
     if (vid) {
