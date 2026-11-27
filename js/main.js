@@ -3,15 +3,44 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-  const PRODUCTS = window.GIVANI_PRODUCTS || [];
+  // İçerik: önce dosyadaki yedek veriler, sonra yönetim panelinden gelen güncel veriler
+  let PRODUCTS = (window.GIVANI_PRODUCTS || []).map((p) => ({ ...p, id: String(p.id) }));
+  let SHOW = window.GIVANI_SHOW || { year: new Date().getFullYear(), images: [] };
+  let IMGS = (SHOW.images || []).filter((im) => im && im.src);
+  let REVIEWS = [];
+  let SETTINGS = {
+    whatsapp: "905309518934",
+    phone: "0530 951 89 34",
+    email: "info@givanibridal.com",
+    address: "Atikali Mah. Fevzipaşa Cad.\nEski Altay Sk. No:3 D:A\n34087 Fatih / İstanbul",
+    instagram: "givanibridal",
+    mapsQuery: "Givani Bridal, Eski Altay Sk. No:3, Fatih, İstanbul",
+    googleReviewsUrl: "https://share.google/dOHkbhQ2nWm1ZBZy6",
+    hours: { weekdayOpen: "10:00", weekdayClose: "19:00", sundayOpen: "12:00", sundayClose: "17:00", sundayClosed: false, step: 30 }
+  };
   const CATS = window.GIVANI_CATEGORIES || [];
   const I18N = window.GIVANI_I18N;
-  const byId = (id) => PRODUCTS.find((p) => p.id === id);
+  const byId = (id) => PRODUCTS.find((p) => p.id === String(id));
 
   const store = {
     get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
+
+  // ================= ZİYARET TAKİBİ =================
+  // Kişisel veri tutulmaz: tarayıcıya rastgele, anonim bir kimlik yazılır.
+  let vid = store.get("gv_vid", null);
+  if (!vid) { vid = Math.random().toString(36).slice(2) + Date.now().toString(36); store.set("gv_vid", vid); }
+  const device = () => (/iPad|Tablet/i.test(navigator.userAgent) || (matchMedia("(pointer:coarse)").matches && innerWidth >= 768) ? "tablet" : matchMedia("(pointer:coarse)").matches ? "mobile" : "desktop");
+  const track = (t, extra = {}) => {
+    try {
+      const data = JSON.stringify({ t, v: vid, ...extra });
+      if (!(navigator.sendBeacon && navigator.sendBeacon("/api/public?a=track", data))) {
+        fetch("/api/public?a=track", { method: "POST", body: data, keepalive: true }).catch(() => {});
+      }
+    } catch {}
+  };
+  const ev = (e, extra = {}) => track("ev", { e, ...extra });
 
   // ================= DİL =================
   const LANGS = I18N.languages;
@@ -39,8 +68,10 @@
   const norm = (s) =>
     String(s).toLocaleLowerCase("tr").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ı/g, "i");
 
-  let favs = store.get("gv_fav", []).filter(byId);
-  let cart = store.get("gv_cart", []).filter((i) => byId(i.id));
+  let favs = store.get("gv_fav", []).map(String);
+  let cart = store.get("gv_cart", []).map((i) => ({ id: String(i.id), qty: i.qty }));
+  const cleanSaved = () => { favs = favs.filter(byId); cart = cart.filter((i) => byId(i.id)); };
+  cleanSaved();
 
   const media = (p, cls = "", inner = "") =>
     `<div class="shot ${cls}">${
@@ -64,10 +95,10 @@
   let filter = "all";
 
   const cardHTML = (p) => `
-    <article class="card" data-id="${p.id}">
+    <article class="card" data-id="${esc(p.id)}">
       ${media(p, "", `
-        <button class="fav${favs.includes(p.id) ? " is-active" : ""}" data-fav="${p.id}" aria-label="${esc(t("action.addFav"))}" aria-pressed="${favs.includes(p.id)}"><svg><use href="#i-heart"/></svg></button>
-        <button class="card__add" data-add="${p.id}">${esc(t("action.addToCart"))}</button>`)}
+        <button class="fav${favs.includes(p.id) ? " is-active" : ""}" data-fav="${esc(p.id)}" aria-label="${esc(t("action.addFav"))}" aria-pressed="${favs.includes(p.id)}"><svg><use href="#i-heart"/></svg></button>
+        <button class="card__add" data-add="${esc(p.id)}">${esc(t("action.addToCart"))}</button>`)}
       <div class="card__info">
         <h3>${esc(prodName(p))}</h3><span class="price">${money(p.price)}</span>
       </div>
@@ -82,6 +113,11 @@
   };
   $$(".tab").forEach((tb) => tb.addEventListener("click", () => { filter = tb.dataset.filter; renderGrid(); }));
   $$(".cat").forEach((c) => c.addEventListener("click", () => { filter = c.dataset.go; renderGrid(); }));
+  grid.addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;
+    const card = e.target.closest(".card");
+    if (card) ev("product_click", { p: card.dataset.id });
+  });
 
   // ================= FAVORİ & SEPET =================
   const toggleFav = (id) => {
@@ -89,6 +125,7 @@
     favs = on ? [...favs, id] : favs.filter((f) => f !== id);
     store.set("gv_fav", favs);
     say(t(on ? "toast.favAdded" : "toast.favRemoved"));
+    if (on) ev("fav_add", { p: id });
     refresh();
   };
   const addCart = (id, n = 1) => {
@@ -118,8 +155,8 @@
   const renderFav = () => {
     $("#favList").innerHTML = favs.length
       ? favs.map((id) => rowHTML(byId(id), `<div class="row__actions">
-            <button class="link" data-add="${id}">${esc(t("action.addToCart"))}</button>
-            <button class="link link--muted" data-fav="${id}">${esc(t("action.remove"))}</button></div>`)).join("")
+            <button class="link" data-add="${esc(id)}">${esc(t("action.addToCart"))}</button>
+            <button class="link link--muted" data-fav="${esc(id)}">${esc(t("action.remove"))}</button></div>`)).join("")
       : `<li class="empty">${esc(t("fav.empty"))}</li>`;
   };
 
@@ -127,9 +164,9 @@
     $("#cartList").innerHTML = cart.length
       ? cart.map(({ id, qty }) => rowHTML(byId(id), `<div class="row__actions">
             <div class="qty">
-              <button data-dec="${id}" aria-label="${esc(t("action.dec"))}">−</button><span>${qty}</span><button data-inc="${id}" aria-label="${esc(t("action.inc"))}">+</button>
+              <button data-dec="${esc(id)}" aria-label="${esc(t("action.dec"))}">−</button><span>${qty}</span><button data-inc="${esc(id)}" aria-label="${esc(t("action.inc"))}">+</button>
             </div>
-            <button class="link link--muted" data-remove="${id}">${esc(t("action.remove"))}</button></div>`)).join("")
+            <button class="link link--muted" data-remove="${esc(id)}">${esc(t("action.remove"))}</button></div>`)).join("")
       : `<li class="empty">${esc(t("cart.empty"))}</li>`;
     const priced = cart.every(({ id }) => typeof byId(id).price === "number");
     const total = cart.reduce((s, { id, qty }) => s + (byId(id).price || 0) * qty, 0);
@@ -149,22 +186,25 @@
 
   // ================= TIKLAMALAR =================
   document.addEventListener("click", (e) => {
+    const tr = e.target.closest("[data-track]");
+    if (tr) ev(tr.dataset.track);
     const el = e.target.closest("button, a");
     if (!el) return;
     const d = el.dataset;
-    if (d.fav) toggleFav(+d.fav);
-    else if (d.add) { addCart(+d.add); say(t("toast.cartAdded")); }
-    else if (d.inc) addCart(+d.inc, 1);
-    else if (d.dec) addCart(+d.dec, -1);
-    else if (d.remove) removeCart(+d.remove);
-    else if (d.open) openLayer(d.open);
+    if (d.fav) toggleFav(d.fav);
+    else if (d.add) { addCart(d.add); say(t("toast.cartAdded")); ev("cart_add", { p: d.add }); }
+    else if (d.inc) addCart(d.inc, 1);
+    else if (d.dec) addCart(d.dec, -1);
+    else if (d.remove) removeCart(d.remove);
+    else if (d.open) { if (el.tagName === "A") e.preventDefault(); openLayer(d.open); }
     else if ("close" in d) closeAll();
     else if (d.setlang) setLang(d.setlang);
     else if (d.result) {
       closeAll();
       filter = "all";
       renderGrid();
-      const card = $(`.card[data-id="${d.result}"]`);
+      ev("product_click", { p: d.result });
+      const card = $(`.card[data-id="${CSS.escape(d.result)}"]`);
       card?.scrollIntoView({ behavior: "smooth", block: "center" });
       card?.classList.add("is-flash");
       setTimeout(() => card?.classList.remove("is-flash"), 1600);
@@ -194,6 +234,7 @@
     lastFocus?.focus?.({ preventScroll: true });
   };
 
+  const LAYER_EVENTS = { show: "gallery_open", size: "size_guide_open", ship: "shipping_open" };
   const openLayer = (name) => {
     const prev = document.activeElement;
     closeAll();
@@ -207,6 +248,7 @@
     }
     const panel = $("#panel-" + name);
     if (!panel) return;
+    if (LAYER_EVENTS[name]) ev(LAYER_EVENTS[name]);
     if (name === "show") renderGallery();
     if (!panel.classList.contains("gallery")) backdrop.hidden = false;
     panel.hidden = false;
@@ -228,7 +270,7 @@
 
   $("#menuOpen").addEventListener("click", () => setDrawer(true));
   $("#menuClose").addEventListener("click", () => setDrawer(false));
-  $$(".drawer__nav a").forEach((a) => a.addEventListener("click", () => setDrawer(false)));
+  $$(".drawer__nav a, .drawer__tools a").forEach((a) => a.addEventListener("click", () => setDrawer(false)));
 
   // ---------- Arama ----------
   const input = $("#searchInput");
@@ -242,55 +284,60 @@
 
   // Arama tüm dillerdeki kategori adlarında yapılır (ör. "mermaid" veya "balık")
   const allCatNames = (k) => Object.values(I18N.strings).map((s) => s["cat." + k] || "").join(" ");
+  let searchT, lastQ = "";
   const runSearch = () => {
-    const q = norm(input.value.trim());
+    const raw = input.value.trim();
+    const q = norm(raw);
     const res = q
       ? PRODUCTS.filter((p) => norm(`${prodName(p)} ${p.cat} ${allCatNames(p.cat)}`).includes(q))
       : PRODUCTS;
     $("#searchMeta").textContent = q ? (res.length ? t("search.results", { n: res.length }) : t("search.none")) : t("search.all");
     $("#searchResults").innerHTML = res.map((p) => `
-      <button class="result" data-result="${p.id}">
+      <button class="result" data-result="${esc(p.id)}">
         ${media(p)}
         <span class="result__name">${esc(prodName(p))}</span>
         <span class="result__meta">${esc(catName(p.cat))} · ${money(p.price)}</span>
       </button>`).join("");
+    clearTimeout(searchT);
+    if (raw.length >= 2) searchT = setTimeout(() => { if (raw !== lastQ) { lastQ = raw; ev("search", { q: raw }); } }, 1500);
   };
   input.addEventListener("input", runSearch);
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#searchResults .result")?.click(); });
 
-  // ================= HESAP =================
-  let mode = "login";
-  const syncAuth = () => {
-    $$(".seg__btn").forEach((x) => x.classList.toggle("is-active", x.dataset.auth === mode));
-    $$('[data-only="register"]').forEach((el) => { el.hidden = mode !== "register"; el.required = mode === "register"; });
-    $("#authSubmit").textContent = t(mode === "login" ? "auth.login" : "auth.register");
-  };
-  $$(".seg__btn").forEach((b) => b.addEventListener("click", () => { mode = b.dataset.auth; $("#authMsg").hidden = true; syncAuth(); }));
-  $("#authForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const m = $("#authMsg");
-    m.textContent = t("auth.soon");
-    m.hidden = false;
-  });
-
   $("#checkout").addEventListener("click", () => { $("#checkoutMsg").hidden = false; });
 
+  // ================= SUNUCUYA GÖNDERME =================
+  const post = async (action, data) => {
+    const r = await fetch("/api/public?a=" + action, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data)
+    });
+    const j = await r.json().catch(() => ({}));
+    return r.ok && j.ok;
+  };
+
   // ================= RANDEVU =================
-  // Pazar: 12:00–17:00, diğer günler: 10:00–19:00 (dakika cinsinden). Aralık: 30 dk.
-  const HOURS = { default: [10 * 60, 19 * 60], sunday: [12 * 60, 17 * 60] };
-  const STEP = 30;
   const dateIn = $("#bookDate"), timeIn = $("#bookTime");
   const pad = (n) => String(n).padStart(2, "0");
+  const toMin = (s) => { const [h, m] = String(s).split(":").map(Number); return h * 60 + (m || 0); };
   const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
   dateIn.min = todayISO();
 
   const fillTimes = () => {
+    const H = SETTINGS.hours;
     const keep = timeIn.value;
     const now = new Date();
     const nowMin = dateIn.value === todayISO() ? now.getHours() * 60 + now.getMinutes() : -1;
     const [y, mo, d] = (dateIn.value || "").split("-").map(Number);
-    const isSunday = dateIn.value && new Date(y, mo - 1, d).getDay() === 0;
-    const [OPEN, CLOSE] = isSunday ? HOURS.sunday : HOURS.default;
+    const isSunday = Boolean(dateIn.value) && new Date(y, mo - 1, d).getDay() === 0;
+    if (isSunday && H.sundayClosed) {
+      timeIn.innerHTML = `<option value="" disabled selected>${esc(t("book.closedDay"))}</option>`;
+      dateIn.setCustomValidity(t("book.closedDay"));
+      return;
+    }
+    dateIn.setCustomValidity("");
+    const OPEN = toMin(isSunday ? H.sundayOpen : H.weekdayOpen);
+    const CLOSE = toMin(isSunday ? H.sundayClose : H.weekdayClose);
+    const STEP = Number(H.step) || 30;
     let html = `<option value="" disabled>${esc(t("form.time"))}</option>`;
     for (let m = OPEN; m <= CLOSE; m += STEP) {
       const tm = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
@@ -313,14 +360,96 @@
     const date = new Intl.DateTimeFormat(locale(), { day: "numeric", month: "long", year: "numeric" }).format(new Date(y, mo - 1, d));
     $("#bookingOk").textContent = t("book.ok", { type: t("type." + booked.type), date, time: booked.time });
   };
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    booked = { type: $('input[name="bookType"]:checked').value, date: dateIn.value, time: timeIn.value };
-    renderBooked();
-    form.hidden = true;
-    $(".types").hidden = true;
-    $("#bookingOk").hidden = false;
+    const btn = form.querySelector("button[type=submit]");
+    const [nameIn, phoneIn] = form.querySelectorAll("input[type=text]:not(.hp), input[type=tel]");
+    const data = {
+      type: $('input[name="bookType"]:checked').value,
+      name: nameIn.value.trim(), phone: phoneIn.value.trim(),
+      date: dateIn.value, time: timeIn.value, lang, hp: form.hp.value
+    };
+    btn.disabled = true; btn.textContent = t("form.sending");
+    const ok = await post("booking", data).catch(() => false);
+    btn.disabled = false; btn.textContent = t("form.send");
+    const msg = $("#bookingOk");
+    if (ok) {
+      booked = data;
+      renderBooked();
+      form.hidden = true;
+      $(".types").hidden = true;
+    } else {
+      msg.innerHTML = `${esc(t("form.error"))} <a data-wa data-track="whatsapp_click" href="${waLink()}" target="_blank" rel="noopener">WhatsApp</a>`;
+    }
+    msg.hidden = false;
   });
+
+  // ================= BİZE ULAŞIN =================
+  const cForm = $("#contactForm");
+  cForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = cForm.elements, msg = $("#contactMsg");
+    const data = { name: f.name.value.trim(), phone: f.phone.value.trim(), email: f.email.value.trim(), message: f.message.value.trim(), lang, hp: f.hp.value };
+    if (!data.name || !data.message || (!data.phone && !data.email)) { msg.textContent = t("form.required"); msg.hidden = false; return; }
+    const btn = cForm.querySelector("button[type=submit]");
+    btn.disabled = true; btn.textContent = t("form.sending");
+    const ok = await post("contact", data).catch(() => false);
+    btn.disabled = false; btn.textContent = t("form.send");
+    if (ok) { cForm.reset(); msg.textContent = t("contact.ok"); }
+    else msg.innerHTML = `${esc(t("form.error"))} <a data-wa data-track="whatsapp_click" href="${waLink()}" target="_blank" rel="noopener">WhatsApp</a>`;
+    msg.hidden = false;
+  });
+
+  // ================= İLETİŞİM BİLGİLERİ / HARİTA =================
+  const waLink = () => "https://wa.me/" + String(SETTINGS.whatsapp || "").replace(/\D/g, "");
+  const telLink = (p) => {
+    let d = String(p || "").replace(/\D/g, "");
+    if (d.startsWith("0")) d = "90" + d.slice(1);
+    return "tel:+" + d;
+  };
+  const mapsUrl = () => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(SETTINGS.mapsQuery);
+  const applySettings = () => {
+    const S = SETTINGS;
+    $$("[data-wa]").forEach((a) => (a.href = waLink()));
+    $$('[data-set="phone"]').forEach((a) => { a.href = telLink(S.phone); a.textContent = S.phone; a.hidden = !S.phone; });
+    $$('[data-set="email"]').forEach((a) => { a.href = "mailto:" + S.email; a.textContent = S.email; a.hidden = !S.email; });
+    $$('[data-set="address"]').forEach((a) => { a.href = mapsUrl(); a.innerHTML = String(S.address || "").split("\n").map(esc).join("<br>"); });
+    const ig = "https://www.instagram.com/" + encodeURIComponent(S.instagram || "") + "/";
+    $$('[data-set="instagram"]').forEach((a) => { a.href = ig; a.hidden = !S.instagram; });
+    $$('[data-set="instagramText"]').forEach((a) => { a.href = ig; a.textContent = "@" + S.instagram; a.hidden = !S.instagram; });
+    const frame = $("#mapFrame");
+    const src = "https://maps.google.com/maps?q=" + encodeURIComponent(S.mapsQuery) + "&z=16&output=embed";
+    if (frame.getAttribute("src") !== src) frame.setAttribute("src", src);
+    $("#mapDirections").href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(S.mapsQuery);
+    const more = $("#reviewsMore");
+    more.href = S.googleReviewsUrl || mapsUrl();
+  };
+  const renderHours = () => {
+    const H = SETTINGS.hours;
+    $("#hoursView").innerHTML = `
+      <span><b>${esc(t("contact.weekdays"))}</b> <span dir="ltr">${esc(H.weekdayOpen)} – ${esc(H.weekdayClose)}</span></span>
+      <span><b>${esc(t("contact.sunday"))}</b> ${H.sundayClosed ? esc(t("contact.closed")) : `<span dir="ltr">${esc(H.sundayOpen)} – ${esc(H.sundayClose)}</span>`}</span>`;
+  };
+
+  // ================= YORUMLAR =================
+  const starSvg = (on) => `<svg viewBox="0 0 24 24" class="${on ? "on" : ""}"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/></svg>`;
+  const stars = (n) => `<span class="stars" role="img" aria-label="${n}/5">${[1, 2, 3, 4, 5].map((i) => starSvg(i <= Math.round(n))).join("")}</span>`;
+  const renderReviews = () => {
+    const sec = $("#yorumlar");
+    sec.hidden = REVIEWS.length === 0;
+    if (!REVIEWS.length) return;
+    const avg = REVIEWS.reduce((s, r) => s + r.rating, 0) / REVIEWS.length;
+    $("#reviewsScore").innerHTML = `<strong dir="ltr">${avg.toLocaleString(locale(), { maximumFractionDigits: 1, minimumFractionDigits: 1 })}</strong>${stars(avg)}<span>${esc(t("reviews.count", { n: REVIEWS.length }))}</span>`;
+    $("#reviewsList").innerHTML = REVIEWS.map((r) => `
+      <figure class="review">
+        <div class="review__top">
+          <span class="review__avatar" aria-hidden="true">${esc((r.name || "?").trim().charAt(0).toLocaleUpperCase("tr"))}</span>
+          <figcaption><strong>${esc(r.name)}</strong>${r.date ? `<span>${esc(r.date)}</span>` : ""}</figcaption>
+        </div>
+        ${stars(r.rating)}
+        <blockquote>${esc(r.text)}</blockquote>
+      </figure>`).join("");
+  };
 
   // ================= BEDEN REHBERİ =================
   // Kadın beden tablosu (cm). Değerleri değiştirmek için bu listeyi düzenleyin.
@@ -364,7 +493,6 @@
     $("#addrCard").hidden = !show;
     shipForm.hidden = show;
     if (show) $("#addrView").innerHTML = addrLines(addr).map(esc).join("<br>");
-    // Sepetteki satır
     $("#shipLine").innerHTML = addr
       ? `<span class="ship-line__label">${esc(t("ship.to"))}</span>
          <span class="ship-line__text">${esc(addr.name)} — ${esc([addr.district, addr.city].filter(Boolean).join(", "))}</span>
@@ -406,10 +534,10 @@
   if (location.hash === "#kargo") setTimeout(() => openLayer("ship"), 0);
 
   // ================= DEFİLE =================
-  const SHOW = window.GIVANI_SHOW || { year: new Date().getFullYear(), images: [] };
-  const IMGS = (SHOW.images || []).filter((im) => im && im.src);
   const viewer = $("#viewer"), vImg = $("#viewerImg");
   let vIndex = 0;
+  const cover = $("#showCover");
+  const coverDefault = cover.innerHTML;
 
   const showTitle = () => t("show.title", { year: SHOW.year });
 
@@ -417,22 +545,25 @@
     $("#showTitle").textContent = showTitle();
     $("#galleryTitle").textContent = showTitle();
     $("#galleryCount").textContent = IMGS.length ? t("show.photos", { n: IMGS.length }) : "";
-    const cover = $("#showCover");
-    if (IMGS.length && !cover.querySelector("img")) {
-      cover.innerHTML = `<img src="${esc(IMGS[0].src)}" alt="" loading="lazy">`;
+    if (IMGS.length) {
+      const img = cover.querySelector("img");
+      if (!img || img.getAttribute("src") !== IMGS[0].src) cover.innerHTML = `<img src="${esc(IMGS[0].src)}" alt="" loading="lazy">`;
       cover.classList.add("has-img");
+    } else if (cover.classList.contains("has-img")) {
+      cover.innerHTML = coverDefault;
+      cover.classList.remove("has-img");
     }
   };
 
   const renderGallery = () => {
-    const grid = $("#galleryGrid");
+    const g = $("#galleryGrid");
     $("#galleryEmpty").hidden = IMGS.length > 0;
     if (!IMGS.length) {
-      const g = ["g-ball", "g-mermaid", "g-aline", "g-sheath", "g-off", "g-sleeve"];
-      grid.innerHTML = g.map((id) => `<div class="gallery__item is-placeholder"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${id}"/></svg></div></div>`).join("");
+      const gs = ["g-ball", "g-mermaid", "g-aline", "g-sheath", "g-off", "g-sleeve"];
+      g.innerHTML = gs.map((id) => `<div class="gallery__item is-placeholder"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${id}"/></svg></div></div>`).join("");
       return;
     }
-    grid.innerHTML = IMGS.map((im, i) => `
+    g.innerHTML = IMGS.map((im, i) => `
       <button class="gallery__item" data-view="${i}">
         <img src="${esc(im.src)}" alt="${esc(im.alt || t("show.alt", { year: SHOW.year, i: i + 1 }))}" loading="lazy">
       </button>`).join("");
@@ -443,12 +574,11 @@
     vImg.src = im.src;
     vImg.alt = im.alt || t("show.alt", { year: SHOW.year, i: vIndex + 1 });
     $("#viewerCount").textContent = `${vIndex + 1} / ${IMGS.length}`;
-    // Sonraki görseli önceden yükle
     const next = IMGS[(vIndex + 1) % IMGS.length];
     if (next) { const pre = new Image(); pre.src = next.src; }
   };
   function step(d) { if (IMGS.length) { vIndex = (vIndex + d + IMGS.length) % IMGS.length; showImage(); } }
-  const openViewer = (i) => { vIndex = i; viewer.hidden = false; showImage(); $("#viewerClose").focus(); };
+  const openViewer = (i) => { vIndex = i; viewer.hidden = false; showImage(); ev("gallery_photo"); $("#viewerClose").focus(); };
   function closeViewer() {
     viewer.hidden = true;
     $(`.gallery__item[data-view="${vIndex}"]`)?.focus({ preventScroll: false });
@@ -463,7 +593,6 @@
   $("#viewerClose").addEventListener("click", closeViewer);
   viewer.addEventListener("click", (e) => { if (e.target === viewer || e.target.id === "viewerStage") closeViewer(); });
 
-  // Telefonda kaydırma ile geçiş
   let sx = null;
   viewer.addEventListener("pointerdown", (e) => { sx = e.clientX; });
   viewer.addEventListener("pointerup", (e) => {
@@ -474,19 +603,16 @@
   if (location.hash === "#defile-galeri") setTimeout(() => openLayer("show"), 0);
 
   // ================= GİRİŞ EKRANI =================
-  // Her ziyarette (oturum başına bir kez) gösterilir. Doğrudan bir bölüm bağlantısıyla gelinirse atlanır.
   const intro = $("#intro");
-  if (document.documentElement.classList.contains("has-intro")) {
-    intro.hidden = false;
-  }
+  if (document.documentElement.classList.contains("has-intro")) intro.hidden = false;
   const enterSite = () => {
     try { sessionStorage.setItem("gv_intro", "1"); } catch {}
     intro.classList.add("is-leaving");
     document.documentElement.classList.remove("has-intro");
     setTimeout(() => { intro.hidden = true; }, 900);
+    ev("intro_enter");
   };
   $("#introEnter").addEventListener("click", enterSite);
-  intro.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target === intro) enterSite(); });
 
   // ================= DİL SEÇİCİ =================
   const langBtn = $("#langBtn"), langMenu = $("#langMenu");
@@ -521,24 +647,56 @@
     $$("[data-i18n-aria]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
     renderLangLists();
     renderQuick();
-    syncAuth();
     fillTimes();
     renderBooked();
     renderSizes();
     renderAddr();
     renderShowSection();
+    renderHours();
+    renderReviews();
+    applySettings();
     if (!$("#panel-show").hidden) renderGallery();
     refresh();
   };
 
   function setLang(code) {
     if (!langOf(code)) return;
+    const changed = code !== lang;
     lang = code;
     store.set("gv_lang", code);
     closeLangMenu();
     applyLang();
+    if (changed) ev("lang_change");
+  }
+
+  // ================= BÖLÜM GÖRÜNTÜLEME =================
+  if ("IntersectionObserver" in window) {
+    const seen = new Set();
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+      const k = en.target.dataset.sec;
+      if (en.isIntersecting && !seen.has(k)) { seen.add(k); ev(k); io.unobserve(en.target); }
+    }), { threshold: 0.35 });
+    $$("[data-sec]").forEach((s) => io.observe(s));
   }
 
   $("#year").textContent = new Date().getFullYear();
   applyLang();
+
+  // ================= GÜNCEL İÇERİK (yönetim panelinden) =================
+  fetch("/api/public?a=content")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((c) => {
+      if (!c || !c.ok) return;
+      if (c.settings) SETTINGS = { ...SETTINGS, ...c.settings, hours: { ...SETTINGS.hours, ...(c.settings.hours || {}) } };
+      if (Array.isArray(c.products)) PRODUCTS = c.products.map((p) => ({ ...p, id: String(p.id) }));
+      if (c.show) { SHOW = c.show; IMGS = (SHOW.images || []).filter((im) => im && im.src); }
+      if (Array.isArray(c.reviews)) REVIEWS = c.reviews;
+      cleanSaved();
+      applyLang();
+    })
+    .catch(() => {});
+
+  // Ziyaret kaydı ve "şu an sitede" sayacı
+  track("pv", { d: device(), l: lang, r: document.referrer, p: location.pathname });
+  setInterval(() => { if (!document.hidden) track("ping"); }, 120000);
 }

@@ -73,7 +73,6 @@
   <div class="intro__langs" id="introLangs" role="group" aria-label="Dil" data-i18n-aria="ui.language"></div>
 </div>
 
-<div class="topbar" data-i18n="topbar">Türkiye geneli ücretsiz kargo</div>
 
 <header class="header" id="header">
   <div class="wrap header__inner">
@@ -95,7 +94,7 @@
         <ul class="lang__menu" id="langMenu" role="listbox" hidden></ul>
       </div>
       <button class="icon-btn" aria-label="Ara" data-i18n-aria="ui.search" data-open="search"><svg><use href="#i-search"/></svg></button>
-      <button class="icon-btn hide-sm" aria-label="Hesabım" data-i18n-aria="account" data-open="account"><svg><use href="#i-user"/></svg></button>
+      <a class="icon-btn" data-wa data-track="whatsapp_click" href="https://wa.me/905309518934" target="_blank" rel="noopener" aria-label="WhatsApp" data-i18n-aria="ui.whatsapp"><svg><use href="#i-whatsapp"/></svg></a>
       <button class="icon-btn badge-wrap hide-sm" aria-label="Favoriler" data-i18n-aria="favorites" data-open="fav"><svg><use href="#i-heart"/></svg><span class="badge" data-count="fav">0</span></button>
       <button class="icon-btn badge-wrap" aria-label="Sepet" data-i18n-aria="cart" data-open="cart"><svg><use href="#i-bag"/></svg><span class="badge" data-count="cart">0</span></button>
     </div>
@@ -110,10 +109,10 @@
     <a href="#atolye" data-i18n="nav.atelier">Atölye</a>
     <a href="#defile" data-i18n="nav.show">Defile</a>
     <a href="#randevu" data-i18n="nav.booking">Randevu</a>
-    <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
+    <a href="#bize-ulasin" data-i18n="nav.contact">İletişim</a>
   </nav>
   <div class="drawer__tools">
-    <button data-open="account"><svg><use href="#i-user"/></svg><span data-i18n="account">Hesabım</span></button>
+    <a data-wa data-track="whatsapp_click" href="https://wa.me/905309518934" target="_blank" rel="noopener"><svg><use href="#i-whatsapp"/></svg><span data-i18n="ui.whatsapp">WhatsApp ile yazın</span></a>
     <button data-open="fav"><svg><use href="#i-heart"/></svg><span data-i18n="favorites">Favoriler</span> <span class="badge badge--inline" data-count="fav">0</span></button>
   </div>
   <div class="drawer__langs" id="drawerLangs" role="group" aria-label="Dil" data-i18n-aria="ui.language"></div>
@@ -135,23 +134,6 @@
 
 <!-- Yan paneller -->
 <div class="backdrop" id="backdrop" hidden></div>
-
-<aside class="panel" id="panel-account" role="dialog" aria-modal="true" aria-label="Hesabım" data-i18n-aria="account" hidden>
-  <div class="panel__head"><h3 data-i18n="account">Hesabım</h3><button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button></div>
-  <div class="panel__body">
-    <div class="seg" role="tablist">
-      <button class="seg__btn is-active" data-auth="login" data-i18n="auth.login">Giriş Yap</button>
-      <button class="seg__btn" data-auth="register" data-i18n="auth.register">Üye Ol</button>
-    </div>
-    <form class="form" id="authForm">
-      <input type="text" name="name" placeholder="Ad Soyad" aria-label="Ad Soyad" data-i18n-placeholder="form.name" data-i18n-aria="form.name" data-only="register" hidden>
-      <input type="email" name="email" placeholder="E-posta" aria-label="E-posta" data-i18n-placeholder="form.email" data-i18n-aria="form.email" required>
-      <input type="password" name="password" placeholder="Şifre" aria-label="Şifre" data-i18n-placeholder="form.password" data-i18n-aria="form.password" required minlength="6">
-      <button type="submit" class="btn btn--block" id="authSubmit">Giriş Yap</button>
-      <p class="form__msg" id="authMsg" hidden></p>
-    </form>
-  </div>
-</aside>
 
 <aside class="panel" id="panel-fav" role="dialog" aria-modal="true" aria-label="Favoriler" data-i18n-aria="favorites" hidden>
   <div class="panel__head"><h3><span data-i18n="favorites">Favoriler</span> <span class="muted" data-count="fav">0</span></h3><button class="icon-btn" data-close aria-label="Kapat" data-i18n-aria="ui.close"><svg><use href="#i-close"/></svg></button></div>
@@ -281,9 +263,80 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero__stage shot">
-      <svg preserveAspectRatio="xMidYMax meet" class="gown gown--side"><use href="#g-aline"/></svg>
-      <svg preserveAspectRatio="xMidYMax meet" class="gown gown--main"><use href="#g-ball"/></svg>
-      <svg preserveAspectRatio="xMidYMax meet" class="gown gown--side"><use href="#g-mermaid"/></svg>
+      <svg class="bride" preserveAspectRatio="xMidYMax meet" viewBox="0 0 400 640" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="br-gown" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".55" stop-color="#f7f7f7"/>
+      <stop offset="1" stop-color="#dcdcdc"/>
+    </linearGradient>
+    <linearGradient id="br-tulle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".85"/>
+    </linearGradient>
+    <linearGradient id="br-veil" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".3"/>
+    </linearGradient>
+    <radialGradient id="br-shadow"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+
+  <ellipse class="br-shadow" cx="190" cy="598" rx="178" ry="13" fill="url(#br-shadow)"/>
+
+  <g class="br-body">
+    <!-- Duvak -->
+    <g class="br-veil">
+      <path d="M202 90C166 100 124 146 94 210C66 270 46 346 34 440C30 478 34 510 42 532C60 478 86 414 118 352C146 298 172 240 192 176C198 148 201 118 202 90Z" fill="url(#br-veil)" stroke="#d4d4d4" stroke-width=".8"/>
+      <path d="M202 90C176 112 146 162 124 224C106 274 92 336 82 410" fill="none" stroke="#e4e4e4" stroke-width=".7"/>
+      <path d="M202 90C186 122 164 178 144 242C130 288 116 332 100 376" fill="none" stroke="#e8e8e8" stroke-width=".7"/>
+    </g>
+
+    <!-- Etek (alt kat) -->
+    <g class="br-skirt">
+      <path d="M197 212C185 270 150 354 94 454C68 500 44 548 26 592Q66 608 106 598Q146 614 186 602Q228 616 268 600Q306 612 346 590C332 520 308 446 280 380C256 318 238 262 225 212Z" fill="url(#br-gown)" stroke="#cbcbcb" stroke-width="1"/>
+      <g fill="none" stroke="#e0e0e0" stroke-width="1">
+        <path d="M204 216C196 300 170 420 130 598"/>
+        <path d="M211 216C211 320 205 450 190 602"/>
+        <path d="M218 216C228 310 248 430 270 600"/>
+        <path d="M200 216C178 300 136 412 70 596"/>
+        <path d="M222 216C246 300 288 420 322 600"/>
+      </g>
+    </g>
+    <!-- Etek (tül kat) -->
+    <g class="br-tulle">
+      <path d="M198 214C184 280 148 370 104 450C84 488 66 528 54 566Q96 584 138 574Q176 590 214 578Q252 592 290 576Q318 586 338 570C322 500 298 432 272 372C250 320 234 266 224 214Z" fill="url(#br-tulle)" stroke="#d6d6d6" stroke-width=".7"/>
+    </g>
+
+    <!-- Alttaki kol -->
+    <g class="br-arm2" fill="#f3f3f3" stroke="#c6c6c6" stroke-width=".9" stroke-linejoin="round">
+      <path d="M186 150C179 165 172 180 166 195L175 199C181 185 188 171 195 157Z"/>
+      <path d="M166 195C160 209 154 221 147 232L155 238C162 226 169 213 175 199Z"/>
+      <ellipse cx="149" cy="241" rx="5.2" ry="7.6" transform="rotate(30 149 241)"/>
+    </g>
+
+    <!-- Üst beden -->
+    <path d="M206 123L214 123L216 141L204 141Z" fill="#f3f3f3" stroke="#c6c6c6" stroke-width=".8"/>
+    <path d="M196 139Q189 142 185 150L190 154Q200 147 210 153Q220 147 230 154L235 150Q231 142 224 139Z" fill="#f3f3f3" stroke="#c6c6c6" stroke-width=".8"/>
+    <path d="M190 154Q200 147 210 153Q220 147 230 154C229 172 226 192 224 210L197 210C195 192 192 172 190 154Z" fill="url(#br-gown)" stroke="#cbcbcb" stroke-width="1"/>
+    <path d="M200 158C204 176 205 192 204 206M220 158C216 176 215 192 216 206" fill="none" stroke="#e3e3e3" stroke-width=".8"/>
+    <path d="M196 206L225 206L224 214L197 214Z" fill="#d4d4d4"/>
+
+    <!-- Kalkık kol -->
+    <g class="br-arm" fill="#f3f3f3" stroke="#c6c6c6" stroke-width=".9" stroke-linejoin="round">
+      <path d="M226 151C237 137 246 125 252 114L261 119C255 132 246 146 236 158Z"/>
+      <path d="M252 114C257 99 260 86 261 70L270 70C270 89 267 104 261 119Z"/>
+      <ellipse cx="266" cy="62" rx="5.2" ry="8.6" transform="rotate(8 266 62)"/>
+    </g>
+
+    <!-- Baş -->
+    <g class="br-head">
+      <ellipse cx="212" cy="105" rx="14.5" ry="18.5" fill="#f3f3f3" stroke="#c6c6c6" stroke-width=".8" transform="rotate(-10 212 105)"/>
+      <path d="M197 104C194 88 205 79 218 83C227 86 230 94 228 101C220 92 207 92 199 109Z" fill="#9a9a9a"/>
+      <circle cx="196" cy="93" r="10.5" fill="#9a9a9a"/>
+      <path d="M190 86l3-5 3 4 3-6 3 5 3-4 2 5" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>
     </div>
     <div class="wrap hero__text">
       <h1 data-i18n="hero.title">Yeni Koleksiyon</h1>
@@ -292,7 +345,7 @@
   </section>
 
   <!-- Kategoriler -->
-  <section class="section" id="koleksiyon">
+  <section class="section" id="koleksiyon" data-sec="view_collection">
     <div class="wrap">
       <h2 class="title" data-i18n="nav.collection">Koleksiyon</h2>
       <div class="cats">
@@ -305,7 +358,7 @@
   </section>
 
   <!-- Ürünler -->
-  <section class="section section--top0" id="yeni-sezon">
+  <section class="section section--top0" id="yeni-sezon" data-sec="view_new_season">
     <div class="wrap">
       <div class="bar">
         <h2 class="title title--left" data-i18n="nav.newSeason">Yeni Sezon</h2>
@@ -324,7 +377,7 @@
   </section>
 
   <!-- Atölye -->
-  <section class="split" id="atolye">
+  <section class="split" id="atolye" data-sec="view_atelier">
     <div class="shot split__media"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#g-sleeve"/></svg></div>
     <div class="split__text">
       <h2 data-i18n="split.title">Kişiye özel dikim</h2>
@@ -335,7 +388,7 @@
 
 
   <!-- Defile -->
-  <section class="show" id="defile">
+  <section class="show" id="defile" data-sec="view_show">
     <button class="show__cover" data-open="show" aria-label="Defile" data-i18n-aria="show.cta">
       <div class="shot show__stage" id="showCover">
         <div class="runway" aria-hidden="true"></div>
@@ -360,8 +413,22 @@
     </div>
   </section>
 
+  <!-- Yorumlar -->
+  <section class="section reviews" id="yorumlar" data-sec="view_reviews" hidden>
+    <div class="wrap">
+      <div class="bar">
+        <div class="reviews__head">
+          <h2 class="title title--left" data-i18n="reviews.title">Yorumlar</h2>
+          <div class="reviews__score" id="reviewsScore"></div>
+        </div>
+        <a class="btn btn--outline" id="reviewsMore" data-track="reviews_more" href="#" target="_blank" rel="noopener" data-i18n="reviews.more">Google'da tüm yorumlar</a>
+      </div>
+      <div class="reviews__list" id="reviewsList"></div>
+    </div>
+  </section>
+
   <!-- Randevu -->
-  <section class="section section--tint" id="randevu">
+  <section class="section section--tint" id="randevu" data-sec="view_booking">
     <div class="wrap booking">
       <h2 class="title title--left" data-i18n="nav.booking">Randevu</h2>
       <div class="types" role="radiogroup" aria-label="Randevu türü" data-i18n-aria="book.typeLabel">
@@ -375,6 +442,7 @@
         </label>
       </div>
       <form class="booking__form" id="bookingForm">
+        <input type="text" name="hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input type="text" placeholder="Ad Soyad" aria-label="Ad Soyad" data-i18n-placeholder="form.name" data-i18n-aria="form.name" required>
         <input type="tel" placeholder="Telefon" aria-label="Telefon" data-i18n-placeholder="form.phone" data-i18n-aria="form.phone" required>
         <input type="date" id="bookDate" aria-label="Tarih" data-i18n-aria="form.date" required>
@@ -387,6 +455,38 @@
     </div>
   </section>
 
+  <!-- Bize Ulaşın -->
+  <section class="section contact" id="bize-ulasin" data-sec="view_contact">
+    <div class="wrap contact__grid">
+      <div>
+        <h2 class="title title--left" data-i18n="contact.title">Bize Ulaşın</h2>
+        <form class="contact__form" id="contactForm" novalidate>
+          <input type="text" name="hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input name="name" autocomplete="name" placeholder="Ad Soyad" data-i18n-placeholder="form.name" data-i18n-aria="form.name" required>
+          <input name="phone" type="tel" autocomplete="tel" placeholder="Telefon" data-i18n-placeholder="form.phone" data-i18n-aria="form.phone">
+          <input name="email" type="email" autocomplete="email" class="span2" placeholder="E-posta" data-i18n-placeholder="form.email" data-i18n-aria="form.email">
+          <textarea name="message" rows="5" class="span2" placeholder="Mesajınız" data-i18n-placeholder="form.message" data-i18n-aria="form.message" required></textarea>
+          <button type="submit" class="btn span2" data-i18n="form.send">Gönder</button>
+          <p class="form__note span2" id="contactMsg" role="status" hidden></p>
+        </form>
+      </div>
+      <div class="contact__info">
+        <a class="contact__wa" data-wa data-track="whatsapp_click" href="https://wa.me/905309518934" target="_blank" rel="noopener"><svg><use href="#i-whatsapp"/></svg><span data-i18n="ui.whatsapp">WhatsApp ile yazın</span></a>
+        <dl>
+          <div><dt data-i18n="nav.contact">İletişim</dt><dd><a data-set="phone" data-track="phone_click" href="tel:+905309518934" dir="ltr">0530 951 89 34</a><a data-set="email" data-track="email_click" href="mailto:info@givanibridal.com" dir="ltr">info@givanibridal.com</a></dd></div>
+          <div><dt data-i18n="map.title">Konum</dt><dd><a class="addr" data-set="address" data-track="map_click" href="#" target="_blank" rel="noopener">Atikali Mah. Fevzipaşa Cad.<br>Eski Altay Sk. No:3 D:A<br>34087 Fatih / İstanbul</a></dd></div>
+          <div><dt data-i18n="contact.hours">Çalışma saatleri</dt><dd id="hoursView"></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Harita -->
+  <section class="map" aria-label="Harita" data-i18n-aria="map.title">
+    <iframe id="mapFrame" title="Givani Bridal" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <a class="btn map__btn" id="mapDirections" data-track="directions_click" href="#" target="_blank" rel="noopener" data-i18n="map.directions">Yol tarifi al</a>
+  </section>
+
 </main>
 
 <footer class="footer" id="iletisim">
@@ -397,26 +497,26 @@
       <a href="#yeni-sezon" data-i18n="nav.newSeason">Yeni Sezon</a>
       <a href="#defile" data-i18n="nav.show">Defile</a>
       <a href="#randevu" data-i18n="nav.booking">Randevu</a>
+      <a href="#bize-ulasin" data-i18n="contact.title">Bize Ulaşın</a>
     </div>
     <div class="footer__col">
       <h4 data-i18n="footer.help">Yardım</h4>
       <a href="#beden-rehberi" data-open="size" data-i18n="footer.size">Beden Rehberi</a>
       <a href="#kargo" data-open="ship" data-i18n="footer.shipping">Kargo</a>
-      <a href="#" data-i18n="footer.faq">S.S.S.</a>
     </div>
     <div class="footer__col">
       <h4 data-i18n="nav.contact">İletişim</h4>
-      <a class="addr" href="https://www.google.com/maps/search/?api=1&amp;query=Givani+Bridal%2C+Eski+Altay+Sk.+No%3A3%2C+Fatih%2C+%C4%B0stanbul" target="_blank" rel="noopener">Atikali Mah. Fevzipaşa Cad.<br>Eski Altay Sk. No:3 D:A<br>34087 Fatih / İstanbul</a>
-      <a href="tel:+905309518934">0530 951 89 34</a>
-      <a href="mailto:info@givanibridal.com" dir="ltr">info@givanibridal.com</a>
+      <a class="addr" data-set="address" data-track="map_click" href="#" target="_blank" rel="noopener">Atikali Mah. Fevzipaşa Cad.<br>Eski Altay Sk. No:3 D:A<br>34087 Fatih / İstanbul</a>
+      <a data-set="phone" data-track="phone_click" href="tel:+905309518934" dir="ltr">0530 951 89 34</a>
+      <a data-set="email" data-track="email_click" href="mailto:info@givanibridal.com" dir="ltr">info@givanibridal.com</a>
     </div>
     <div class="footer__col">
       <h4 data-i18n="footer.follow">Takip Edin</h4>
       <div class="social">
-        <a href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener" aria-label="Instagram: givanibridal"><svg><use href="#i-instagram"/></svg></a>
-        <a href="https://wa.me/905309518934" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a>
+        <a data-set="instagram" data-track="instagram_click" href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a>
+        <a data-wa data-track="whatsapp_click" href="https://wa.me/905309518934" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a>
       </div>
-      <a href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener" dir="ltr">@givanibridal</a>
+      <a data-set="instagramText" data-track="instagram_click" href="https://www.instagram.com/givanibridal/" target="_blank" rel="noopener" dir="ltr">@givanibridal</a>
     </div>
   </div>
 

@@ -163,16 +163,6 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 html.has-intro body { overflow: hidden; }
 html.has-intro #intro[hidden] { display: grid !important; }
 
-/* ---------- Topbar ---------- */
-.topbar {
-  background: var(--tint);
-  color: var(--ink);
-  font-size: 14px;
-  text-align: center;
-  padding: 9px 16px;
-  border-bottom: 1px solid var(--line);
-}
-
 /* ---------- Header ---------- */
 .header {
   position: sticky; top: 0; z-index: 50;
@@ -258,11 +248,29 @@ html.has-intro #intro[hidden] { display: grid !important; }
   gap: 1%;
   align-items: flex-end;
 }
-.hero__stage { justify-content: center; gap: 2%; }
-.hero__stage::before { bottom: 64px; width: 56%; height: 50px; opacity: .45; }
-.hero__stage .gown { width: 20%; height: 72%; margin-bottom: 80px; opacity: .38; filter: none; }
-.hero__stage .gown--main { width: 26%; opacity: .45; }
-.hero__stage .gown--side { height: 58%; }
+.hero__stage { justify-content: center; align-items: flex-end; }
+.hero__stage::before { display: none; }
+/* Dans eden gelin */
+.bride { position: relative; height: 96%; width: auto; max-width: 92%; margin-bottom: 1%; opacity: .92; }
+.bride g, .bride ellipse { transform-box: view-box; }
+.bride .br-body { transform-origin: 196px 600px; animation: br-sway 7s ease-in-out infinite alternate; }
+.bride .br-skirt { transform-origin: 211px 212px; animation: br-swish 3.5s ease-in-out infinite alternate; }
+.bride .br-tulle { transform-origin: 211px 214px; animation: br-swish2 3.5s ease-in-out infinite alternate; }
+.bride .br-veil { transform-origin: 202px 90px; animation: br-veil 4.2s ease-in-out infinite alternate; }
+.bride .br-arm { transform-origin: 230px 153px; animation: br-arm 3.5s ease-in-out infinite alternate; }
+.bride .br-arm2 { transform-origin: 190px 153px; animation: br-arm2 3.5s ease-in-out infinite alternate; }
+.bride .br-head { transform-origin: 210px 124px; animation: br-head 7s ease-in-out infinite alternate; }
+.bride .br-shadow { transform-origin: 190px 598px; animation: br-shadow 7s ease-in-out infinite alternate; }
+@keyframes br-sway { from { transform: rotate(-2.2deg); } to { transform: rotate(2.2deg); } }
+@keyframes br-swish { from { transform: skewX(4deg) scaleX(.97); } to { transform: skewX(-4deg) scaleX(1.04); } }
+@keyframes br-swish2 { from { transform: skewX(-5deg) scaleX(1.03); } to { transform: skewX(5deg) scaleX(.96); } }
+@keyframes br-veil { from { transform: rotate(-5deg) skewY(-2deg); } to { transform: rotate(4deg) skewY(2deg); } }
+@keyframes br-arm { from { transform: rotate(-9deg); } to { transform: rotate(5deg); } }
+@keyframes br-arm2 { from { transform: rotate(6deg); } to { transform: rotate(-6deg); } }
+@keyframes br-head { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+@keyframes br-shadow { from { transform: scaleX(.94); } to { transform: scaleX(1.05); } }
+@media (prefers-reduced-motion: reduce) { .bride * { animation: none !important; } }
+
 
 .hero__text {
   position: absolute; inset: 0;
@@ -626,7 +634,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
 
 /* ---------- Mobil menü araçları ---------- */
 .drawer__tools { display: flex; flex-direction: column; margin-top: 24px; }
-.drawer__tools button {
+.drawer__tools button, .drawer__tools a {
   display: flex; align-items: center; gap: 12px;
   min-height: 52px; font-size: 18px; font-weight: 500; color: var(--ink);
 }
@@ -737,6 +745,79 @@ html.has-intro #intro[hidden] { display: grid !important; }
 
 .total { display: flex; justify-content: space-between; font-size: 17px; margin-bottom: 16px; color: var(--ink); }
 .total strong { font-weight: 600; }
+
+/* ---------- Bot tuzağı ---------- */
+.hp { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; border: 0 !important; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
+
+/* ---------- Yorumlar ---------- */
+.reviews__head { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
+.reviews__score { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--muted); }
+.reviews__score strong { font-size: 30px; font-weight: 500; color: var(--ink); letter-spacing: -.02em; }
+.stars { display: inline-flex; gap: 2px; }
+.stars svg { width: 18px; height: 18px; fill: #d4d4d4; stroke: none; }
+.stars svg.on { fill: var(--ink); }
+.reviews__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 14px;
+}
+.review {
+  margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 26px;
+  background: var(--tint);
+  border-radius: 18px;
+}
+.review__top { display: flex; align-items: center; gap: 12px; }
+.review__avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  background: linear-gradient(180deg, #45474a, #2a2c2e); color: #fff;
+  font-size: 17px; font-weight: 500;
+}
+.review figcaption { display: flex; flex-direction: column; line-height: 1.3; }
+.review figcaption strong { font-size: 16px; font-weight: 600; color: var(--ink); }
+.review figcaption span { font-size: 14px; color: var(--muted); }
+.review blockquote { margin: 0; font-size: 16px; line-height: 1.65; color: var(--text); white-space: pre-line; }
+
+/* ---------- Bize Ulaşın ---------- */
+.contact__grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.contact .title { margin-bottom: 28px; }
+.contact__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.contact__form .span2 { grid-column: 1 / -1; }
+.contact__form input, .contact__form textarea {
+  min-height: 52px; padding: 13px 18px;
+  background: #fff; border: 1px solid var(--line); border-radius: 14px;
+  font: inherit; font-size: 16px; color: var(--ink); outline: none;
+  transition: border-color .3s var(--ease);
+}
+.contact__form textarea { resize: vertical; min-height: 140px; }
+.contact__form input:focus, .contact__form textarea:focus { border-color: var(--ink); }
+.contact__form ::placeholder { color: var(--muted); }
+.contact__form .btn { justify-self: start; }
+.form__note { font-size: 16px; color: var(--ink); }
+.form__note a, .booking__ok a { text-decoration: underline; text-underline-offset: 3px; }
+.contact__info { display: flex; flex-direction: column; gap: 28px; padding-top: 8px; }
+.contact__wa {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 22px; border-radius: 18px;
+  background: linear-gradient(180deg, #45474a, #2a2c2e); color: #fff;
+  font-size: 18px; font-weight: 500;
+  transition: transform .3s var(--ease);
+}
+.contact__wa:hover { transform: translateY(-2px); }
+.contact__wa svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.5; flex: none; }
+.contact__info dl { display: flex; flex-direction: column; gap: 22px; margin: 0; }
+.contact__info dt { font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+.contact__info dd { margin: 0; display: flex; flex-direction: column; gap: 4px; font-size: 17px; color: var(--ink); }
+.contact__info dd a:hover { opacity: .6; }
+.contact__info dd b { font-weight: 500; margin-inline-end: 6px; }
+
+/* ---------- Harita ---------- */
+.map { position: relative; height: clamp(360px, 42vw, 540px); background: var(--studio); }
+.map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) contrast(1.05); }
+.map__btn { position: absolute; left: var(--pad); bottom: 28px; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+[dir="rtl"] .map__btn { left: auto; right: var(--pad); }
 
 /* ---------- Beden rehberi ---------- */
 .modal {
@@ -868,9 +949,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .hide-sm { display: none; }
 
   .hero__stage { height: 62vh; min-height: 420px; }
-  .hero__stage .gown--side { display: none; }
-  .hero__stage .gown, .hero__stage .gown--main { width: 70%; height: 80%; margin-bottom: 40px; }
-  .hero__stage::before { bottom: 28px; width: 70%; }
+  .bride { height: 94%; }
 
   .cats, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { gap: 28px 10px; }
@@ -897,6 +976,10 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .modal__head h3 { font-size: 21px; }
   .modal__body { padding: 20px; }
   .ship-form { grid-template-columns: 1fr; }
+  .contact__grid { grid-template-columns: 1fr; }
+  .contact__form { grid-template-columns: 1fr; }
+  .contact__form .btn { justify-self: stretch; }
+  .review { padding: 22px; }
   .show__stage { height: 60vh; min-height: 400px; }
   .show__text { position: static; padding-top: 24px; }
   .show__g--1 { left: 50%; height: 62%; }

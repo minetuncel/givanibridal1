@@ -126,7 +126,24 @@ window.GIVANI_I18N = {
       "show.prev": "Önceki",
       "show.next": "Sonraki",
       "show.alt": "Defile {year} — görsel {i}",
-      "intro.enter": "Siteye gir"
+      "intro.enter": "Siteye gir",
+      "ui.whatsapp": "WhatsApp ile yazın",
+      "reviews.title": "Yorumlar",
+      "reviews.count": "{n} yorum",
+      "reviews.more": "Google'da tüm yorumlar",
+      "contact.title": "Bize Ulaşın",
+      "form.message": "Mesajınız",
+      "contact.ok": "Mesajınız alındı. En kısa sürede dönüş yapacağız.",
+      "contact.hours": "Çalışma saatleri",
+      "contact.weekdays": "Pazartesi – Cumartesi",
+      "contact.sunday": "Pazar",
+      "contact.closed": "Kapalı",
+      "map.title": "Konum",
+      "map.directions": "Yol tarifi al",
+      "form.error": "Gönderilemedi. Lütfen WhatsApp'tan yazın.",
+      "form.sending": "Gönderiliyor…",
+      "book.closedDay": "Bu gün randevu alınmıyor.",
+      "form.required": "Lütfen adınızı, mesajınızı ve telefon ya da e-posta bilginizi yazın."
     },
 
     /* ---------------- ENGLISH ---------------- */
@@ -235,7 +252,24 @@ window.GIVANI_I18N = {
       "show.prev": "Previous",
       "show.next": "Next",
       "show.alt": "Runway Show {year} — photo {i}",
-      "intro.enter": "Enter the site"
+      "intro.enter": "Enter the site",
+      "ui.whatsapp": "Message us on WhatsApp",
+      "reviews.title": "Reviews",
+      "reviews.count": "{n} reviews",
+      "reviews.more": "All reviews on Google",
+      "contact.title": "Contact Us",
+      "form.message": "Your message",
+      "contact.ok": "Thank you, we have received your message and will get back to you shortly.",
+      "contact.hours": "Opening hours",
+      "contact.weekdays": "Monday – Saturday",
+      "contact.sunday": "Sunday",
+      "contact.closed": "Closed",
+      "map.title": "Location",
+      "map.directions": "Get directions",
+      "form.error": "Could not be sent. Please message us on WhatsApp.",
+      "form.sending": "Sending…",
+      "book.closedDay": "No appointments on this day.",
+      "form.required": "Please enter your name, your message and a phone number or email."
     },
 
     /* ---------------- العربية ---------------- */
@@ -344,7 +378,24 @@ window.GIVANI_I18N = {
       "show.prev": "السابق",
       "show.next": "التالي",
       "show.alt": "عرض الأزياء {year} — صورة {i}",
-      "intro.enter": "دخول الموقع"
+      "intro.enter": "دخول الموقع",
+      "ui.whatsapp": "راسلينا على واتساب",
+      "reviews.title": "آراء العملاء",
+      "reviews.count": "{n} تقييم",
+      "reviews.more": "جميع التقييمات على Google",
+      "contact.title": "تواصلي معنا",
+      "form.message": "رسالتك",
+      "contact.ok": "شكرًا لك، استلمنا رسالتك وسنرد عليك قريبًا.",
+      "contact.hours": "ساعات العمل",
+      "contact.weekdays": "الاثنين – السبت",
+      "contact.sunday": "الأحد",
+      "contact.closed": "مغلق",
+      "map.title": "الموقع",
+      "map.directions": "احصلي على الاتجاهات",
+      "form.error": "تعذّر الإرسال. يرجى مراسلتنا على واتساب.",
+      "form.sending": "جارٍ الإرسال…",
+      "book.closedDay": "لا توجد مواعيد في هذا اليوم.",
+      "form.required": "يرجى كتابة اسمك ورسالتك ورقم الهاتف أو البريد الإلكتروني."
     },
 
     /* ---------------- FRANÇAIS ---------------- */
@@ -453,7 +504,24 @@ window.GIVANI_I18N = {
       "show.prev": "Précédente",
       "show.next": "Suivante",
       "show.alt": "Défilé {year} — photo {i}",
-      "intro.enter": "Entrer sur le site"
+      "intro.enter": "Entrer sur le site",
+      "ui.whatsapp": "Écrivez-nous sur WhatsApp",
+      "reviews.title": "Avis",
+      "reviews.count": "{n} avis",
+      "reviews.more": "Tous les avis sur Google",
+      "contact.title": "Contactez-nous",
+      "form.message": "Votre message",
+      "contact.ok": "Merci, nous avons bien reçu votre message et vous répondrons rapidement.",
+      "contact.hours": "Horaires",
+      "contact.weekdays": "Lundi – Samedi",
+      "contact.sunday": "Dimanche",
+      "contact.closed": "Fermé",
+      "map.title": "Emplacement",
+      "map.directions": "Itinéraire",
+      "form.error": "Échec de l'envoi. Écrivez-nous sur WhatsApp.",
+      "form.sending": "Envoi…",
+      "book.closedDay": "Pas de rendez-vous ce jour-là.",
+      "form.required": "Veuillez indiquer votre nom, votre message et un téléphone ou un e-mail."
     },
 
     /* ---------------- DEUTSCH ---------------- */
@@ -562,7 +630,24 @@ window.GIVANI_I18N = {
       "show.prev": "Zurück",
       "show.next": "Weiter",
       "show.alt": "Modenschau {year} — Foto {i}",
-      "intro.enter": "Zur Website"
+      "intro.enter": "Zur Website",
+      "ui.whatsapp": "Schreiben Sie uns auf WhatsApp",
+      "reviews.title": "Bewertungen",
+      "reviews.count": "{n} Bewertungen",
+      "reviews.more": "Alle Bewertungen auf Google",
+      "contact.title": "Kontakt",
+      "form.message": "Ihre Nachricht",
+      "contact.ok": "Danke, wir haben Ihre Nachricht erhalten und melden uns in Kürze.",
+      "contact.hours": "Öffnungszeiten",
+      "contact.weekdays": "Montag – Samstag",
+      "contact.sunday": "Sonntag",
+      "contact.closed": "Geschlossen",
+      "map.title": "Standort",
+      "map.directions": "Route planen",
+      "form.error": "Senden fehlgeschlagen. Bitte schreiben Sie uns auf WhatsApp.",
+      "form.sending": "Wird gesendet…",
+      "book.closedDay": "An diesem Tag keine Termine.",
+      "form.required": "Bitte geben Sie Ihren Namen, Ihre Nachricht und Telefon oder E-Mail an."
     },
 
     /* ---------------- РУССКИЙ ---------------- */
@@ -671,7 +756,24 @@ window.GIVANI_I18N = {
       "show.prev": "Назад",
       "show.next": "Вперёд",
       "show.alt": "Показ {year} — фото {i}",
-      "intro.enter": "Войти на сайт"
+      "intro.enter": "Войти на сайт",
+      "ui.whatsapp": "Напишите нам в WhatsApp",
+      "reviews.title": "Отзывы",
+      "reviews.count": "Отзывов: {n}",
+      "reviews.more": "Все отзывы в Google",
+      "contact.title": "Свяжитесь с нами",
+      "form.message": "Ваше сообщение",
+      "contact.ok": "Спасибо, мы получили ваше сообщение и скоро ответим.",
+      "contact.hours": "Часы работы",
+      "contact.weekdays": "Понедельник – суббота",
+      "contact.sunday": "Воскресенье",
+      "contact.closed": "Выходной",
+      "map.title": "Как нас найти",
+      "map.directions": "Проложить маршрут",
+      "form.error": "Не удалось отправить. Напишите нам в WhatsApp.",
+      "form.sending": "Отправка…",
+      "book.closedDay": "В этот день запись не ведётся.",
+      "form.required": "Укажите имя, сообщение и телефон или e-mail."
     }
   }
 };
