@@ -414,7 +414,7 @@
     $$("[data-wa]").forEach((a) => (a.href = waLink()));
     $$('[data-set="phone"]').forEach((a) => { a.href = telLink(S.phone); a.textContent = S.phone; a.hidden = !S.phone; });
     $$('[data-set="email"]').forEach((a) => { a.href = "mailto:" + S.email; a.textContent = S.email; a.hidden = !S.email; });
-    $$('[data-set="address"]').forEach((a) => { a.href = mapsUrl(); a.innerHTML = String(S.address || "").split("\n").map(esc).join("<br>"); });
+    $$('[data-set="address"]').forEach((a) => { a.href = mapsUrl(); a.innerHTML = "<span>" + String(S.address || "").split("\n").map(esc).join("<br>") + "</span>"; });
     const ig = "https://www.instagram.com/" + encodeURIComponent(S.instagram || "") + "/";
     $$('[data-set="instagram"]').forEach((a) => { a.href = ig; a.hidden = !S.instagram; });
     const pin = "https://www.pinterest.com/" + encodeURIComponent(S.pinterest || "") + "/";
