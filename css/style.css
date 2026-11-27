@@ -890,9 +890,10 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .contact__wa {
   display: flex; align-items: center; gap: 14px;
   padding: 18px 22px; border-radius: 18px;
-  background: linear-gradient(180deg, #45474a, #2a2c2e); color: #fff;
+  background: linear-gradient(180deg, #2fe07a, #1fb457); color: #fff;
   font-size: 18px; font-weight: 500;
-  transition: transform .3s var(--ease);
+  box-shadow: 0 10px 24px rgba(37,211,102,.28);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .contact__wa:hover { transform: translateY(-2px); }
 .contact__wa svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.5; flex: none; }
@@ -1121,3 +1122,8 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
   .map { width: calc(100% - 28px); border-radius: 16px; margin-bottom: 40px; }
   .section { padding: 56px 0; }
 }
+
+/* WhatsApp simgeleri her yerde yeşil */
+.header .icon-btn[data-wa] { color: #25d366; }
+.drawer__tools a[data-wa] svg { stroke: #25d366; }
+.contact__wa:hover { box-shadow: 0 14px 30px rgba(37,211,102,.36); }
