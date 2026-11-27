@@ -1234,3 +1234,10 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 .contact__info dd a { width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .35s var(--ease); }
 .contact__info dd a:hover { opacity: 1; background-size: 100% 1px; }
 @media (max-width: 760px) { .contact__info dl > div { padding: 16px; column-gap: 14px; } .contact__info dl > div::after { top: 28px; inset-inline-start: 28px; } }
+/* Telefonda Defile görselinin alt kısmı sayfanın beyazına yavaşça karışır */
+@media (max-width: 760px) {
+  .show { box-shadow: none; border-radius: 16px 16px 0 0; }
+  .show__stage.has-media { background: #fff; }
+  .show__stage .show__bgimg { -webkit-mask-image: linear-gradient(180deg, #000 45%, rgba(0,0,0,.4) 75%, transparent 100%); mask-image: linear-gradient(180deg, #000 45%, rgba(0,0,0,.4) 75%, transparent 100%); }
+  .show__stage.has-media::after { background: linear-gradient(180deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.55) 68%, rgba(255,255,255,.92) 88%, #fff 100%); }
+}
