@@ -1307,3 +1307,9 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 .logo { background: none !important; padding: 6px 8px !important; box-shadow: none; }
 .logo .mark { color: #111; }
 .logo .mark::before, .logo .mark::after { border-color: #111; border-width: 1px; }
+/* Üst menü logosu daha belirgin */
+.logo .mark { font-size: 31px; color: #000; letter-spacing: .01em; }
+.logo .mark::before, .logo .mark::after { border-color: #000; border-width: 1.6px; }
+@media (max-width: 760px) { .logo .mark { font-size: 26px; } .logo .mark::before, .logo .mark::after { border-width: 1.4px; } }
+@media (max-width: 400px) { .logo .mark { font-size: 22px; } .logo { margin-inline-end: 12px; } }
+@media (max-width: 380px) { .logo .mark { font-size: 19px; } }
