@@ -537,7 +537,7 @@
   if (location.hash === "#kargo") setTimeout(() => openLayer("ship"), 0);
 
   // ================= DEFİLE =================
-  const viewer = $("#viewer"), vImg = $("#viewerImg");
+  const viewer = $("#viewer"), vTrack = $("#viewerTrack"), vDots = $("#viewerDots");
   let vIndex = 0;
   const cover = $("#showCover");
   const coverDefault = cover.innerHTML;
@@ -589,16 +589,38 @@
       </button>`).join("");
   };
 
-  const showImage = () => {
-    const im = IMGS[vIndex];
-    vImg.src = im.src;
-    vImg.alt = im.alt || t("show.alt", { year: SHOW.year, i: vIndex + 1 });
-    $("#viewerCount").textContent = `${vIndex + 1} / ${IMGS.length}`;
-    const next = IMGS[(vIndex + 1) % IMGS.length];
-    if (next) { const pre = new Image(); pre.src = next.src; }
+  // Instagram gibi: fotoğraflar parmakla/trackpad ile yana kayar, yerine oturur
+  let vKey = "", vObs = null;
+  const buildViewer = () => {
+    const key = IMGS.map((im) => im.src).join("|");
+    if (key === vKey) return;
+    vKey = key;
+    vTrack.innerHTML = IMGS.map((im, i) => `
+      <figure class="viewer__slide" data-i="${i}"><img src="${esc(im.src)}" alt="${esc(im.alt || t("show.alt", { year: SHOW.year, i: i + 1 }))}" loading="lazy" draggable="false"></figure>`).join("");
+    vDots.innerHTML = IMGS.map(() => "<span></span>").join("");
+    vObs?.disconnect();
+    vObs = new IntersectionObserver((entries) => entries.forEach((en) => {
+      if (en.isIntersecting) { vIndex = +en.target.dataset.i; updateViewerUi(); }
+    }), { root: vTrack, threshold: 0.6 });
+    vTrack.querySelectorAll(".viewer__slide").forEach((s) => vObs.observe(s));
   };
-  function step(d) { if (IMGS.length) { vIndex = (vIndex + d + IMGS.length) % IMGS.length; showImage(); } }
-  const openViewer = (i) => { vIndex = i; viewer.hidden = false; showImage(); ev("gallery_photo"); $("#viewerClose").focus(); };
+  const updateViewerUi = () => {
+    $("#viewerCount").textContent = `${vIndex + 1} / ${IMGS.length}`;
+    vDots.querySelectorAll("span").forEach((d, i) => d.classList.toggle("on", i === vIndex));
+    $("#viewerPrev").disabled = vIndex === 0;
+    $("#viewerNext").disabled = vIndex === IMGS.length - 1;
+  };
+  const goTo = (i, smooth = true) => {
+    i = Math.max(0, Math.min(IMGS.length - 1, i));
+    const s = vTrack.children[i];
+    if (s) s.scrollIntoView({ inline: "center", block: "nearest", behavior: smooth ? "smooth" : "instant" });
+  };
+  function step(d) { if (IMGS.length) goTo(vIndex + d); }
+  const openViewer = (i) => {
+    buildViewer(); viewer.hidden = false; vIndex = i; updateViewerUi();
+    requestAnimationFrame(() => goTo(i, false));
+    ev("gallery_photo"); $("#viewerClose").focus();
+  };
   function closeViewer() {
     viewer.hidden = true;
     $(`.gallery__item[data-view="${vIndex}"]`)?.focus({ preventScroll: false });
@@ -611,15 +633,32 @@
   $("#viewerPrev").addEventListener("click", () => step(document.dir === "rtl" ? 1 : -1));
   $("#viewerNext").addEventListener("click", () => step(document.dir === "rtl" ? -1 : 1));
   $("#viewerClose").addEventListener("click", closeViewer);
-  viewer.addEventListener("click", (e) => { if (e.target === viewer || e.target.id === "viewerStage") closeViewer(); });
+  let dragged = false;
+  viewer.addEventListener("click", (e) => { if (!dragged && (e.target === viewer || e.target.classList.contains("viewer__slide"))) closeViewer(); });
 
-  let sx = null;
-  viewer.addEventListener("pointerdown", (e) => { sx = e.clientX; });
-  viewer.addEventListener("pointerup", (e) => {
-    if (sx === null) return;
-    const dx = e.clientX - sx; sx = null;
-    if (Math.abs(dx) > 50) step((dx < 0 ? 1 : -1) * (document.dir === "rtl" ? -1 : 1));
+  // Bilgisayarda fareyle sürükleyerek kaydırma (dokunmatikte tarayıcı kendisi yapar)
+  let dx0 = null, sl0 = 0;
+  vTrack.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    dx0 = e.clientX; sl0 = vTrack.scrollLeft; dragged = false;
+    vTrack.classList.add("is-drag"); vTrack.setPointerCapture(e.pointerId);
   });
+  vTrack.addEventListener("pointermove", (e) => {
+    if (dx0 === null) return;
+    const dx = e.clientX - dx0;
+    if (Math.abs(dx) > 4) dragged = true;
+    vTrack.scrollLeft = sl0 - dx;
+  });
+  const endDrag = (e) => {
+    if (dx0 === null) return;
+    const dx = e.clientX - dx0; dx0 = null;
+    vTrack.classList.remove("is-drag");
+    const dir = document.dir === "rtl" ? -1 : 1;
+    goTo(Math.abs(dx) > 60 ? vIndex + (dx < 0 ? 1 : -1) * dir : vIndex);
+    setTimeout(() => { dragged = false; }, 0);
+  };
+  vTrack.addEventListener("pointerup", endDrag);
+  vTrack.addEventListener("pointercancel", endDrag);
   if (location.hash === "#defile-galeri") setTimeout(() => openLayer("show"), 0);
 
   // ================= GİRİŞ EKRANI =================
