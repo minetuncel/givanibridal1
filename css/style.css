@@ -210,7 +210,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
   white-space: nowrap;
   direction: ltr;
 }
-.logo span {
+.logo .logo__sub {
   font-family: var(--font);
   font-size: 11px;
   font-weight: 500;
@@ -1064,7 +1064,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
   body { font-size: 16px; }
   .header__inner { height: 64px; }
   .logo { font-size: 24px; padding: 6px 12px 7px; }
-  .logo span { display: none; }
+  .logo .logo__sub { display: none; }
   .lang__btn { padding: 0 6px; }
   .hide-sm { display: none; }
 
@@ -1272,3 +1272,34 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 [dir="rtl"] .gallery__exit:hover .gallery__back svg { transform: scaleX(-1) translateX(-3px); }
 .gallery__title { font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .gallery__exit:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- Marka logosu: siyah zemin, açık gri Givani, kaydırılmış çift ince çerçeve ---------- */
+.mark {
+  position: relative; display: inline-block;
+  padding: .34em .42em .38em;
+  line-height: 1; color: #e9e9e9;
+}
+.mark::before, .mark::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border: max(1px, .02em) solid #d9d9d9;
+}
+.mark::before { transform: translate(-.08em, -.08em); }
+.mark::after  { transform: translate(.08em, .08em); }
+/* Giriş ekranı */
+.sign {
+  background: #000 !important;
+  padding: clamp(30px, 4.2vw, 54px) clamp(34px, 5vw, 64px) clamp(18px, 2.4vw, 30px) !important;
+  border-radius: 2px;
+  text-align: center;
+}
+.sign .mark { font-family: "Questrial", "Century Gothic", sans-serif; font-size: clamp(58px, 9.5vw, 128px); }
+.sign .sign__word {
+  display: block; font-size: 1em; line-height: 1; letter-spacing: .02em;
+  background: none; -webkit-background-clip: border-box; background-clip: border-box;
+  color: #e9e9e9; filter: none;
+}
+.sign__in { margin-top: clamp(16px, 2.2vw, 28px); color: #bdbdbd; }
+/* Üst menüdeki logo */
+.logo { background: #000 !important; padding: 8px 14px !important; gap: 12px; }
+.logo .mark { font-size: 24px; }
+.logo .logo__sub { color: #bdbdbd; }
