@@ -1160,3 +1160,4 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 .drawer__tools a[data-wa] svg { stroke: #25d366; }
 .contact__wa:hover { box-shadow: 0 14px 30px rgba(37,211,102,.36); }
 .drawer__tools button[data-open="fav"] svg { stroke: #e0245e; fill: #e0245e; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
