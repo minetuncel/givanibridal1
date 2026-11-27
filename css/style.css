@@ -1323,3 +1323,9 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 /* Alttaki büyük Givani: logodaki yazı stilinin vektör hali, boyut aynı */
 .footer__mark { line-height: 0; padding-top: .16em; padding-bottom: .1em; }
 .footer__word { display: inline-block; width: 2.8em; height: auto; color: var(--ink); }
+/* Üst menü logosu: menü kutularıyla aynı yükseklikte, daha hafif çizgili, sayfaya oturan */
+.logo { padding: 0 !important; }
+.logo__img { height: 44px; opacity: .92; transition: opacity .3s var(--ease); }
+.logo:hover .logo__img { opacity: 1; }
+@media (max-width: 760px) { .logo__img { height: 36px; } }
+@media (max-width: 380px) { .logo__img { height: 31px; } }
