@@ -635,25 +635,54 @@
   let dragged = false;
   viewer.addEventListener("click", (e) => { if (!dragged && (e.target === viewer || e.target.classList.contains("viewer__slide"))) closeViewer(); });
 
-  // Bilgisayarda fareyle sürükleyerek kaydırma (dokunmatikte tarayıcı kendisi yapar)
-  let dx0 = null, sl0 = 0;
+  // Sürükleme: yatayda fotoğraflar arasında geçiş (fare), aşağı çekince görünüm kapanır (fare ve dokunmatik)
+  let g = null;
+  const curImg = () => vTrack.children[vIndex]?.querySelector("img");
+  const setPull = (dy, anim) => {
+    const im = curImg(); if (!im) return;
+    const k = Math.min(Math.max(dy, 0) / 400, 1);
+    im.style.transition = anim ? "transform .35s var(--ease)" : "none";
+    viewer.style.transition = anim ? "background-color .35s var(--ease)" : "none";
+    im.style.transform = dy ? `translateY(${dy}px) scale(${1 - k * 0.15})` : "";
+    viewer.style.backgroundColor = dy ? `rgba(14,14,15,${0.9 * (1 - k * 0.85)})` : "";
+    $$(".viewer__top, .viewer__nav, .viewer__dots").forEach((el) => { el.style.opacity = dy ? String(1 - k * 1.6) : ""; });
+  };
+  const resetPull = () => { setPull(0, false); const im = curImg(); if (im) im.style.transition = ""; viewer.style.transition = ""; };
   vTrack.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "mouse" || e.button !== 0) return;
-    dx0 = e.clientX; sl0 = vTrack.scrollLeft; dragged = false;
-    vTrack.classList.add("is-drag"); vTrack.setPointerCapture(e.pointerId);
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    g = { x: e.clientX, y: e.clientY, sl: vTrack.scrollLeft, axis: null, id: e.pointerId, mouse: e.pointerType === "mouse" };
+    dragged = false;
   });
   vTrack.addEventListener("pointermove", (e) => {
-    if (dx0 === null) return;
-    const dx = e.clientX - dx0;
-    if (Math.abs(dx) > 4) dragged = true;
-    vTrack.scrollLeft = sl0 - dx;
+    if (!g || e.pointerId !== g.id) return;
+    const dx = e.clientX - g.x, dy = e.clientY - g.y;
+    if (!g.axis) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      g.axis = Math.abs(dy) > Math.abs(dx) ? "y" : "x";
+      if (g.axis === "x" && !g.mouse) { g = null; return; } // dokunmatikte yatay kaydırmayı tarayıcı yapar
+      dragged = true;
+      vTrack.setPointerCapture(e.pointerId);
+      if (g.axis === "x") vTrack.classList.add("is-drag");
+    }
+    if (g.axis === "x") vTrack.scrollLeft = g.sl - dx;
+    else setPull(Math.max(0, dy), false);
   });
   const endDrag = (e) => {
-    if (dx0 === null) return;
-    const dx = e.clientX - dx0; dx0 = null;
-    vTrack.classList.remove("is-drag");
-    const dir = document.dir === "rtl" ? -1 : 1;
-    goTo(Math.abs(dx) > 60 ? vIndex + (dx < 0 ? 1 : -1) * dir : vIndex);
+    if (!g || e.pointerId !== g.id) return;
+    const dx = e.clientX - g.x, dy = e.clientY - g.y, axis = g.axis; g = null;
+    if (axis === "x") {
+      vTrack.classList.remove("is-drag");
+      const dir = document.dir === "rtl" ? -1 : 1;
+      goTo(Math.abs(dx) > 60 ? vIndex + (dx < 0 ? 1 : -1) * dir : vIndex);
+    } else if (axis === "y") {
+      if (dy > 110 && e.type !== "pointercancel") {
+        setPull(Math.max(dy, 260) + 300, true);
+        setTimeout(() => { closeViewer(); resetPull(); }, 260);
+      } else {
+        setPull(0, true);
+        setTimeout(resetPull, 360);
+      }
+    }
     setTimeout(() => { dragged = false; }, 0);
   };
   vTrack.addEventListener("pointerup", endDrag);

@@ -1258,3 +1258,4 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
   .contact__info dl > div { padding: 15px 18px; }
   .contact__info dl > div::after { top: 27px; inset-inline-start: 30px; }
 }
+.viewer__track { touch-action: pan-x; }
