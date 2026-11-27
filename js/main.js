@@ -562,6 +562,19 @@
     }
   };
 
+  // Galeri açıldığında arka planda silik defile videosu oynar, kapanınca durur
+  const galPanel = $("#panel-show"), galVid = galPanel.querySelector(".gallery__bg video");
+  const syncGalleryVideo = () => {
+    if (!galVid) return;
+    const src = SHOW.video;
+    if (!src) { galVid.parentElement.hidden = true; galVid.pause(); return; }
+    galVid.parentElement.hidden = false;
+    if (galVid.getAttribute("src") !== src) { galVid.src = src; if (SHOW.poster) galVid.poster = SHOW.poster; }
+    if (galPanel.hidden || matchMedia("(prefers-reduced-motion: reduce)").matches) galVid.pause();
+    else galVid.play().catch(() => {});
+  };
+  new MutationObserver(syncGalleryVideo).observe(galPanel, { attributes: true, attributeFilter: ["hidden"] });
+
   const renderGallery = () => {
     const g = $("#galleryGrid");
     $("#galleryEmpty").hidden = IMGS.length > 0;

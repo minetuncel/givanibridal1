@@ -89,8 +89,8 @@ const DEFAULT_PRODUCTS = [
 
 const DEFAULT_SHOW = {
   year: 2026,
-  video: null,
-  poster: null,
+  video: "/assets/defile/video.mp4",
+  poster: "/assets/defile/video-poster.jpg",
   images: Array.from({ length: 13 }, (_, i) => ({ src: `/assets/defile/${String(i + 1).padStart(2, "0")}.jpg`, alt: "" }))
 };
 const DEFAULT_REVIEWS = [];

@@ -397,8 +397,9 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .show__cover { display: block; width: 100%; padding: 0; }
 .show__stage { height: min(78vh, 760px); min-height: 480px; }
 .show__stage.has-media::before { display: none; }
-.show__stage video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
-.show__stage.has-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(20,20,20,.62) 0%, rgba(20,20,20,.25) 45%, rgba(20,20,20,0) 70%); }
+.show__stage video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; opacity: .45; filter: blur(1px); }
+.show__stage.has-media { background: #f4f4f4; }
+.show__stage.has-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.45) 45%, rgba(255,255,255,0) 75%); }
 [dir="rtl"] .show__stage.has-media::after { transform: scaleX(-1); }
 .runway {
   position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
@@ -422,22 +423,29 @@ html.has-intro #intro[hidden] { display: grid !important; }
   font-weight: 500; letter-spacing: -.04em; line-height: .95;
   color: var(--ink);
 }
-.show:has(.has-media) .show__text h2 { color: #fff; text-shadow: 0 2px 24px rgba(0,0,0,.25); }
-.show:has(.has-media) .show__text .btn { background: #fff; color: var(--ink); border-color: #fff; }
 
 /* Galeri */
 .gallery {
   position: fixed; inset: 0; z-index: 120;
   background: #fff; overflow-y: auto;
+  isolation: isolate;
   animation: fade .25s var(--ease);
 }
 .gallery__head {
   position: sticky; top: 0; z-index: 2;
   display: flex; align-items: center; gap: 16px;
-  height: 80px; background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+  height: 80px; background: rgba(255,255,255,.82); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
-.gallery__head h3 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
+/* Galeri arka planında silik defile videosu */
+.gallery__bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: #fff; }
+.gallery__bg video {
+  position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px);
+  object-fit: cover; object-position: 50% 35%;
+  opacity: .32; filter: blur(4px);
+}
+.gallery__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.1) 40%, rgba(255,255,255,.5)); }
+.gallery__head h3 { flex: 1; font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
 .gallery__count { flex: 1; font-size: 15px; color: var(--muted); }
 .gallery__body { max-width: 1240px; padding-top: clamp(32px, 5vw, 64px); padding-bottom: 80px; }
 .gallery__empty { font-size: 18px; color: var(--ink); margin-bottom: 24px; }
@@ -998,9 +1006,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
   .show__g--2 { left: 76%; }
   .show__g--3 { left: 28%; }
   .runway { clip-path: polygon(42% 0, 58% 0, 84% 100%, 16% 100%); }
-  .show:has(.has-media) .show__text h2 { color: var(--ink); text-shadow: none; }
   .show__stage.has-media::after { display: none; }
-  .show:has(.has-media) .show__text .btn { background: var(--ink); color: #fff; border-color: var(--ink); }
   .gallery__head { height: 64px; }
   .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .gallery__item { border-radius: 10px; }
