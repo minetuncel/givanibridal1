@@ -1206,15 +1206,3 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
   .footer__cols { grid-template-columns: 1fr; gap: 12px; }
   .footer__col { padding: 22px 18px 18px; }
 }
-/* Alt bilgi kartları sayfaya karışsın: üstten beyaz, aşağıya doğru silikleşen */
-.footer__col {
-  background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.6) 55%, rgba(255,255,255,0) 100%);
-  border: 0; box-shadow: none;
-  position: relative;
-}
-.footer__col::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  padding: 1px; background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,0) 85%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
