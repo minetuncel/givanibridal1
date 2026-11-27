@@ -693,6 +693,18 @@
   applyReveal();
   new MutationObserver(applyReveal).observe($("main") || document.body, { childList: true, subtree: true });
 
+  // Üst menüde, ekranda olan bölümün kutusu koyu görünür
+  const navLinks = $$(".nav a[href^='#']");
+  if (navLinks.length && "IntersectionObserver" in window) {
+    const secs = navLinks.map((a) => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+    const navObs = new IntersectionObserver((entries) => entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      navLinks.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === "#" + en.target.id));
+    }), { rootMargin: "-45% 0px -50% 0px" });
+    secs.forEach((s) => navObs.observe(s));
+    addEventListener("scroll", () => { if (scrollY < 200) navLinks.forEach((a) => a.classList.remove("is-active")); }, { passive: true });
+  }
+
   // ================= GİRİŞ EKRANI =================
   const intro = $("#intro");
   if (document.documentElement.classList.contains("has-intro")) intro.hidden = false;
