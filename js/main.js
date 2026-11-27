@@ -664,14 +664,32 @@
   // ================= GİRİŞ EKRANI =================
   const intro = $("#intro");
   if (document.documentElement.classList.contains("has-intro")) intro.hidden = false;
+  let introTimer;
   const enterSite = () => {
     try { sessionStorage.setItem("gv_intro", "1"); } catch {}
     intro.classList.add("is-leaving");
     document.documentElement.classList.remove("has-intro");
-    setTimeout(() => { intro.hidden = true; }, 900);
+    clearTimeout(introTimer); introTimer = setTimeout(() => { intro.hidden = true; }, 900);
     ev("intro_enter");
   };
-  $("#introEnter").addEventListener("click", enterSite);
+  // Giriş ekranında dil seçimi dışında herhangi bir yere tıklamak siteye girer
+  intro.addEventListener("click", (e) => { if (!e.target.closest("[data-setlang]") && !intro.classList.contains("is-leaving")) enterSite(); });
+  intro.addEventListener("keydown", (e) => { if (e.key === "Escape") enterSite(); });
+
+  // Üstteki Givani Bridal logosu giriş ekranını tekrar açar
+  const showIntro = () => {
+    closeAll(); clearTimeout(introTimer);
+    intro.hidden = false;
+    intro.classList.add("is-leaving");
+    document.documentElement.classList.add("has-intro");
+    void intro.offsetWidth;
+    intro.classList.remove("is-leaving");
+    window.scrollTo({ top: 0, behavior: "instant" });
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    setTimeout(() => $("#introEnter").focus({ preventScroll: true }), 50);
+    ev("logo_intro");
+  };
+  $$(".header .logo").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); showIntro(); }));
 
   // ================= DİL SEÇİCİ =================
   const langBtn = $("#langBtn"), langMenu = $("#langMenu");
