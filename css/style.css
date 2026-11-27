@@ -1087,3 +1087,25 @@ html.has-intro #intro[hidden] { display: grid !important; }
 }
 .footer__col .addr { display: block; line-height: 1.5; }
 [dir="rtl"] .addr { text-align: right; }
+
+/* ---------- Yumuşak kaydırma geçişleri ---------- */
+/* Bölümler ekrana girerken yavaşça belirir ve hafifçe yukarı kayar */
+html.js .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform 1s var(--ease); transition-delay: var(--d, 0s); will-change: opacity, transform; }
+html.js .rv.in { opacity: 1; transform: none; }
+html.js .rv--scale { transform: translateY(28px) scale(.985); }
+@media (prefers-reduced-motion: reduce) { html.js .rv { opacity: 1; transform: none; transition: none; } }
+
+/* Tam genişlik alanlar arasında sert çizgiler yerine yumuşak geçiş */
+.section--tint { background: linear-gradient(180deg, var(--bg) 0, var(--tint) clamp(60px, 8vw, 120px), var(--tint) calc(100% - clamp(60px, 8vw, 120px)), var(--bg) 100%); }
+.hero__stage { -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%); mask-image: linear-gradient(180deg, #000 82%, transparent 100%); }
+.map {
+  width: calc(100% - 2 * var(--pad)); max-width: 1480px;
+  margin: 0 auto clamp(48px, 7vw, 104px);
+  border-radius: 22px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 18px 48px rgba(0,0,0,.06);
+}
+.footer { border-top: 0; background: linear-gradient(180deg, var(--bg) 0, var(--tint) 140px); }
+@media (max-width: 760px) {
+  .map { width: calc(100% - 28px); border-radius: 16px; margin-bottom: 40px; }
+  .section { padding: 56px 0; }
+}

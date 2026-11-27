@@ -669,6 +669,30 @@
     }
   }
 
+  // Kaydırırken bölümlerin yumuşakça belirmesi (bilgisayar ve telefon)
+  const revealSel = [
+    ".section .wrap > *", ".cats > *", "#productGrid > *", ".services > *", ".split", ".show", ".map",
+    ".footer__cols > *", ".reviews__list > *"
+  ].join(",");
+  const revObs = "IntersectionObserver" in window ? new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting) { en.target.classList.add("in"); revObs.unobserve(en.target); }
+  }), { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }) : null;
+  const applyReveal = () => {
+    if (!revObs) return;
+    $$(revealSel).forEach((el) => {
+      if (el.classList.contains("rv") || el.closest(".panel, .modal, .gallery, .viewer, .intro")) return;
+      const sibs = el.parentElement ? [...el.parentElement.children] : [];
+      const i = Math.max(0, sibs.indexOf(el));
+      const grid = el.parentElement && el.parentElement.matches(".cats, #productGrid, .services, .footer__cols, .reviews__list");
+      el.style.setProperty("--d", grid ? Math.min(i % 4, 3) * 0.08 + "s" : "0s");
+      el.classList.add("rv");
+      if (el.matches(".split, .show, .map")) el.classList.add("rv--scale");
+      revObs.observe(el);
+    });
+  };
+  applyReveal();
+  new MutationObserver(applyReveal).observe($("main") || document.body, { childList: true, subtree: true });
+
   // ================= GİRİŞ EKRANI =================
   const intro = $("#intro");
   if (document.documentElement.classList.contains("has-intro")) intro.hidden = false;
