@@ -1250,3 +1250,11 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 .contact__left .contact__form textarea { height: 100%; }
 .contact__info { padding-top: 0; }
 @media (max-width: 1080px) { .contact__left .contact__form { grid-template-rows: none; } }
+/* Mesaj kutusunun alt kenarı, Çalışma saatleri kartının alt kenarıyla aynı çizgide biter
+   (Gönder butonu altta kalır). Kartlar biraz daha sıkı. */
+@media (min-width: 1081px) {
+  .contact__info { padding-bottom: 62px; gap: 20px; }
+  .contact__info dl { gap: 10px; }
+  .contact__info dl > div { padding: 15px 18px; }
+  .contact__info dl > div::after { top: 27px; inset-inline-start: 30px; }
+}
