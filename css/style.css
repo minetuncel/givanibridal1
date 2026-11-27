@@ -1319,3 +1319,7 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 .logo__img { display: block; height: 50px; width: auto; }
 @media (max-width: 760px) { .logo__img { height: 38px; } }
 @media (max-width: 380px) { .logo__img { height: 32px; } }
+
+/* Alttaki büyük Givani: logodaki yazı stilinin vektör hali, boyut aynı */
+.footer__mark { line-height: 0; padding-top: .16em; padding-bottom: .1em; }
+.footer__word { display: inline-block; width: 2.8em; height: auto; color: var(--ink); }
