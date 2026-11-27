@@ -101,7 +101,7 @@
         <button class="fav${favs.includes(p.id) ? " is-active" : ""}" data-fav="${esc(p.id)}" aria-label="${esc(t("action.addFav"))}" aria-pressed="${favs.includes(p.id)}"><svg><use href="#i-heart"/></svg></button>
         <button class="card__add" data-add="${esc(p.id)}">${esc(t("action.addToCart"))}</button>`)}
       <div class="card__info">
-        <h3>${esc(prodName(p))}</h3><span class="price">${money(p.price)}</span>
+        <h3>${esc(prodName(p))}</h3>
       </div>
       <span class="card__cat">${esc(catName(p.cat))}</span>
     </article>`;
@@ -297,7 +297,7 @@
       <button class="result" data-result="${esc(p.id)}">
         ${media(p)}
         <span class="result__name">${esc(prodName(p))}</span>
-        <span class="result__meta">${esc(catName(p.cat))} · ${money(p.price)}</span>
+        <span class="result__meta">${esc(catName(p.cat))}</span>
       </button>`).join("");
     clearTimeout(searchT);
     if (raw.length >= 2) searchT = setTimeout(() => { if (raw !== lastQ) { lastQ = raw; ev("search", { q: raw }); } }, 1500);
