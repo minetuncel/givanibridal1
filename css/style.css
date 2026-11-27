@@ -12,7 +12,8 @@
   --muted: #6f6f6f;
   --line: #e4e4e4;
 
-  --font: "Inter Tight", "Noto Sans Arabic", "Helvetica Neue", Arial, sans-serif;
+  /* Tüm site logodaki yazı tipiyle (Questrial). Kiril ve Arap harfleri için yedek yazı tipleri. */
+  --font: "Questrial", "Inter Tight", "Noto Sans Arabic", "Century Gothic", Arial, sans-serif;
   --pad: clamp(20px, 4vw, 56px);
   --ease: cubic-bezier(.22, .61, .36, 1);
 }
@@ -274,7 +275,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .hero h1 {
   font-size: clamp(44px, 7vw, 112px);
   font-weight: 500;
-  letter-spacing: -.045em;
+  letter-spacing: -.02em;
   line-height: .95;
   color: var(--ink);
 }
@@ -412,7 +413,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .show__text > * { pointer-events: auto; }
 .show__text h2 {
   font-size: clamp(40px, 6vw, 96px);
-  font-weight: 500; letter-spacing: -.04em; line-height: .95;
+  font-weight: 500; letter-spacing: -.02em; line-height: .95;
   color: var(--ink);
 }
 

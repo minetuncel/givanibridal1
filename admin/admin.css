@@ -8,7 +8,7 @@
   --line: #e2e2e2;
   --soft: #f6f6f6;
   --panel: #2d2f31;
-  --font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font: "Questrial", "Inter Tight", "Century Gothic", Arial, sans-serif;
   --ease: cubic-bezier(.22, .61, .36, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
