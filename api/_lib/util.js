@@ -70,6 +70,7 @@ const DEFAULT_SETTINGS = {
   email: "info@givanibridal.com",
   address: "Atikali Mah. Fevzipaşa Cad.\nEski Altay Sk. No:3 D:A\n34087 Fatih / İstanbul",
   instagram: "givanibridal",
+  pinterest: "givanibridal",
   mapsQuery: "Givani Bridal, Eski Altay Sk. No:3, Fatih, İstanbul",
   googleReviewsUrl: "https://share.google/dOHkbhQ2nWm1ZBZy6",
   hours: { weekdayOpen: "10:00", weekdayClose: "19:00", sundayOpen: "12:00", sundayClose: "17:00", sundayClosed: false, step: 30 }

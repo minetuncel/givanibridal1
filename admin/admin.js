@@ -115,7 +115,7 @@
   $("#refresh").addEventListener("click", () => loaders.dash());
 
   const LABELS = {
-    whatsapp_click: "WhatsApp", phone_click: "Telefon", instagram_click: "Instagram", email_click: "E-posta",
+    whatsapp_click: "WhatsApp", phone_click: "Telefon", instagram_click: "Instagram", pinterest_click: "Pinterest", email_click: "E-posta",
     map_click: "Harita", directions_click: "Yol tarifi",
     fav_add: "Favoriye ekleme", cart_add: "Sepete ekleme", product_click: "Model tıklama", search: "Arama",
     gallery_open: "Defile galerisi açılışı", gallery_photo: "Defile fotoğraf görüntüleme", size_guide_open: "Beden rehberi",
@@ -124,7 +124,7 @@
     view_collection: "Koleksiyon", view_new_season: "Yeni Sezon", view_atelier: "Kişiye özel dikim", view_show: "Defile",
     view_reviews: "Yorumlar", view_booking: "Randevu", view_contact: "Bize Ulaşın"
   };
-  const CLICK = ["whatsapp_click", "phone_click", "instagram_click", "email_click", "map_click", "directions_click"];
+  const CLICK = ["whatsapp_click", "phone_click", "instagram_click", "pinterest_click", "email_click", "map_click", "directions_click"];
   const INTER = ["product_click", "fav_add", "cart_add", "search", "gallery_open", "gallery_photo", "size_guide_open", "shipping_open", "booking_submit", "contact_submit", "reviews_more", "lang_change", "intro_enter"];
   const SECT = ["view_collection", "view_new_season", "view_atelier", "view_show", "view_reviews", "view_booking", "view_contact"];
   const DEV = { mobile: "Telefon", tablet: "Tablet", desktop: "Bilgisayar" };
@@ -519,7 +519,7 @@
   loaders.settings = async () => {
     await loadContent();
     const s = content.settings;
-    ["whatsapp", "phone", "email", "instagram", "address", "mapsQuery", "googleReviewsUrl"].forEach((k) => (sForm[k].value = s[k] || ""));
+    ["whatsapp", "phone", "email", "instagram", "pinterest", "address", "mapsQuery", "googleReviewsUrl"].forEach((k) => (sForm[k].value = s[k] || ""));
     ["weekdayOpen", "weekdayClose", "sundayOpen", "sundayClose"].forEach((k) => (sForm[k].value = s.hours[k]));
     sForm.sundayClosed.checked = s.hours.sundayClosed;
     sForm.step.value = String(s.hours.step);
@@ -531,7 +531,7 @@
     if (wa.length < 10) return toast("WhatsApp numarasını ülke koduyla yazın (ör. 905309518934)");
     if (v("weekdayOpen") >= v("weekdayClose") || v("sundayOpen") >= v("sundayClose")) return toast("Kapanış saati açılıştan sonra olmalı");
     await save({ settings: {
-      whatsapp: wa, phone: v("phone"), email: v("email"), instagram: v("instagram"), address: sForm.address.value,
+      whatsapp: wa, phone: v("phone"), email: v("email"), instagram: v("instagram"), pinterest: v("pinterest"), address: sForm.address.value,
       mapsQuery: v("mapsQuery"), googleReviewsUrl: v("googleReviewsUrl"),
       hours: { weekdayOpen: v("weekdayOpen"), weekdayClose: v("weekdayClose"), sundayOpen: v("sundayOpen"), sundayClose: v("sundayClose"), sundayClosed: sForm.sundayClosed.checked, step: Number(sForm.step.value) }
     } });

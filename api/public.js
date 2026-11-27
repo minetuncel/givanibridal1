@@ -4,7 +4,7 @@ const U = require("./_lib/util");
 
 const TTL = 400 * 86400; // istatistikler ~13 ay saklanır
 const EVENTS = new Set([
-  "whatsapp_click", "phone_click", "instagram_click", "email_click", "map_click", "directions_click",
+  "whatsapp_click", "phone_click", "instagram_click", "pinterest_click", "email_click", "map_click", "directions_click",
   "fav_add", "cart_add", "product_click", "search", "gallery_open", "gallery_photo", "size_guide_open",
   "shipping_open", "lang_change", "intro_enter", "booking_submit", "contact_submit", "reviews_more",
   "view_collection", "view_new_season", "view_atelier", "view_show", "view_booking", "view_reviews", "view_contact"

@@ -16,6 +16,7 @@ function cleanSettings(s = {}) {
     email: U.str(s.email, 120),
     address: U.text(s.address, 300),
     instagram: U.str(s.instagram, 60).replace(/^@/, ""),
+    pinterest: U.str(s.pinterest, 60).replace(/^@/, "").replace(/[^\w.-]/g, ""),
     mapsQuery: U.str(s.mapsQuery, 200) || D.mapsQuery,
     googleReviewsUrl: /^https:\/\//.test(s.googleReviewsUrl || "") ? U.str(s.googleReviewsUrl, 300) : "",
     hours: {
