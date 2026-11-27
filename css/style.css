@@ -1154,3 +1154,4 @@ html.js .rv--scale { transform: translateY(28px) scale(.985); }
 /* WhatsApp simgeleri her yerde yeşil */
 .drawer__tools a[data-wa] svg { stroke: #25d366; }
 .contact__wa:hover { box-shadow: 0 14px 30px rgba(37,211,102,.36); }
+.drawer__tools button[data-open="fav"] svg { stroke: #e0245e; fill: #e0245e; }
