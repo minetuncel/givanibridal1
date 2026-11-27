@@ -251,6 +251,17 @@
   </div>
 </div>
 
+<!-- Givani Gelinleri galerisi -->
+<div class="gallery" id="panel-brides" role="dialog" aria-modal="true" aria-labelledby="bridesGalleryTitle" hidden>
+  <div class="wrap gallery__head">
+    <button class="gallery__exit" data-close><span class="gallery__back" aria-hidden="true"><svg><use href="#i-back"/></svg></span><span class="gallery__title" id="bridesGalleryTitle" data-i18n="brides.title">Givani Gelinleri</span></button>
+  </div>
+  <div class="wrap gallery__body">
+    <p class="gallery__empty" id="bridesEmpty" data-i18n="show.empty" hidden>Görseller yakında eklenecek.</p>
+    <div class="gallery__grid" id="bridesGrid"></div>
+  </div>
+</div>
+
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Defile" hidden>
   <div class="viewer__top">
     <span class="viewer__count" id="viewerCount"></span>
@@ -321,11 +332,17 @@
 
 
   <!-- Givani Gelinleri -->
-  <section class="brides" id="givani-gelinleri" data-sec="view_brides">
-    <div class="wrap">
-      <h2 class="title" data-i18n="brides.title">Givani Gelinleri</h2>
-      <div class="brides__grid" id="bridesGrid"></div>
-      <button class="btn btn--outline brides__more" id="bridesMore" data-i18n="brides.more" hidden>Daha Fazla</button>
+  <section class="show brides" id="givani-gelinleri" data-sec="view_brides">
+    <button class="show__cover" data-open="brides" aria-label="Givani Gelinleri" data-i18n-aria="brides.title">
+      <div class="shot show__stage" id="bridesCover">
+        <svg preserveAspectRatio="xMidYMax meet" class="gown show__g show__g--3"><use href="#g-aline"/></svg>
+        <svg preserveAspectRatio="xMidYMax meet" class="gown show__g show__g--2"><use href="#g-sleeve"/></svg>
+        <svg preserveAspectRatio="xMidYMax meet" class="gown show__g show__g--1"><use href="#g-off"/></svg>
+      </div>
+    </button>
+    <div class="wrap show__text">
+      <h2 data-i18n="brides.title">Givani Gelinleri</h2>
+      <button class="btn" data-open="brides" data-i18n="show.cta">Görselleri Gör</button>
     </div>
   </section>
 

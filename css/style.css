@@ -440,33 +440,8 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .split__text p { font-size: 19px; color: var(--muted); margin-bottom: 36px; }
 
 /* ---------- Givani Gelinleri ---------- */
-/* Müşterilerin düğün çekimleri: dikey kareler, tıklayınca büyük görünüm */
-.brides { padding: clamp(8px, 2vw, 24px) 0; }
-.brides__grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 28px);
-}
-.brides__item {
-  position: relative; display: block; width: 100%; padding: 0;
-  aspect-ratio: 3 / 4; overflow: hidden;
-  border-radius: 14px; background: var(--studio);
-  box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 10px 24px rgba(0,0,0,.06);
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-.brides__item img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; transition: transform .8s var(--ease); }
-.brides__item:hover { transform: translateY(-4px); box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 18px 36px rgba(0,0,0,.1); }
-.brides__item:hover img { transform: scale(1.04); }
-.brides__item.is-placeholder { opacity: .55; box-shadow: none; }
-.brides__item.is-placeholder:hover { transform: none; }
-.brides__item.is-placeholder .shot { height: 100%; }
-.brides__item.is-placeholder .gown { width: 60%; height: 84%; }
-.brides__more { display: flex; margin: clamp(28px, 4vw, 44px) auto 0; }
-.brides__more[hidden] { display: none; }
-@media (max-width: 760px) {
-  .brides__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .brides__item { border-radius: 10px; }
-}
+/* Defile bloğuyla aynı yapı; Defile'nin hemen üstünde olduğu için aradaki boşluk biraz daraltılır */
+.brides + .show { margin-top: clamp(28px, 4vw, 56px); }
 
 /* ---------- Defile ---------- */
 .show { position: relative; }

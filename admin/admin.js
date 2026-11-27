@@ -122,11 +122,11 @@
     shipping_open: "Kargo adresi penceresi", lang_change: "Dil değiştirme", intro_enter: "Giriş ekranından siteye giriş",
     booking_submit: "Randevu talebi", contact_submit: "İletişim mesajı", reviews_more: "Google yorumlarına gitme",
     view_collection: "Koleksiyon", view_new_season: "Yeni Sezon", view_atelier: "Kişiye özel dikim", view_brides: "Givani Gelinleri", view_show: "Defile",
-    brides_photo: "Gelin fotoğrafı açma", brides_more: "Gelinler: daha fazla",
+    brides_open: "Gelinler galerisini açma", brides_photo: "Gelin fotoğrafı açma",
     view_reviews: "Yorumlar", view_booking: "Randevu", view_contact: "Bize Ulaşın"
   };
   const CLICK = ["whatsapp_click", "phone_click", "instagram_click", "pinterest_click", "email_click", "map_click", "directions_click"];
-  const INTER = ["product_click", "fav_add", "cart_add", "search", "gallery_open", "gallery_photo", "brides_photo", "brides_more", "size_guide_open", "shipping_open", "booking_submit", "contact_submit", "reviews_more", "lang_change", "intro_enter"];
+  const INTER = ["product_click", "fav_add", "cart_add", "search", "gallery_open", "gallery_photo", "brides_open", "brides_photo", "size_guide_open", "shipping_open", "booking_submit", "contact_submit", "reviews_more", "lang_change", "intro_enter"];
   const SECT = ["view_collection", "view_new_season", "view_atelier", "view_brides", "view_show", "view_reviews", "view_booking", "view_contact"];
   const DEV = { mobile: "Telefon", tablet: "Tablet", desktop: "Bilgisayar" };
   const LANG = { tr: "Türkçe", en: "English", ar: "العربية", fr: "Français", de: "Deutsch", ru: "Русский" };
@@ -472,7 +472,7 @@
       <div class="thumb">
         <img src="${esc(im.src)}" alt="" loading="lazy">
         <div class="thumb__bar">
-          <span>${i + 1}</span>
+          <span>${i === 0 ? "Kapak" : i + 1}</span>
           <div>
             <button class="icon-btn" data-b-up="${i}" ${i === 0 ? "disabled" : ""} aria-label="Öne al"><svg><use href="#a-left"/></svg></button>
             <button class="icon-btn" data-b-down="${i}" ${i === imgs.length - 1 ? "disabled" : ""} aria-label="Geri al"><svg><use href="#a-right"/></svg></button>

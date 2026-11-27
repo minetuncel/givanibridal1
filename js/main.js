@@ -236,7 +236,7 @@
     lastFocus?.focus?.({ preventScroll: true });
   };
 
-  const LAYER_EVENTS = { show: "gallery_open", size: "size_guide_open", ship: "shipping_open" };
+  const LAYER_EVENTS = { show: "gallery_open", brides: "brides_open", size: "size_guide_open", ship: "shipping_open" };
   const openLayer = (name) => {
     const prev = document.activeElement;
     closeAll();
@@ -252,6 +252,7 @@
     if (!panel) return;
     if (LAYER_EVENTS[name]) ev(LAYER_EVENTS[name]);
     if (name === "show") renderGallery();
+    if (name === "brides") renderBridesGallery();
     if (!panel.classList.contains("gallery")) backdrop.hidden = false;
     panel.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add("is-open")));
@@ -635,29 +636,38 @@
   });
 
   // ================= GİVANİ GELİNLERİ =================
-  // Müşterilerin düğün çekimleri; önce 8 fotoğraf görünür, "Daha Fazla" ile devamı açılır
-  const BRIDES_STEP = 8;
-  let bridesShown = BRIDES_STEP;
+  // Defile gibi: ana sayfada kapak, tıklayınca galeri açılır; ilk fotoğraf kapakta silik görünür
   const brideAlt = (i) => t("brides.alt", { i: i + 1 });
+  const bCover = $("#bridesCover");
+  const bCoverDefault = bCover.innerHTML;
   const renderBrides = () => {
-    const grid = $("#bridesGrid"), more = $("#bridesMore");
+    const cv = BRIDES[0]?.src;
+    if (cv) {
+      const img = bCover.querySelector("img");
+      if (!img || img.getAttribute("src") !== cv) bCover.innerHTML = `<img class="show__bgimg" src="${esc(cv)}" alt="" loading="lazy" decoding="async">`;
+      bCover.classList.add("has-media");
+    } else if (bCover.classList.contains("has-media")) {
+      bCover.innerHTML = bCoverDefault;
+      bCover.classList.remove("has-media");
+    }
+  };
+  const renderBridesGallery = () => {
+    const g = $("#bridesGrid");
+    $("#bridesEmpty").hidden = BRIDES.length > 0;
     if (!BRIDES.length) {
-      const gs = ["g-ball", "g-mermaid", "g-aline", "g-sleeve"];
-      grid.innerHTML = gs.map((id) => `<div class="brides__item is-placeholder"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${id}"/></svg></div></div>`).join("");
-      more.hidden = true;
+      const gs = ["g-off", "g-aline", "g-sleeve", "g-ball", "g-mermaid", "g-sheath"];
+      g.innerHTML = gs.map((id) => `<div class="gallery__item is-placeholder"><div class="shot"><svg preserveAspectRatio="xMidYMax meet" class="gown"><use href="#${id}"/></svg></div></div>`).join("");
       return;
     }
-    grid.innerHTML = BRIDES.slice(0, bridesShown).map((im, i) => `
-      <button class="brides__item" data-bride="${i}">
-        <img src="${esc(im.src)}" alt="${esc(im.alt || brideAlt(i))}" loading="lazy" decoding="async">
+    g.innerHTML = BRIDES.map((im, i) => `
+      <button class="gallery__item" data-bride="${i}">
+        <img src="${esc(im.src)}" alt="${esc(im.alt || brideAlt(i))}" loading="lazy">
       </button>`).join("");
-    more.hidden = bridesShown >= BRIDES.length;
   };
   $("#bridesGrid").addEventListener("click", (e) => {
     const b = e.target.closest("[data-bride]");
     if (b) openViewer(+b.dataset.bride, BRIDES, brideAlt, "brides_photo");
   });
-  $("#bridesMore").addEventListener("click", () => { bridesShown += BRIDES_STEP; renderBrides(); ev("brides_more"); });
   $("#viewerPrev").addEventListener("click", () => step(document.dir === "rtl" ? 1 : -1));
   $("#viewerNext").addEventListener("click", () => step(document.dir === "rtl" ? -1 : 1));
   $("#viewerClose").addEventListener("click", closeViewer);
@@ -717,6 +727,7 @@
   vTrack.addEventListener("pointerup", endDrag);
   vTrack.addEventListener("pointercancel", endDrag);
   if (location.hash === "#defile-galeri") setTimeout(() => openLayer("show"), 0);
+  if (location.hash === "#gelinler-galeri") setTimeout(() => openLayer("brides"), 0);
 
   // Ana sayfa üst alanındaki arka plan videosu: görünmüyorsa durur, hareket azaltma tercihinde oynamaz
   const heroVid = $(".hero__video");
@@ -844,6 +855,7 @@
     renderReviews();
     applySettings();
     if (!$("#panel-show").hidden) renderGallery();
+    if (!$("#panel-brides").hidden) renderBridesGallery();
     refresh();
   };
 
