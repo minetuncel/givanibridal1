@@ -144,6 +144,21 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
   color: transparent;
   filter: drop-shadow(0 2px 1px rgba(0,0,0,.45));
 }
+/* Çerçeve içinde küçük BRIDAL, dışında imza */
+.sign__in {
+  display: block; margin-top: clamp(6px, .8vw, 10px);
+  font-family: "Questrial", sans-serif;
+  font-size: clamp(11px, 1.15vw, 15px);
+  letter-spacing: .62em; margin-right: -.62em;
+  text-align: center; color: #d5d8db;
+}
+[dir="rtl"] .sign__in { margin-right: 0; margin-left: -.62em; }
+.sign__by {
+  font-family: "Questrial", sans-serif;
+  font-size: clamp(14px, 1.5vw, 18px);
+  letter-spacing: .08em;
+  color: #3a3c3e;
+}
 .sign__sub {
   font-family: "Questrial", sans-serif;
   font-size: clamp(13px, 1.4vw, 16px);
