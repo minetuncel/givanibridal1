@@ -255,3 +255,9 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.08); stroke-width: .8; }
 }
 .mobile-logout { display: none; }
 @media (max-width: 900px) { .mobile-logout { display: inline-grid; } }
+
+/* Logo: ana sayfadaki üst menü logosuyla aynı */
+.brand-logo { display: block; height: 64px; width: auto; }
+.card .brand-logo { align-self: center; margin-bottom: 8px; }
+.brand-logo--sm { height: 46px; }
+@media (max-width: 900px) { .brand-logo--sm { height: 38px; } }
