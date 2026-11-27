@@ -91,6 +91,7 @@ const DEFAULT_SHOW = {
   year: 2026,
   video: "/assets/defile/video.mp4",
   poster: "/assets/defile/video-poster.jpg",
+  collage: { desktop: "/assets/defile/collage.jpg", mobile: "/assets/defile/collage-m.jpg" },
   images: Array.from({ length: 13 }, (_, i) => ({ src: `/assets/defile/${String(i + 1).padStart(2, "0")}.jpg`, alt: "" }))
 };
 const DEFAULT_REVIEWS = [];

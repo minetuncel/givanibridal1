@@ -49,6 +49,7 @@ function cleanShow(s = {}) {
     year: y >= 2000 && y <= 2100 ? y : new Date().getFullYear(),
     video: typeof s.video === "string" && /^\/assets\/[\w\/-]{1,80}\.(mp4|webm)$/.test(s.video) ? s.video : null,
     poster: imgUrl(s.poster),
+    collage: s.collage && imgUrl(s.collage.desktop) ? { desktop: imgUrl(s.collage.desktop), mobile: imgUrl(s.collage.mobile) } : U.DEFAULT_SHOW.collage,
     images: (Array.isArray(s.images) ? s.images : []).slice(0, 200)
       .map((im) => ({ src: imgUrl(im.src), alt: U.str(im.alt, 120) }))
       .filter((im) => im.src)

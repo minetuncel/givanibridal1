@@ -14,6 +14,8 @@ window.GIVANI_SHOW = {
   // Ana sayfadaki Defile bölümünde oynayan video (yoksa null → çizim gösterilir)
   video: "/assets/defile/video.mp4",
   poster: "/assets/defile/video-poster.jpg",
+  // Ana sayfadaki Defile kapağı: tüm defile fotoğraflarından kolaj
+  collage: { desktop: "/assets/defile/collage.jpg", mobile: "/assets/defile/collage-m.jpg" },
   images: [
     { src: "/assets/defile/01.jpg" },
     { src: "/assets/defile/02.jpg" },

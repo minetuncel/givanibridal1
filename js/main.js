@@ -547,13 +547,12 @@
   const renderShowSection = () => {
     $("#showTitle").textContent = showTitle();
     $("#galleryTitle").textContent = showTitle();
-    // Kapakta defile fotoğrafı değil, varsa defile videosu gösterilir
-    const vid = SHOW.video;
-    if (vid) {
-      const v = cover.querySelector("video");
-      if (!v || v.getAttribute("src") !== vid) {
-        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-        cover.innerHTML = `<video src="${esc(vid)}"${SHOW.poster ? ` poster="${esc(SHOW.poster)}"` : ""} muted loop playsinline ${reduce ? "" : "autoplay"} preload="metadata" aria-hidden="true"></video>`;
+    // Kapakta defile fotoğraflarından hazırlanmış kolaj gösterilir
+    const col = SHOW.collage;
+    if (col && col.desktop) {
+      const img = cover.querySelector("img");
+      if (!img || img.getAttribute("src") !== col.desktop) {
+        cover.innerHTML = `<picture>${col.mobile ? `<source media="(max-width: 760px)" srcset="${esc(col.mobile)}">` : ""}<img src="${esc(col.desktop)}" alt="" loading="lazy" decoding="async"></picture>`;
       }
       cover.classList.add("has-media");
     } else if (cover.classList.contains("has-media")) {

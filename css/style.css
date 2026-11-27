@@ -389,7 +389,7 @@ html.has-intro #intro[hidden] { display: grid !important; }
 .show__cover { display: block; width: 100%; padding: 0; }
 .show__stage { height: min(78vh, 760px); min-height: 480px; }
 .show__stage.has-media::before { display: none; }
-.show__stage video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; opacity: .45; filter: blur(1px); }
+.show__stage picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
 .show__stage.has-media { background: #f4f4f4; }
 .show__stage.has-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.45) 45%, rgba(255,255,255,0) 75%); }
 [dir="rtl"] .show__stage.has-media::after { transform: scaleX(-1); }
