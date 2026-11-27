@@ -4,7 +4,7 @@ const U = require("./_lib/util");
 
 const CATS = ["prenses", "balik", "akesim", "sade"];
 const GOWNS = ["g-ball", "g-mermaid", "g-aline", "g-sheath", "g-sleeve", "g-off"];
-const imgUrl = (v) => (typeof v === "string" && /^\/api\/img\?id=[\w-]{6,40}$/.test(v) ? v : null);
+const imgUrl = (v) => (typeof v === "string" && (/^\/api\/img\?id=[\w-]{6,40}$/.test(v) || /^\/assets\/[\w\/-]{1,80}\.(jpe?g|png|webp)$/.test(v)) ? v : null);
 const time = (v, d) => (/^([01]\d|2[0-3]):[0-5]\d$/.test(v) ? v : d);
 
 function cleanSettings(s = {}) {

@@ -12,7 +12,19 @@
 window.GIVANI_SHOW = {
   year: 2026,
   images: [
-    // { src: "assets/defile/01.jpg" },
-    // { src: "assets/defile/02.jpg" },
+    { src: "/assets/defile/01.jpg" },
+    { src: "/assets/defile/02.jpg" },
+    { src: "/assets/defile/03.jpg" },
+    { src: "/assets/defile/04.jpg" },
+    { src: "/assets/defile/05.jpg" },
+    { src: "/assets/defile/06.jpg" },
+    { src: "/assets/defile/07.jpg" },
+    { src: "/assets/defile/08.jpg" },
+    { src: "/assets/defile/09.jpg" },
+    { src: "/assets/defile/10.jpg" },
+    { src: "/assets/defile/11.jpg" },
+    { src: "/assets/defile/12.jpg" },
+    { src: "/assets/defile/13.jpg" },
+    { src: "/assets/defile/14.jpg" }
   ]
 };
