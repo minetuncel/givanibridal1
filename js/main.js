@@ -661,6 +661,15 @@
   vTrack.addEventListener("pointercancel", endDrag);
   if (location.hash === "#defile-galeri") setTimeout(() => openLayer("show"), 0);
 
+  // Ana sayfa üst alanındaki arka plan videosu: görünmüyorsa durur, hareket azaltma tercihinde oynamaz
+  const heroVid = $(".hero__video");
+  if (heroVid) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { heroVid.removeAttribute("autoplay"); heroVid.pause(); }
+    else if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([en]) => { if (en.isIntersecting) heroVid.play().catch(() => {}); else heroVid.pause(); }).observe(heroVid.parentElement);
+    }
+  }
+
   // ================= GİRİŞ EKRANI =================
   const intro = $("#intro");
   if (document.documentElement.classList.contains("has-intro")) intro.hidden = false;

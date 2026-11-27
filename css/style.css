@@ -250,6 +250,18 @@ html.has-intro #intro[hidden] { display: grid !important; }
 }
 .hero__stage { justify-content: center; align-items: flex-end; }
 .hero__stage::before { display: none; }
+/* Arka planda silik defile videosu; yazı ve buton önde okunur kalır */
+.hero__stage { position: relative; overflow: hidden; isolation: isolate; }
+.hero__video {
+  position: absolute; inset: -20px; width: calc(100% + 40px); height: calc(100% + 40px);
+  object-fit: cover; object-position: 50% 30%;
+  opacity: .38; filter: blur(2px);
+  z-index: -2; pointer-events: none;
+}
+.hero__stage::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(255,255,255,.7), rgba(255,255,255,.25) 70%, rgba(255,255,255,.1));
+}
 /* Dans eden gelin */
 .bride { position: relative; height: 96%; width: auto; max-width: 92%; margin-bottom: 1%; opacity: .92; }
 .bride g, .bride ellipse { transform-box: view-box; }
