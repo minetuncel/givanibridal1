@@ -274,7 +274,6 @@ html.has-intro #intro[hidden] { display: grid !important; }
   border-bottom: 1px solid var(--line);
   transition: padding .25s var(--ease), color .25s;
 }
-.drawer__nav a::before { content: counter(dn, decimal-leading-zero); font-size: 12px; letter-spacing: .08em; color: #a3a3a3; min-width: 20px; }
 .drawer__nav a::after {
   content: ""; margin-inline-start: auto; width: 7px; height: 7px;
   border-top: 1.4px solid #b5b5b5; border-right: 1.4px solid #b5b5b5; transform: rotate(45deg);
