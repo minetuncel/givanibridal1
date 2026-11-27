@@ -126,7 +126,7 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 }
 .sign {
   display: block;
-  padding: clamp(18px, 2.6vw, 30px) clamp(40px, 6vw, 84px) clamp(22px, 3vw, 36px);
+  padding: clamp(14px, 2vw, 24px) clamp(40px, 6vw, 84px) clamp(12px, 1.6vw, 20px);
   background: linear-gradient(180deg, #45474a 0%, #333538 55%, #2a2c2e 100%);
   border-radius: 2px;
   box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 24px 48px rgba(0,0,0,.28), 0 6px 14px rgba(0,0,0,.18);
@@ -146,9 +146,9 @@ symbol .f { fill: none; stroke: rgba(0,0,0,.07); stroke-width: .8; }
 }
 /* Çerçeve içinde küçük BRIDAL, dışında imza */
 .sign__in {
-  display: block; margin-top: clamp(6px, .8vw, 10px);
+  display: block; margin-top: clamp(2px, .4vw, 6px);
   font-family: "Questrial", sans-serif;
-  font-size: clamp(11px, 1.15vw, 15px);
+  font-size: clamp(10px, 1vw, 13px); line-height: 1.2;
   letter-spacing: .62em; margin-right: -.62em;
   text-align: center; color: #d5d8db;
 }
