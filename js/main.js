@@ -548,13 +548,18 @@
     $("#showTitle").textContent = showTitle();
     $("#galleryTitle").textContent = showTitle();
     $("#galleryCount").textContent = IMGS.length ? t("show.photos", { n: IMGS.length }) : "";
-    if (IMGS.length) {
-      const img = cover.querySelector("img");
-      if (!img || img.getAttribute("src") !== IMGS[0].src) cover.innerHTML = `<img src="${esc(IMGS[0].src)}" alt="" loading="lazy">`;
-      cover.classList.add("has-img");
-    } else if (cover.classList.contains("has-img")) {
+    // Kapakta defile fotoğrafı değil, varsa defile videosu gösterilir
+    const vid = SHOW.video;
+    if (vid) {
+      const v = cover.querySelector("video");
+      if (!v || v.getAttribute("src") !== vid) {
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        cover.innerHTML = `<video src="${esc(vid)}"${SHOW.poster ? ` poster="${esc(SHOW.poster)}"` : ""} muted loop playsinline ${reduce ? "" : "autoplay"} preload="metadata" aria-hidden="true"></video>`;
+      }
+      cover.classList.add("has-media");
+    } else if (cover.classList.contains("has-media")) {
       cover.innerHTML = coverDefault;
-      cover.classList.remove("has-img");
+      cover.classList.remove("has-media");
     }
   };
 
@@ -670,6 +675,15 @@
     closeLangMenu();
     applyLang();
     if (changed) ev("lang_change");
+  }
+
+  // Video görünür değilken durdurulur (pil ve veri tasarrufu)
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => entries.forEach((en) => {
+      const v = en.target.querySelector("video");
+      if (!v || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (en.isIntersecting) v.play().catch(() => {}); else v.pause();
+    }), { threshold: 0.15 }).observe(cover);
   }
 
   // ================= BÖLÜM GÖRÜNTÜLEME =================

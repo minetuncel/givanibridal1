@@ -11,6 +11,9 @@
 */
 window.GIVANI_SHOW = {
   year: 2026,
+  // Ana sayfadaki Defile bölümünde oynayan video (yoksa null → çizim gösterilir)
+  video: null,
+  poster: null,
   images: [
     { src: "/assets/defile/01.jpg" },
     { src: "/assets/defile/02.jpg" },
