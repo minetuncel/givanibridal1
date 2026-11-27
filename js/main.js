@@ -547,12 +547,12 @@
   const renderShowSection = () => {
     $("#showTitle").textContent = showTitle();
     $("#galleryTitle").textContent = showTitle();
-    // Kapakta defile fotoğraflarından hazırlanmış kolaj gösterilir
-    const col = SHOW.collage;
-    if (col && col.desktop) {
+    // Kapakta seçilen defile fotoğrafı silik ve arka plana karışmış şekilde gösterilir
+    const cv = SHOW.cover;
+    if (cv) {
       const img = cover.querySelector("img");
-      if (!img || img.getAttribute("src") !== col.desktop) {
-        cover.innerHTML = `<picture>${col.mobile ? `<source media="(max-width: 760px)" srcset="${esc(col.mobile)}">` : ""}<img src="${esc(col.desktop)}" alt="" loading="lazy" decoding="async"></picture>`;
+      if (!img || img.getAttribute("src") !== cv) {
+        cover.innerHTML = `<img class="show__bgimg" src="${esc(cv)}" alt="" loading="lazy" decoding="async">`;
       }
       cover.classList.add("has-media");
     } else if (cover.classList.contains("has-media")) {
